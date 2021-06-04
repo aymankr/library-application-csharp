@@ -40,8 +40,8 @@ namespace ProjetDedisclasik
             this.login = new System.Windows.Forms.TextBox();
             this.loginAbo = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.pays = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.listPaysBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // nom
@@ -129,18 +129,11 @@ namespace ProjetDedisclasik
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 246);
+            this.label5.Location = new System.Drawing.Point(42, 224);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 13;
             this.label5.Text = "Pays :";
-            // 
-            // pays
-            // 
-            this.pays.Location = new System.Drawing.Point(101, 243);
-            this.pays.Name = "pays";
-            this.pays.Size = new System.Drawing.Size(100, 20);
-            this.pays.TabIndex = 12;
             // 
             // button1
             // 
@@ -152,14 +145,22 @@ namespace ProjetDedisclasik
             this.button1.Text = "Annuler";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // listPaysBox
+            // 
+            this.listPaysBox.FormattingEnabled = true;
+            this.listPaysBox.Location = new System.Drawing.Point(101, 216);
+            this.listPaysBox.Name = "listPaysBox";
+            this.listPaysBox.Size = new System.Drawing.Size(121, 21);
+            this.listPaysBox.TabIndex = 15;
+            // 
             // Inscription
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listPaysBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.pays);
             this.Controls.Add(this.loginAbo);
             this.Controls.Add(this.login);
             this.Controls.Add(this.listAbonnes);
@@ -190,8 +191,8 @@ namespace ProjetDedisclasik
         private System.Windows.Forms.TextBox login;
         private System.Windows.Forms.Label loginAbo;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox pays;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox listPaysBox;
     }
 }
 
