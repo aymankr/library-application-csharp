@@ -18,6 +18,9 @@ namespace ProjetDedisclasik
         {
             InitializeComponent();
             this.musique = musique;
+            List<string> liste = new List<string>();
+            liste = listePays();
+            liste.ForEach(p => listPaysBox.Items.Add(p));
             chargeListAbonnes();
         }
 
@@ -25,16 +28,20 @@ namespace ProjetDedisclasik
         {
             ABONNÉS abonne = new ABONNÉS();
 
-            String nomAbonne = nom.Text;
-            String prenomAbonne = prenom.Text;
-            String loginAbonne = login.Text;
-            String mdpAbonne = mdp.Text;
+            string nomAbonne = nom.Text;
+            string prenomAbonne = prenom.Text;
+            string loginAbonne = login.Text;
+            string mdpAbonne = mdp.Text;
+            string paysAbonne = listPaysBox.SelectedItem.ToString();
 
             abonne.NOM_ABONNÉ = nomAbonne;
             abonne.PRÉNOM_ABONNÉ = prenomAbonne;
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
-            Console.WriteLine(abonne.LOGIN_ABONNÉ);
+
+            var pays = (from p in musique.PAYS where paysAbonne.Trim() == p.NOM_PAYS
+                        select p.CODE_PAYS);
+            abonne.CODE_PAYS = pays.First();
 
             if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals(""))
             {
@@ -61,12 +68,12 @@ namespace ProjetDedisclasik
             listAbonnes.Items.Clear();
             foreach (ABONNÉS a in abonnes)
             {
-                String noms = a.PRÉNOM_ABONNÉ.Trim() + " " +  a.NOM_ABONNÉ;
+                string noms = a.PRÉNOM_ABONNÉ.Trim() + " " +  a.NOM_ABONNÉ + " " + a.CODE_PAYS;
                 listAbonnes.Items.Add(noms);
             }
         }
 
-        private bool loginExiste(String chaine)
+        private bool loginExiste(string chaine)
         {
             bool existe = false;
             var abonnes = (from a in musique.ABONNÉS
@@ -80,6 +87,14 @@ namespace ProjetDedisclasik
             return existe;
         }
 
+        private List<string> listePays()
+        {
+            List<string> listePays = new List<string>();
+            var pays = (from p in musique.PAYS
+                        select p.NOM_PAYS.Trim()).ToList();
+            listePays.AddRange(pays);
 
+            return listePays;
+        }
     }
 }
