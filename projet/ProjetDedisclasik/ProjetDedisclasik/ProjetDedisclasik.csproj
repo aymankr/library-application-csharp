@@ -76,17 +76,23 @@
     <Compile Include="ALBUMS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Connexion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Connexion.Designer.cs">
+      <DependentUpon>Connexion.cs</DependentUpon>
+    </Compile>
     <Compile Include="EDITEURS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EMPRUNTER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Inscription.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Inscription.Designer.cs">
+      <DependentUpon>Inscription.cs</DependentUpon>
     </Compile>
     <Compile Include="GENRES.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -111,8 +117,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Connexion.resx">
+      <DependentUpon>Connexion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inscription.resx">
+      <DependentUpon>Inscription.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
