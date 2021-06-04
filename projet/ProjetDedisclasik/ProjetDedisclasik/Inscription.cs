@@ -32,18 +32,16 @@ namespace ProjetDedisclasik
             string prenomAbonne = prenom.Text;
             string loginAbonne = login.Text;
             string mdpAbonne = mdp.Text;
-            string paysAbonne = listPaysBox.SelectedItem.ToString();
+            
 
             abonne.NOM_ABONNÉ = nomAbonne;
             abonne.PRÉNOM_ABONNÉ = prenomAbonne;
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
 
-            var pays = (from p in musique.PAYS where paysAbonne.Trim() == p.NOM_PAYS
-                        select p.CODE_PAYS);
-            abonne.CODE_PAYS = pays.First();
 
-            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals(""))
+
+            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null)
             {
                 MessageBox.Show("Veuillez saisir les informations dans les champs spécifiés.");
             }
@@ -53,6 +51,11 @@ namespace ProjetDedisclasik
             }
             else
             {
+                string paysAbonne = listPaysBox.SelectedItem.ToString();
+                var pays = (from p in musique.PAYS
+                            where paysAbonne.Trim() == p.NOM_PAYS
+                            select p.CODE_PAYS);
+                abonne.CODE_PAYS = pays.First();
                 musique.ABONNÉS.Add(abonne);
                 musique.SaveChanges();
                 chargeListAbonnes();
