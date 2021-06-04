@@ -16,7 +16,9 @@ namespace ProjetDedisclasik
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Connexion connexion = new Connexion();
+            connexion.ShowDialog();
+            //Application.Run(new Inscription());
         }
     }
 }
