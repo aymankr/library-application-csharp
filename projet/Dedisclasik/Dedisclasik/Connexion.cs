@@ -30,10 +30,11 @@ namespace Dedisclasik
 
         private void connexion_Click(object sender, EventArgs e)
         {
-            string login = loginConnexion.Text;
-            string mdp = mdpConnexion.Text;
+            String login = loginConnexion.Text;
+            String mdp = mdpConnexion.Text;
             if (connexionAdminValide())
             {
+                MessageBox.Show("Connexion admin réussie.");
                 Administrateur administrateur = new Administrateur();
                 administrateur.ShowDialog();
             }
@@ -44,13 +45,10 @@ namespace Dedisclasik
                 emprunt.ShowDialog();
                 fermerLaFenetre();
             }
-            else
-            {
-                MessageBox.Show("Connexion échouée.");
-            }
+            else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
-        private bool connexionValide(string login, string mdp)
+        private bool connexionValide(String login, String mdp)
         {
             bool valide = false;
             var abonnes = (from a in Outils.musique.ABONNÉS
@@ -66,11 +64,15 @@ namespace Dedisclasik
         private bool connexionAdminValide()
         {
             string loginAdmin = "dedisk";
+            //string mdpAdmin = "a3cd5e9@eelp0";
             string mdpAdmin = "admin";
-            bool valide = false;
 
-            if (loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin)) valide = true;
-            return valide;
+            return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
+        }
+
+        public void fermerLaFenetre()
+        {
+            this.Close();
         }
 
         public void fermerLaFenetre()
