@@ -74,10 +74,5 @@ namespace Dedisclasik
         {
             this.Close();
         }
-
-        public void fermerLaFenetre()
-        {
-            this.Close();
-        }
     }
 }
