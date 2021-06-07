@@ -18,8 +18,7 @@ namespace Dedisclasik
         {
             InitializeComponent();
             List<string> liste = new List<string>();
-            liste = listePays();
-            liste.ForEach(p => listPaysBox.Items.Add(p));
+            chargeListPays();
             chargeListAbonnes();
         }
 
@@ -69,7 +68,7 @@ namespace Dedisclasik
             listAbonnes.Items.Clear();
             foreach (ABONNÉS a in abonnes)
             {
-                string noms = a.PRÉNOM_ABONNÉ.Trim() + " " + a.NOM_ABONNÉ + " " + a.CODE_PAYS;
+                string noms = a.PRÉNOM_ABONNÉ.Trim() + " " + a.NOM_ABONNÉ;
                 listAbonnes.Items.Add(noms);
             }
         }
@@ -88,14 +87,11 @@ namespace Dedisclasik
             return existe;
         }
 
-        private List<string> listePays()
+        private void chargeListPays()
         {
-            List<string> listePays = new List<string>();
             var pays = (from p in musique.PAYS
-                        select p.NOM_PAYS.Trim()).ToList();
-            listePays.AddRange(pays);
-
-            return listePays;
+                        select p.NOM_PAYS.Trim()).ToArray();
+            listPaysBox.Items.AddRange(pays);
         }
     }
 }

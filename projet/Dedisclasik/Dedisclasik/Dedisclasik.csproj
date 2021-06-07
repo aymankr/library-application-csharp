@@ -58,6 +58,12 @@
     <Compile Include="ABONNÉS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrateur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrateur.Designer.cs">
+      <DependentUpon>Administrateur.cs</DependentUpon>
+    </Compile>
     <Compile Include="ALBUMS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -123,6 +129,9 @@
     <Compile Include="RechercheAlbumEtEmprunt.Designer.cs">
       <DependentUpon>RechercheAlbumEtEmprunt.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Administrateur.resx">
+      <DependentUpon>Administrateur.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Connexion.resx">
       <DependentUpon>Connexion.cs</DependentUpon>
     </EmbeddedResource>
