@@ -34,7 +34,6 @@ namespace Dedisclasik
             String mdp = mdpConnexion.Text;
             if (connexionAdminValide())
             {
-                MessageBox.Show("Connexion admin réussie.");
                 Administrateur administrateur = new Administrateur();
                 administrateur.ShowDialog();
             }
