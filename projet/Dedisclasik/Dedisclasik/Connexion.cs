@@ -12,30 +12,38 @@ namespace Dedisclasik
 {
     public partial class Connexion : Form
     {
-        MusiquePT2_NEntities musique;
+
+        public static int id_abonné { get; set; }
+
         public Connexion()
         {
             InitializeComponent();
-            musique = new MusiquePT2_NEntities();
+            Outils.musique = new MusiquePT2_NEntities();
         }
 
         private void inscription_Click(object sender, EventArgs e)
         {
-            Inscription inscription = new Inscription(musique);
+            Inscription inscription = new Inscription();
             inscription.ShowDialog();
         }
 
         private void connexion_Click(object sender, EventArgs e)
         {
-            if (connexionValide()) MessageBox.Show("Connexion réussie.");
-        }
-
-        private bool connexionValide()
-        {
-            bool valide = false;
             String login = loginConnexion.Text;
             String mdp = mdpConnexion.Text;
-            var abonnes = (from a in musique.ABONNÉS
+            if (connexionValide(login, mdp))
+            {
+                id_abonné = ABONNÉS.RechercheAbonne(login);
+
+                RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+                emprunt.ShowDialog();
+            }
+        }
+
+        private bool connexionValide(String login, String mdp)
+        {
+            bool valide = false;
+            var abonnes = (from a in Outils.musique.ABONNÉS
                            select a).ToList();
             foreach (ABONNÉS a in abonnes)
             {

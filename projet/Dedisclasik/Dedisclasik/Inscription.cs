@@ -12,11 +12,11 @@ namespace Dedisclasik
 {
     public partial class Inscription : Form
     {
-        MusiquePT2_NEntities musique;
-        public Inscription(MusiquePT2_NEntities musique)
+        MusiquePT2_NEntities musique = Outils.musique;
+
+        public Inscription()
         {
             InitializeComponent();
-            this.musique = musique;
             List<string> liste = new List<string>();
             liste = listePays();
             liste.ForEach(p => listPaysBox.Items.Add(p));
