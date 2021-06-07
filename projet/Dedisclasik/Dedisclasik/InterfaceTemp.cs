@@ -98,5 +98,11 @@ namespace Dedisclasik
                 }
             }
         }
+
+        private void suggest_Click(object sender, EventArgs e)
+        {
+            suggest sug = new suggest();
+            sug.ShowDialog();
+        }
     }
 }

@@ -33,6 +33,8 @@ namespace Dedisclasik
             this.Prolonger = new System.Windows.Forms.Button();
             this.dateRetourAttendue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.suggest = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // albumEmprunt
@@ -46,7 +48,7 @@ namespace Dedisclasik
             // 
             // Prolonger
             // 
-            this.Prolonger.Location = new System.Drawing.Point(152, 297);
+            this.Prolonger.Location = new System.Drawing.Point(368, 394);
             this.Prolonger.Name = "Prolonger";
             this.Prolonger.Size = new System.Drawing.Size(75, 23);
             this.Prolonger.TabIndex = 1;
@@ -57,7 +59,7 @@ namespace Dedisclasik
             // dateRetourAttendue
             // 
             this.dateRetourAttendue.AutoSize = true;
-            this.dateRetourAttendue.Location = new System.Drawing.Point(149, 245);
+            this.dateRetourAttendue.Location = new System.Drawing.Point(157, 404);
             this.dateRetourAttendue.Name = "dateRetourAttendue";
             this.dateRetourAttendue.Size = new System.Drawing.Size(53, 13);
             this.dateRetourAttendue.TabIndex = 2;
@@ -66,17 +68,38 @@ namespace Dedisclasik
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 245);
+            this.label1.Location = new System.Drawing.Point(12, 404);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Date de retour attendue:";
+            // 
+            // suggest
+            // 
+            this.suggest.Location = new System.Drawing.Point(44, 56);
+            this.suggest.Name = "suggest";
+            this.suggest.Size = new System.Drawing.Size(110, 23);
+            this.suggest.TabIndex = 4;
+            this.suggest.Text = "Mes suggestions";
+            this.suggest.UseVisualStyleBackColor = true;
+            this.suggest.Click += new System.EventHandler(this.suggest_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(449, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Mes emprunts";
             // 
             // InterfaceTemp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.suggest);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateRetourAttendue);
             this.Controls.Add(this.Prolonger);
@@ -94,5 +117,7 @@ namespace Dedisclasik
         private System.Windows.Forms.Button Prolonger;
         private System.Windows.Forms.Label dateRetourAttendue;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button suggest;
+        private System.Windows.Forms.Label label2;
     }
 }
