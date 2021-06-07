@@ -49,7 +49,7 @@ namespace Dedisclasik
                 {
                     if (emp.CODE_ALBUM == id_album.First())
                     {
-                        if (!dejaProlongé(emp))
+                        if (!Outils.dejaProlongé(emp))
                         {
                             emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
                             MessageBox.Show("Prolongement effectué");
@@ -65,16 +65,7 @@ namespace Dedisclasik
             Outils.musique.SaveChanges();
         }
 
-        public bool dejaProlongé(EMPRUNTER emprunt)
-        {
-            bool dejaProlongé = true;
-            TimeSpan temps = emprunt.DATE_RETOUR_ATTENDUE - emprunt.DATE_EMPRUNT;
-            if (int.Parse(temps.Days.ToString()) <= emprunt.ALBUMS.GENRES.DÉLAI)
-            {
-                dejaProlongé = false;
-            }
-            return dejaProlongé;
-        }
+        
 
         private void albumEmprunt_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -87,7 +78,7 @@ namespace Dedisclasik
                 if (emp.CODE_ALBUM == id_album.First())
                 {
                     dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
-                    if (dejaProlongé(emp))
+                    if (Outils.dejaProlongé(emp))
                     {
                         Prolonger.Enabled = false;
                     }
