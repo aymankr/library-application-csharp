@@ -53,7 +53,7 @@ namespace ProjetDedisclasik
             // 
             // mdp
             // 
-            this.mdp.Location = new System.Drawing.Point(101, 137);
+            this.mdp.Location = new System.Drawing.Point(129, 172);
             this.mdp.Name = "mdp";
             this.mdp.Size = new System.Drawing.Size(100, 20);
             this.mdp.TabIndex = 1;
@@ -86,7 +86,7 @@ namespace ProjetDedisclasik
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 144);
+            this.label3.Location = new System.Drawing.Point(43, 175);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 5;
@@ -96,7 +96,7 @@ namespace ProjetDedisclasik
             // 
             this.ajout.Location = new System.Drawing.Point(42, 303);
             this.ajout.Name = "ajout";
-            this.ajout.Size = new System.Drawing.Size(128, 48);
+            this.ajout.Size = new System.Drawing.Size(81, 48);
             this.ajout.TabIndex = 6;
             this.ajout.Text = "OK";
             this.ajout.UseVisualStyleBackColor = true;
@@ -105,14 +105,14 @@ namespace ProjetDedisclasik
             // listAbonnes
             // 
             this.listAbonnes.FormattingEnabled = true;
-            this.listAbonnes.Location = new System.Drawing.Point(336, 62);
+            this.listAbonnes.Location = new System.Drawing.Point(293, 23);
             this.listAbonnes.Name = "listAbonnes";
-            this.listAbonnes.Size = new System.Drawing.Size(452, 303);
+            this.listAbonnes.Size = new System.Drawing.Size(452, 342);
             this.listAbonnes.TabIndex = 7;
             // 
             // login
             // 
-            this.login.Location = new System.Drawing.Point(101, 181);
+            this.login.Location = new System.Drawing.Point(129, 134);
             this.login.Name = "login";
             this.login.Size = new System.Drawing.Size(100, 20);
             this.login.TabIndex = 8;
@@ -120,16 +120,16 @@ namespace ProjetDedisclasik
             // loginAbo
             // 
             this.loginAbo.AutoSize = true;
-            this.loginAbo.Location = new System.Drawing.Point(39, 184);
+            this.loginAbo.Location = new System.Drawing.Point(43, 137);
             this.loginAbo.Name = "loginAbo";
-            this.loginAbo.Size = new System.Drawing.Size(39, 13);
+            this.loginAbo.Size = new System.Drawing.Size(82, 13);
             this.loginAbo.TabIndex = 9;
-            this.loginAbo.Text = "Login :";
+            this.loginAbo.Text = "Nom utilisateur :";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 224);
+            this.label5.Location = new System.Drawing.Point(42, 216);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 13;
@@ -138,9 +138,9 @@ namespace ProjetDedisclasik
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(218, 303);
+            this.button1.Location = new System.Drawing.Point(149, 303);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 48);
+            this.button1.Size = new System.Drawing.Size(80, 48);
             this.button1.TabIndex = 14;
             this.button1.Text = "Annuler";
             this.button1.UseVisualStyleBackColor = true;
@@ -148,7 +148,7 @@ namespace ProjetDedisclasik
             // listPaysBox
             // 
             this.listPaysBox.FormattingEnabled = true;
-            this.listPaysBox.Location = new System.Drawing.Point(101, 216);
+            this.listPaysBox.Location = new System.Drawing.Point(101, 213);
             this.listPaysBox.Name = "listPaysBox";
             this.listPaysBox.Size = new System.Drawing.Size(121, 21);
             this.listPaysBox.TabIndex = 15;
@@ -172,7 +172,7 @@ namespace ProjetDedisclasik
             this.Controls.Add(this.mdp);
             this.Controls.Add(this.nom);
             this.Name = "Inscription";
-            this.Text = "Form1";
+            this.Text = "Inscription";
             this.ResumeLayout(false);
             this.PerformLayout();
 

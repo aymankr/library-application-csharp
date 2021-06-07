@@ -27,10 +27,19 @@ namespace ProjetDedisclasik
 
         private void connexion_Click(object sender, EventArgs e)
         {
-            if (connexionValide()) MessageBox.Show("Connexion réussie.");
+            Administrateur administrateur = new Administrateur(musique);
+            administrateur.ShowDialog();
+            /* if (connexionAdminValide())
+             {
+                 MessageBox.Show("Connexion admin réussie.");
+                 Administrateur administrateur = new Administrateur();
+                 administrateur.ShowDialog();
+             }
+             else if (connexionAboValide()) MessageBox.Show("Connexion abonné réussie.");
+             else MessageBox.Show("Connexion échouée, réessayez.");*/
         }
 
-        private bool connexionValide()
+        private bool connexionAboValide()
         {
             bool valide = false;
             String login = loginConnexion.Text;
@@ -43,6 +52,15 @@ namespace ProjetDedisclasik
             }
 
             return valide;
+        }
+
+        private bool connexionAdminValide()
+        {
+            string loginAdmin = "dedisk";
+            //string mdpAdmin = "a3cd5e9@eelp0";
+            string mdpAdmin = "admin";
+
+            return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
         }
     }
 }
