@@ -56,6 +56,7 @@ namespace Dedisclasik
                 musique.ABONNÉS.Add(abonne);
                 musique.SaveChanges();
                 chargeListAbonnes();
+                new Connexion().ShowDialog();
                 Close();
             }
         }
