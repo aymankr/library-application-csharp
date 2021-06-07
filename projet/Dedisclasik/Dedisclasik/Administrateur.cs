@@ -79,5 +79,22 @@ namespace Dedisclasik
             Outils.musique.ABONNÉS.RemoveRange(abonnesExpires);
             Outils.musique.SaveChanges();
         }
+
+        private void albumsNonEmprunts_Click(object sender, EventArgs e)
+        {
+            listInfos.Items.Clear();
+            DateTime dateNow = DateTime.Now;
+
+            //  US8 : liste albums non empruntés depuis + d'un an 
+            //DateTime dernierEmprunt = musique.EMPRUNTER.OrderByDescending(a => a.DATE_EMPRUNT).Select(a => a.DATE_EMPRUNT).FirstOrDefault();
+
+            var emprunteurs = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                .Select(a => a.ALBUMS).ToList();
+            foreach (ALBUMS a in emprunteurs)
+            {
+                listInfos.Items.Add(a.TITRE_ALBUM);
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@ namespace Dedisclasik
             this.empruntRetard = new System.Windows.Forms.Button();
             this.empruntMeilleurs = new System.Windows.Forms.Button();
             this.listInfos = new System.Windows.Forms.ListBox();
+            this.albumsNonEmprunts = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // empruntProlong
@@ -49,7 +50,7 @@ namespace Dedisclasik
             // purger
             // 
             this.purger.BackColor = System.Drawing.Color.LightCoral;
-            this.purger.Location = new System.Drawing.Point(59, 221);
+            this.purger.Location = new System.Drawing.Point(59, 276);
             this.purger.Name = "purger";
             this.purger.Size = new System.Drawing.Size(154, 51);
             this.purger.TabIndex = 1;
@@ -85,11 +86,22 @@ namespace Dedisclasik
             this.listInfos.Size = new System.Drawing.Size(441, 316);
             this.listInfos.TabIndex = 4;
             // 
+            // albumsNonEmprunts
+            // 
+            this.albumsNonEmprunts.Location = new System.Drawing.Point(59, 221);
+            this.albumsNonEmprunts.Name = "albumsNonEmprunts";
+            this.albumsNonEmprunts.Size = new System.Drawing.Size(154, 49);
+            this.albumsNonEmprunts.TabIndex = 5;
+            this.albumsNonEmprunts.Text = "ALBUMS NON EMPRUNTES DEPUIS UN AN";
+            this.albumsNonEmprunts.UseVisualStyleBackColor = true;
+            this.albumsNonEmprunts.Click += new System.EventHandler(this.albumsNonEmprunts_Click);
+            // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 416);
+            this.Controls.Add(this.albumsNonEmprunts);
             this.Controls.Add(this.listInfos);
             this.Controls.Add(this.empruntMeilleurs);
             this.Controls.Add(this.empruntRetard);
@@ -108,5 +120,6 @@ namespace Dedisclasik
         private System.Windows.Forms.Button empruntRetard;
         private System.Windows.Forms.Button empruntMeilleurs;
         private System.Windows.Forms.ListBox listInfos;
+        private System.Windows.Forms.Button albumsNonEmprunts;
     }
 }
