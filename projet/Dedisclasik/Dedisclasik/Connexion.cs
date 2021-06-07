@@ -32,13 +32,20 @@ namespace Dedisclasik
         {
             String login = loginConnexion.Text;
             String mdp = mdpConnexion.Text;
-            if (connexionValide(login, mdp))
+            if (connexionAdminValide())
+            {
+                MessageBox.Show("Connexion admin réussie.");
+                Administrateur administrateur = new Administrateur();
+                administrateur.ShowDialog();
+            }
+            else if (connexionValide(login, mdp))
             {
                 id_abonné = ABONNÉS.RechercheAbonne(login);
                 RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
                 emprunt.ShowDialog();
                 fermerLaFenetre();
             }
+            else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
         private bool connexionValide(String login, String mdp)
@@ -52,6 +59,15 @@ namespace Dedisclasik
             }
 
             return valide;
+        }
+
+        private bool connexionAdminValide()
+        {
+            string loginAdmin = "dedisk";
+            //string mdpAdmin = "a3cd5e9@eelp0";
+            string mdpAdmin = "admin";
+
+            return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
         }
 
         public void fermerLaFenetre()
