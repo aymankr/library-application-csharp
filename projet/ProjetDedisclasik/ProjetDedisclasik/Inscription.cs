@@ -18,9 +18,9 @@ namespace ProjetDedisclasik
         {
             InitializeComponent();
             this.musique = musique;
-            List<string> liste = new List<string>();
-            liste = listePays();
-            liste.ForEach(p => listPaysBox.Items.Add(p));
+            //List<string> liste = new List<string>();
+            //liste = listePays();
+            //liste.ForEach(p => listPaysBox.Items.Add(p));
             chargeListAbonnes();
         }
 
