@@ -25,6 +25,7 @@ namespace Dedisclasik
         {
             Inscription inscription = new Inscription();
             inscription.ShowDialog();
+            fermerLaFenetre();
         }
 
         private void connexion_Click(object sender, EventArgs e)
@@ -34,9 +35,9 @@ namespace Dedisclasik
             if (connexionValide(login, mdp))
             {
                 id_abonné = ABONNÉS.RechercheAbonne(login);
-
                 RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
                 emprunt.ShowDialog();
+                fermerLaFenetre();
             }
         }
 
@@ -51,6 +52,11 @@ namespace Dedisclasik
             }
 
             return valide;
+        }
+
+        public void fermerLaFenetre()
+        {
+            this.Close();
         }
     }
 }
