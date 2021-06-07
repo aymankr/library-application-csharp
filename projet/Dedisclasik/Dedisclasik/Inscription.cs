@@ -17,7 +17,6 @@ namespace Dedisclasik
         public Inscription()
         {
             InitializeComponent();
-            List<string> liste = new List<string>();
             chargeListPays();
             chargeListAbonnes();
         }

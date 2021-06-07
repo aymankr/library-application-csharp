@@ -19,13 +19,7 @@ namespace Dedisclasik
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
-            /*listInfos.Items.Clear();
-            var emprunts = (from a in musique.EMPRUNTER
-                            select a.ALBUMS).ToList();
-            foreach (ALBUMS a in emprunts)
-            {
-                listInfos.Items.Add(a.TITRE_ALBUM);
-            }*/
+
         }
 
         private void empruntRetard_Click(object sender, EventArgs e)
@@ -50,7 +44,19 @@ namespace Dedisclasik
 
         private void purger_Click(object sender, EventArgs e)
         {
+            listInfos.Items.Clear();
+            DateTime dateNow = DateTime.Now;
+            //DateTime dernierEmprunt = musique.EMPRUNTER.OrderByDescending(a => a.DATE_EMPRUNT).Select(a => a.DATE_EMPRUNT).FirstOrDefault();
 
+            // US6 remove abonnes qui n'ont pas empruntés depuis un an
+            var empruntsExpires = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
+            var abonnesExpires = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                .Select(a => a.ABONNÉS).ToList();
+            Outils.musique.EMPRUNTER.RemoveRange(empruntsExpires);
+            Outils.musique.ABONNÉS.RemoveRange(abonnesExpires);
+            Outils.musique.SaveChanges();
         }
     }
 }
