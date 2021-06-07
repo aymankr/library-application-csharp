@@ -39,7 +39,18 @@ namespace Dedisclasik
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
+            listInfos.Items.Clear();
+            DateTime dateNow = DateTime.Now;
 
+            // US7 : les 10 plus empruntés de l'année
+            var emprunteurs = Outils.musique.EMPRUNTER
+                .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
+                .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
+                .Select(a => a.ALBUMS);
+            foreach (ALBUMS a in emprunteurs)
+            {
+                listInfos.Items.Add(a.TITRE_ALBUM);
+            }
         }
 
         private void purger_Click(object sender, EventArgs e)
