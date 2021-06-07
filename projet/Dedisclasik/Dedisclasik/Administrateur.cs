@@ -19,7 +19,17 @@ namespace Dedisclasik
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
-
+            // US4 : abonnés ayant prolongé leur emprunt
+            listInfos.Items.Clear();
+            var id_album = from al in Outils.musique.ALBUMS
+                           select al.CODE_ALBUM;
+            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            {
+                if (Outils.dejaProlongé(emp))
+                {
+                    listInfos.Items.Add(emp.ALBUMS.TITRE_ALBUM.Trim() + " -> " + emp.ABONNÉS.LOGIN_ABONNÉ);
+                }
+            }
         }
 
         private void empruntRetard_Click(object sender, EventArgs e)
