@@ -10,14 +10,17 @@ using System.Windows.Forms;
 
 namespace Dedisclasik
 {
-    public partial class InterfaceTemp : Form
+    public partial class MonCompte : Form
     {
-        public InterfaceTemp() 
+        public MonCompte() 
         {
             InitializeComponent();
             afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonne));
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
+            nomUtilisateur.Text = "nom";//Connexion.abonné.NOM_ABONNÉS;
+            prenomUtilisateur.Text = "prénom";//Connexion.abonné.PRÉNOM_ABONNÉS;
+            loginUtilisateur.Text = "login";//Connexion.abonné.LOGIN_ABONNÉS;
         }
 
         public void afficherEmprunts(List<string> albums)
@@ -120,6 +123,7 @@ namespace Dedisclasik
 
         private void vérifcationToutProlonger()
         {
+            ToutProlonger.Enabled = false;
             foreach (object objet in albumEmprunt.Items)
             {
                 string titre = objet.ToString();
@@ -133,10 +137,22 @@ namespace Dedisclasik
                         if (!Outils.dejaProlongé(emp))
                         {
                             ToutProlonger.Enabled = true;
+                            break;
                         }
                     }
                 }
             }
+        }
+
+        private void retourButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void deconnexionButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            //new Connexion().ShowDialog(); //à vérifier
         }
     }
 }
