@@ -95,7 +95,7 @@ namespace Dedisclasik
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(217, 168);
+            this.label2.Location = new System.Drawing.Point(217, 164);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 9;
@@ -104,11 +104,11 @@ namespace Dedisclasik
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(227, 120);
+            this.label1.Location = new System.Drawing.Point(219, 120);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Login :";
+            this.label1.Text = "Nom utilisateur :";
             // 
             // Connexion
             // 
@@ -123,7 +123,9 @@ namespace Dedisclasik
             this.Controls.Add(this.loginConnexion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Connexion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connexion";
             this.ResumeLayout(false);
             this.PerformLayout();

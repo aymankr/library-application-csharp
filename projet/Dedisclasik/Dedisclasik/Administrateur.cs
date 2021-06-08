@@ -57,7 +57,7 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
-
+            // OZEFIOZEJFOIZEJFIZEFJZEOIFJZEIFJZEIFJEZIOFJZEOIFJEZIOFJZEFIOZEJFIOZEJFIOZEJFZIEOJFZIOJFE    FAIRE NB EMPRUNTS
             // US7 : les 10 plus empruntés de l'année
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
@@ -127,6 +127,20 @@ namespace Dedisclasik
         {
             var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes) Close();
+        }
+
+        private void listAbo_Click(object sender, EventArgs e)
+        {
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = Outils.musique.ABONNÉS.ToList();
+
+            // US 12 liste des abonnés
+            foreach (ABONNÉS a in abos)
+            {
+                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
         }
     }
 }
