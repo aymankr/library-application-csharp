@@ -9,11 +9,11 @@ namespace Dedisclasik
     public partial class ABONNÉS
     {
 
-        public static int RechercheAbonne(string login)
+        public static ABONNÉS RechercheAbonne(string login)
         {
             var abonné = (from a in Outils.musique.ABONNÉS
                       where a.LOGIN_ABONNÉ.Equals(login.Trim())
-                      select a.CODE_ABONNÉ);
+                      select a);
             return abonné.First();
         }
 

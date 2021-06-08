@@ -13,7 +13,7 @@ namespace Dedisclasik
     public partial class Connexion : Form
     {
 
-        public static int id_abonné { get; set; }
+        public static ABONNÉS abonne { get; set; }
 
         public Connexion()
         {
@@ -23,31 +23,36 @@ namespace Dedisclasik
 
         private void inscription_Click(object sender, EventArgs e)
         {
+            Hide();
             Inscription inscription = new Inscription();
             inscription.ShowDialog();
-            fermerLaFenetre();
+            Show();
         }
 
         private void connexion_Click(object sender, EventArgs e)
         {
-            String login = loginConnexion.Text;
-            String mdp = mdpConnexion.Text;
+            string login = loginConnexion.Text;
+            string mdp = mdpConnexion.Text;
+
             if (connexionAdminValide())
             {
+                Hide();
                 Administrateur administrateur = new Administrateur();
                 administrateur.ShowDialog();
+                Show();
             }
             else if (connexionValide(login, mdp))
             {
-                id_abonné = ABONNÉS.RechercheAbonne(login);
+                abonne = ABONNÉS.RechercheAbonne(login);
                 RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+                Hide();
                 emprunt.ShowDialog();
-                fermerLaFenetre();
+                Show();
             }
             else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
-        private bool connexionValide(String login, String mdp)
+        private bool connexionValide(string login, string mdp)
         {
             bool valide = false;
             var abonnes = (from a in Outils.musique.ABONNÉS
@@ -67,11 +72,6 @@ namespace Dedisclasik
             string mdpAdmin = "admin";
 
             return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
-        }
-
-        public void fermerLaFenetre()
-        {
-            this.Close();
         }
     }
 }

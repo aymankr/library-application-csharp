@@ -15,7 +15,7 @@ namespace Dedisclasik
         public InterfaceTemp() 
         {
             InitializeComponent();
-            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.id_abonné));
+            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonne));
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
         }

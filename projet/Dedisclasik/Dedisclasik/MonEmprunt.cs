@@ -8,10 +8,10 @@ namespace Dedisclasik
 {
     public partial class EMPRUNTER
     {
-        public static List<string> ListeAlbums(int id_abonné)
+        public static List<string> ListeAlbums(ABONNÉS abo)
         {
             var emprunts = (from a in Outils.musique.EMPRUNTER
-                            where a.CODE_ABONNÉ == id_abonné && a.DATE_RETOUR == null
+                            where a.CODE_ABONNÉ == abo.CODE_ABONNÉ && a.DATE_RETOUR == null
                             select a.ALBUMS);
             HashSet<string> albums = new HashSet<string>();
             foreach (ALBUMS al in emprunts)
@@ -19,6 +19,14 @@ namespace Dedisclasik
                 albums.Add(al.TITRE_ALBUM);
             }
             return albums.ToList();
+        }
+        
+        public static ALBUMS typeGenre(string titre)
+        {
+            var album = (from a in Outils.musique.ALBUMS
+                            where a.TITRE_ALBUM == titre
+                            select a);
+            return album.First();
         }
     }
 }

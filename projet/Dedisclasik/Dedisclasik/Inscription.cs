@@ -18,7 +18,6 @@ namespace Dedisclasik
         {
             InitializeComponent();
             chargeListPays();
-            chargeListAbonnes();
         }
 
         private void ajout_Click(object sender, EventArgs e)
@@ -30,13 +29,12 @@ namespace Dedisclasik
             string loginAbonne = login.Text;
             string mdpAbonne = mdp.Text;
 
-
             abonne.NOM_ABONNÉ = nomAbonne;
             abonne.PRÉNOM_ABONNÉ = prenomAbonne;
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
 
-            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null)
+            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null || !mdp.Text.Equals(mdp2.Text))
             {
                 MessageBox.Show("Veuillez saisir les informations dans les champs spécifiés.");
             }
@@ -53,22 +51,8 @@ namespace Dedisclasik
                 abonne.CODE_PAYS = pays.First();
                 musique.ABONNÉS.Add(abonne);
                 musique.SaveChanges();
-                chargeListAbonnes();
                 new Connexion().ShowDialog();
                 Close();
-            }
-        }
-
-        private void chargeListAbonnes()
-        {
-            var abonnes = (from a in musique.ABONNÉS
-                           orderby a.NOM_ABONNÉ
-                           select a).ToList();
-            listAbonnes.Items.Clear();
-            foreach (ABONNÉS a in abonnes)
-            {
-                string noms = a.PRÉNOM_ABONNÉ.Trim() + " " + a.NOM_ABONNÉ;
-                listAbonnes.Items.Add(noms);
             }
         }
 

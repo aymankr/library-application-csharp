@@ -20,10 +20,22 @@ namespace Dedisclasik
         private void recherche_TextChanged(object sender, EventArgs e)
         {
             album.Items.Clear();
+            List<string> emprunter = new List<string>();
+            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            {
+                emprunter.Add(emp.ALBUMS.TITRE_ALBUM);
+            }
             List<String> titres = ABONNÉS.RechercheTitre(recherche.Text);
             foreach (String t in titres)
             {
-                album.Items.Add(t);
+                if (emprunter.Contains(t))
+                {
+                    album.Items.Add(t.Trim() + " -> Déjà emprunté");
+                }
+                else
+                {
+                    album.Items.Add(t);
+                }
             }
         }
 
@@ -31,21 +43,23 @@ namespace Dedisclasik
         {
             MusiquePT2_NEntities m = Outils.musique;
             EMPRUNTER emprunt = new EMPRUNTER();
+            DateTime date = DateTime.Now;
 
-            if (album.SelectedItem != null)
+            if (album.SelectedItem != null && !album.SelectedItem.ToString().Contains("Déjà emprunté"))
             {
                 string titre = album.SelectedItem.ToString().Trim();
-                emprunt.CODE_ABONNÉ = Connexion.id_abonné;
+                emprunt.CODE_ABONNÉ = Connexion.abonne.CODE_ABONNÉ;
                 emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
-                emprunt.DATE_EMPRUNT = DateTime.Now;
-                emprunt.DATE_RETOUR_ATTENDUE = new DateTime(2022, 3, 15); //pas le souci
-                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.id_abonné);
+                emprunt.DATE_EMPRUNT = date;
+                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI); 
+                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonne.CODE_ABONNÉ);
                 emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
 
-                m.ABONNÉS.Find(Connexion.id_abonné).EMPRUNTER.Add(emprunt);
+                m.ABONNÉS.Find(Connexion.abonne.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);
             }
-            m.SaveChanges();
+            m.SaveChanges(); //gestion de la mise a jour de la lsite necessaire
+            recherche_TextChanged(sender, e);
         }
 
         private void MonCompte_Click(object sender, EventArgs e)
