@@ -11,7 +11,6 @@ namespace Dedisclasik
         override
         public string ToString()
         {
-            /*string nonPrécisé = "Non précisée";
             string date = nonPrécisé;
             if (this.ANNÉE_ALBUM != null)
             {
