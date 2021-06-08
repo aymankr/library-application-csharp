@@ -57,13 +57,17 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
-            // OZEFIOZEJFOIZEJFIZEFJZEOIFJZEIFJZEIFJEZIOFJZEOIFJEZIOFJZEFIOZEJFIOZEJFIOZEJFZIEOJFZIOJFE    FAIRE NB EMPRUNTS
+
             // US7 : les 10 plus empruntés de l'année
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
                 .Select(a => a.ALBUMS);
-            foreach (ALBUMS a in emprunteurs) dataGridView1.Rows.Add(a.TITRE_ALBUM);
+            foreach (ALBUMS a in emprunteurs)
+            {
+                string[] row = new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() };
+                dataGridView1.Rows.Add(row);
+            }
             afficherMessageVide(empruntMeilleurs.Text + " : les 10 albums les plus empruntés dans l'année.");
         }
 

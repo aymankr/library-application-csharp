@@ -34,7 +34,7 @@ namespace Dedisclasik
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
 
-            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null)
+            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null || !mdp.Text.Equals(mdp2.Text))
             {
                 MessageBox.Show("Veuillez saisir les informations dans les champs spécifiés.");
             }
