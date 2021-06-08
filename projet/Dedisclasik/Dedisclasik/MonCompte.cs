@@ -64,7 +64,7 @@ namespace Dedisclasik
             }
             Outils.musique.SaveChanges();
         }
-
+        
         
 
         private void albumEmprunt_SelectedIndexChanged(object sender, EventArgs e)
