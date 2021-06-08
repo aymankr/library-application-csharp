@@ -20,5 +20,10 @@ namespace Dedisclasik
             }
             return dejaProlongé;
         }
+
+        public static bool ActiverPagination(int tailleListe)
+        {
+            return (tailleListe <= 20) ;
+        }
     }
 }
