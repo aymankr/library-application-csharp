@@ -33,6 +33,7 @@ namespace Dedisclasik
             this.Prolonger = new System.Windows.Forms.Button();
             this.dateRetourAttendue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ToutProlonger = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // albumEmprunt
@@ -72,11 +73,22 @@ namespace Dedisclasik
             this.label1.TabIndex = 3;
             this.label1.Text = "Date de retour attendue:";
             // 
+            // ToutProlonger
+            // 
+            this.ToutProlonger.Location = new System.Drawing.Point(23, 390);
+            this.ToutProlonger.Name = "ToutProlonger";
+            this.ToutProlonger.Size = new System.Drawing.Size(120, 27);
+            this.ToutProlonger.TabIndex = 4;
+            this.ToutProlonger.Text = "Tout prologoner";
+            this.ToutProlonger.UseVisualStyleBackColor = true;
+            this.ToutProlonger.Click += new System.EventHandler(this.ToutProlonger_Click);
+            // 
             // InterfaceTemp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ToutProlonger);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateRetourAttendue);
             this.Controls.Add(this.Prolonger);
@@ -94,5 +106,6 @@ namespace Dedisclasik
         private System.Windows.Forms.Button Prolonger;
         private System.Windows.Forms.Label dateRetourAttendue;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ToutProlonger;
     }
 }
