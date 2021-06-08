@@ -20,7 +20,7 @@ namespace Dedisclasik
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom"}, dataGridView1);
+            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
 
             // US4 : abonnés ayant prolongé leur emprunt 
             var id_album = from al in Outils.musique.ALBUMS
@@ -82,7 +82,7 @@ namespace Dedisclasik
             var abonnesExpires = Outils.musique.EMPRUNTER
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
                 .Select(a => a.ABONNÉS).ToList();
-            foreach(ABONNÉS a in abonnesExpires)
+            foreach (ABONNÉS a in abonnesExpires)
             {
                 string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
                 dataGridView1.Rows.Add(row);
@@ -135,7 +135,16 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
-           
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = Outils.musique.ABONNÉS.ToList();
+
+            // US 12 liste des abonnés
+            foreach (ABONNÉS a in abos)
+            {
+                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
         }
     }
 }
