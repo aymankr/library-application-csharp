@@ -15,14 +15,12 @@ namespace Dedisclasik
         public MonCompte() 
         {
             InitializeComponent();
-            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonne));
+            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.id_abonné));
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
             nomUtilisateur.Text = "nom";//Connexion.abonné.NOM_ABONNÉS;
             prenomUtilisateur.Text = "prénom";//Connexion.abonné.PRÉNOM_ABONNÉS;
             loginUtilisateur.Text = "login";//Connexion.abonné.LOGIN_ABONNÉS;
-
-            //initDataGridView();
         }
 
         public void afficherEmprunts(List<string> albums)
@@ -30,29 +28,12 @@ namespace Dedisclasik
             albumEmprunt.Items.Clear();
             if (albums.Count() <= 0)
             {
-                albumEmprunt.Items.Add("aucun emprunt en cours"); 
+                albumEmprunt.Items.Add("aucun emprunt en cours"); //modification du message d'erreur et du click
             }
             foreach (string alb in albums)
             {
                 albumEmprunt.Items.Add(alb);
             }
-            /*
-            //modification vers grid
-            if (Connexion.abonné.EMPRUNTER.ALBUMS != null)
-            {
-                foreach (ALBUMS al in Connexion.abonné.EMPRUNTER.ALBUMS)
-                {
-                    dataGridEmprunt[0].Value = al.TITRE_ALBUM;
-                    dataGridEmprunt[1].Value = al.GENRES;
-                    if () { dataGridEmprunt[2].Value = al.EDITEURS; } else { dataGridEmprunt[2].Value = "Non renseigné"; }
-                    dataGridEmprunt[3].Value = al.ANNÉE_ALBUM;
-                }
-            }
-            else
-            {
-                dataGridEmprunt[0].Value = "La liste est vide";//affichage du message de liste vide
-            }
-            */
         }
 
         private void voirAlbums_Click(object sender, EventArgs e)
@@ -83,7 +64,7 @@ namespace Dedisclasik
             }
             Outils.musique.SaveChanges();
         }
-        
+
         
 
         private void albumEmprunt_SelectedIndexChanged(object sender, EventArgs e)
@@ -172,12 +153,6 @@ namespace Dedisclasik
         {
             this.Close();
             //new Connexion().ShowDialog(); //à vérifier
-            MessageBox.Show("Vous avez été déconnecté");
-        }
-
-        public void initDataGridView()
-        {
-            Outils.chargerDataGrid(4 ,new string[] { "Titre", "Genre", "Editeur", "Année"},dataGridEmprunt);
         }
     }
 }
