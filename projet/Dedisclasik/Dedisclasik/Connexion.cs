@@ -32,6 +32,7 @@ namespace Dedisclasik
         {
             String login = loginConnexion.Text;
             String mdp = mdpConnexion.Text;
+            
             Administrateur administrateur = new Administrateur();
             administrateur.ShowDialog();
             /*if (connexionAdminValide())

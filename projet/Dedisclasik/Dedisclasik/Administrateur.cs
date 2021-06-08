@@ -33,7 +33,7 @@ namespace Dedisclasik
                     dataGridView1.Rows.Add(row);
                 }
             }
-            afficherMessageVide();
+            afficherMessageVide(empruntProlong.Text + " : emprunts qui ont été prolongés.");
         }
 
         private void empruntRetard_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace Dedisclasik
                 string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
                 dataGridView1.Rows.Add(row);
             }
-            afficherMessageVide();
+            afficherMessageVide(empruntRetard.Text + " : abonnés ayant des empruntés non rapportés depuis 10 jours.");
         }
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
@@ -64,7 +64,7 @@ namespace Dedisclasik
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
                 .Select(a => a.ALBUMS);
             foreach (ALBUMS a in emprunteurs) dataGridView1.Rows.Add(a.TITRE_ALBUM);
-            afficherMessageVide();
+            afficherMessageVide(empruntMeilleurs.Text + " : les 10 albums les plus empruntés dans l'année.");
         }
 
         private void purger_Click(object sender, EventArgs e)
@@ -84,7 +84,7 @@ namespace Dedisclasik
                 dataGridView1.Rows.Add(row);
             }
 
-            if (!afficherMessageVide())
+            if (!afficherMessageVide(purger.Text + " : purger les abonnés n'ayant pas emprunté depuis plus d'un an."))
             {
                 var confirmResult = MessageBox.Show("Êtes-vous sûr de vouloir tout supprimer ?", "Purger", MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
@@ -108,7 +108,7 @@ namespace Dedisclasik
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
                 .Select(a => a.ALBUMS).ToList();
             foreach (ALBUMS a in emprunteurs) dataGridView1.Rows.Add(a.TITRE_ALBUM);
-            afficherMessageVide();
+            afficherMessageVide(albumsNonEmprunts.Text);
         }
 
         private void chargerDataGrid(int nbColonnes)
@@ -139,8 +139,9 @@ namespace Dedisclasik
             }
         }
 
-        private bool afficherMessageVide()
+        private bool afficherMessageVide(string boutonSousTitre)
         {
+            sousTitre.Text = boutonSousTitre;
             bool estVide = false;
             if (dataGridView1.Rows.Count == 0)
             {
