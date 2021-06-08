@@ -135,16 +135,7 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-            var abos = Outils.musique.ABONNÉS.ToList();
-
-            // US 12 liste des abonnés
-            foreach (ABONNÉS a in abos)
-            {
-                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
-                dataGridView1.Rows.Add(row);
-            }
-            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
+           
         }
     }
 }
