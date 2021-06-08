@@ -20,7 +20,7 @@ namespace Dedisclasik
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
-            chargerDataGrid(3);
+            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom"}, dataGridView1);
 
             // US4 : abonnés ayant prolongé leur emprunt
             var id_album = from al in Outils.musique.ALBUMS
@@ -38,7 +38,7 @@ namespace Dedisclasik
 
         private void empruntRetard_Click(object sender, EventArgs e)
         {
-            chargerDataGrid(2);
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US5 : abonnés ayant emprunts non rendu depuis plus de 10j
@@ -55,7 +55,7 @@ namespace Dedisclasik
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
-            chargerDataGrid(1);
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US7 : les 10 plus empruntés de l'année
@@ -70,7 +70,7 @@ namespace Dedisclasik
         private void purger_Click(object sender, EventArgs e)
         {
             DateTime dateNow = DateTime.Now;
-            chargerDataGrid(2);
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
 
             // US6 remove abonnes qui n'ont pas empruntés depuis un an
             var empruntsExpires = Outils.musique.EMPRUNTER
@@ -98,7 +98,7 @@ namespace Dedisclasik
 
         private void albumsNonEmprunts_Click(object sender, EventArgs e)
         {
-            chargerDataGrid(1);
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             //  US8 : liste albums non empruntés depuis + d'un an 
@@ -109,34 +109,6 @@ namespace Dedisclasik
                 .Select(a => a.ALBUMS).ToList();
             foreach (ALBUMS a in emprunteurs) dataGridView1.Rows.Add(a.TITRE_ALBUM);
             afficherMessageVide(albumsNonEmprunts.Text);
-        }
-
-        private void chargerDataGrid(int nbColonnes)
-        {
-            dataGridView1.Rows.Clear();
-            dataGridView1.Columns.Clear();
-            dataGridView1.ColumnCount = nbColonnes;
-            if (nbColonnes == 1)
-            {
-                dataGridView1.Columns[0].Name = "Titre";
-                dataGridView1.Columns[0].Width = dataGridView1.Width;
-            }
-            else if (nbColonnes == 2)
-            {
-                dataGridView1.Columns[0].Name = "Nom";
-                dataGridView1.Columns[0].Width = dataGridView1.Width / 2;
-                dataGridView1.Columns[1].Name = "Prénom";
-                dataGridView1.Columns[1].Width = dataGridView1.Width / 2;
-            }
-            else
-            {
-                dataGridView1.Columns[0].Name = "Titre";
-                dataGridView1.Columns[0].Width = dataGridView1.Width / 2;
-                dataGridView1.Columns[1].Name = "Nom";
-                dataGridView1.Columns[1].Width = dataGridView1.Width / 5;
-                dataGridView1.Columns[2].Name = "Prénom";
-                dataGridView1.Columns[2].Width = dataGridView1.Width / 5;
-            }
         }
 
         private bool afficherMessageVide(string boutonSousTitre)

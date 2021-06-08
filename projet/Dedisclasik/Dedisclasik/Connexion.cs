@@ -25,7 +25,6 @@ namespace Dedisclasik
         {
             Inscription inscription = new Inscription();
             inscription.ShowDialog();
-            fermerLaFenetre();
         }
 
         private void connexion_Click(object sender, EventArgs e)
@@ -70,11 +69,6 @@ namespace Dedisclasik
             string mdpAdmin = "admin";
 
             return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
-        }
-
-        public void fermerLaFenetre()
-        {
-            this.Close();
         }
     }
 }
