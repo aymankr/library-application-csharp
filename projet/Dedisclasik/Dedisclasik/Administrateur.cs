@@ -16,6 +16,7 @@ namespace Dedisclasik
         {
             InitializeComponent();
         }
+        //feedback avec de messages box
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
