@@ -13,7 +13,7 @@ namespace Dedisclasik
     public partial class Connexion : Form
     {
 
-        public static int id_abonné { get; set; }
+        public static ABONNÉS id_abonné { get; set; }
 
         public Connexion()
         {
@@ -23,30 +23,33 @@ namespace Dedisclasik
 
         private void inscription_Click(object sender, EventArgs e)
         {
+            Hide();
             Inscription inscription = new Inscription();
             inscription.ShowDialog();
+            Show();
         }
 
         private void connexion_Click(object sender, EventArgs e)
         {
-            String login = loginConnexion.Text;
-            String mdp = mdpConnexion.Text;
-            
-            Administrateur administrateur = new Administrateur();
-            administrateur.ShowDialog();
-            /*if (connexionAdminValide())
+            string login = loginConnexion.Text;
+            string mdp = mdpConnexion.Text;
+
+            if (connexionAdminValide())
             {
+                Hide();
                 Administrateur administrateur = new Administrateur();
                 administrateur.ShowDialog();
+                Show();
             }
             else if (connexionValide(login, mdp))
             {
                 id_abonné = ABONNÉS.RechercheAbonne(login);
                 RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+                Hide();
                 emprunt.ShowDialog();
-                fermerLaFenetre();
+                Show();
             }
-            else MessageBox.Show("Connexion échouée, réessayez.");*/
+            else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
         private bool connexionValide(String login, String mdp)

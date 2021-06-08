@@ -38,6 +38,7 @@ namespace Dedisclasik
             this.label1 = new System.Windows.Forms.Label();
             this.deconnect = new System.Windows.Forms.Button();
             this.sousTitre = new System.Windows.Forms.Label();
+            this.listAbo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@ namespace Dedisclasik
             // purger
             // 
             this.purger.BackColor = System.Drawing.Color.LightCoral;
-            this.purger.Location = new System.Drawing.Point(738, 546);
+            this.purger.Location = new System.Drawing.Point(812, 546);
             this.purger.Name = "purger";
             this.purger.Size = new System.Drawing.Size(154, 49);
             this.purger.TabIndex = 1;
@@ -102,7 +103,7 @@ namespace Dedisclasik
             this.dataGridView1.Location = new System.Drawing.Point(12, 91);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(880, 449);
+            this.dataGridView1.Size = new System.Drawing.Size(954, 449);
             this.dataGridView1.TabIndex = 6;
             // 
             // label1
@@ -121,7 +122,7 @@ namespace Dedisclasik
             this.deconnect.BackColor = System.Drawing.SystemColors.Control;
             this.deconnect.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.deconnect.FlatAppearance.BorderSize = 0;
-            this.deconnect.Location = new System.Drawing.Point(783, 12);
+            this.deconnect.Location = new System.Drawing.Point(856, 12);
             this.deconnect.Name = "deconnect";
             this.deconnect.Size = new System.Drawing.Size(109, 34);
             this.deconnect.TabIndex = 9;
@@ -139,11 +140,22 @@ namespace Dedisclasik
             this.sousTitre.TabIndex = 10;
             this.sousTitre.Text = "Veuillez sélectionner une option";
             // 
+            // listAbo
+            // 
+            this.listAbo.Location = new System.Drawing.Point(652, 546);
+            this.listAbo.Name = "listAbo";
+            this.listAbo.Size = new System.Drawing.Size(154, 49);
+            this.listAbo.TabIndex = 11;
+            this.listAbo.Text = "LISTE ABONNÉS";
+            this.listAbo.UseVisualStyleBackColor = true;
+            this.listAbo.Click += new System.EventHandler(this.listAbo_Click);
+            // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 607);
+            this.ClientSize = new System.Drawing.Size(977, 607);
+            this.Controls.Add(this.listAbo);
             this.Controls.Add(this.sousTitre);
             this.Controls.Add(this.deconnect);
             this.Controls.Add(this.label1);
@@ -153,6 +165,7 @@ namespace Dedisclasik
             this.Controls.Add(this.empruntRetard);
             this.Controls.Add(this.purger);
             this.Controls.Add(this.empruntProlong);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Administrateur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Administrateur";
@@ -173,5 +186,6 @@ namespace Dedisclasik
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button deconnect;
         private System.Windows.Forms.Label sousTitre;
+        private System.Windows.Forms.Button listAbo;
     }
 }
