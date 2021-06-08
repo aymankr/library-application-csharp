@@ -32,7 +32,9 @@ namespace Dedisclasik
         {
             String login = loginConnexion.Text;
             String mdp = mdpConnexion.Text;
-            if (connexionAdminValide())
+            Administrateur administrateur = new Administrateur();
+            administrateur.ShowDialog();
+            /*if (connexionAdminValide())
             {
                 Administrateur administrateur = new Administrateur();
                 administrateur.ShowDialog();
@@ -44,7 +46,7 @@ namespace Dedisclasik
                 emprunt.ShowDialog();
                 fermerLaFenetre();
             }
-            else MessageBox.Show("Connexion échouée, réessayez.");
+            else MessageBox.Show("Connexion échouée, réessayez.");*/
         }
 
         private bool connexionValide(String login, String mdp)
