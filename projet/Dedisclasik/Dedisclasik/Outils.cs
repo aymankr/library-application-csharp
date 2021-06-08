@@ -42,6 +42,21 @@ namespace Dedisclasik
                 dg.Columns[i].Width = dg.Width / nbColonnes;
                 i++;
             }
+        public static bool dejaEmprunté(ALBUMS album)
+        {
+            foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
+            {
+                if (album.Equals(emprunt.ALBUMS))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ActiverPagination(int tailleListe)
+        {
+            return (tailleListe <= 20);
         }
 
         #region gestion elements
