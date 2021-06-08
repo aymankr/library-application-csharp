@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PagedList;
 
 namespace Dedisclasik
 {
@@ -15,27 +16,32 @@ namespace Dedisclasik
         public RechercheAlbumEtEmprunt()
         {
             InitializeComponent();
+            pagesAlbums.Rows.Clear();
+            pagesAlbums.Columns.Clear();
+            pagesAlbums.ColumnCount = 6;
+            pagesAlbums.Columns[0].Name = "Titre";
+            pagesAlbums.Columns[0].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[1].Name = "Artiste(s)";
+            pagesAlbums.Columns[1].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[2].Name = "Date";
+            pagesAlbums.Columns[2].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[3].Name = "Pays";
+            pagesAlbums.Columns[3].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[4].Name = "Genre";
+            pagesAlbums.Columns[4].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[5].Name = "Déjà emprunté";
+            pagesAlbums.Columns[5].Width = pagesAlbums.Width;
         }
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
             album.Items.Clear();
-            List<string> emprunter = new List<string>();
-            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            pagesAlbums.Rows.Clear();
+            pagesAlbums.Columns.Clear();
+            foreach (ALBUMS al in Outils.musique.ALBUMS)
             {
-                emprunter.Add(emp.ALBUMS.TITRE_ALBUM);
-            }
-            List<String> titres = ABONNÉS.RechercheTitre(recherche.Text);
-            foreach (String t in titres)
-            {
-                if (emprunter.Contains(t))
-                {
-                    album.Items.Add(t.Trim() + " -> Déjà emprunté");
-                }
-                else
-                {
-                    album.Items.Add(t);
-                }
+                album.Items.Add(al);
+                // pagesAlbums.Rows.Add(al.ToString());
             }
         }
 
