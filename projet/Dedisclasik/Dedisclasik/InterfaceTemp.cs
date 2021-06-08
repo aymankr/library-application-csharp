@@ -12,7 +12,7 @@ namespace Dedisclasik
 {
     public partial class InterfaceTemp : Form
     {
-        public InterfaceTemp()
+        public InterfaceTemp() 
         {
             InitializeComponent();
             afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.id_abonné));
@@ -24,7 +24,7 @@ namespace Dedisclasik
             albumEmprunt.Items.Clear();
             if (albums.Count() <= 0)
             {
-                albumEmprunt.Items.Add("erreur");
+                albumEmprunt.Items.Add("aucun emprunt en cours"); //modification du message d'erreur et du click
             }
             foreach (string alb in albums)
             {
@@ -39,7 +39,7 @@ namespace Dedisclasik
 
         private void Prolonger_Click(object sender, EventArgs e)
         {
-            if (albumEmprunt.SelectedItem != null)
+            if (albumEmprunt.SelectedItem != null && !albumEmprunt.SelectedItem.ToString().Contains("aucun emprunt en cours"))
             {
                 string titre = albumEmprunt.SelectedItem.ToString();
                 var id_album = from al in Outils.musique.ALBUMS
@@ -73,18 +73,21 @@ namespace Dedisclasik
             var id_album = from al in Outils.musique.ALBUMS
                            where al.TITRE_ALBUM == titre
                            select al.CODE_ALBUM;
-            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            if (!albumEmprunt.SelectedItem.ToString().Contains("aucun emprunt en cours"))
             {
-                if (emp.CODE_ALBUM == id_album.First())
+                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
                 {
-                    dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
-                    if (Outils.dejaProlongé(emp))
+                    if (emp.CODE_ALBUM == id_album.First())
                     {
-                        Prolonger.Enabled = false;
-                    }
-                    else
-                    {
-                        Prolonger.Enabled = true;
+                        dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
+                        if (Outils.dejaProlongé(emp))
+                        {
+                            Prolonger.Enabled = false;
+                        }
+                        else
+                        {
+                            Prolonger.Enabled = true;
+                        }
                     }
                 }
             }
