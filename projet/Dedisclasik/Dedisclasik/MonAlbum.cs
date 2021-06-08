@@ -11,7 +11,7 @@ namespace Dedisclasik
         override
         public string ToString()
         {
-            string nonPrécisé = "Non précisée";
+            /*string nonPrécisé = "Non précisée";
             string date = nonPrécisé;
             if (this.ANNÉE_ALBUM != null)
             {
@@ -33,6 +33,13 @@ namespace Dedisclasik
                 genre = this.GENRES.LIBELLÉ_GENRE.Trim();
             }
             string infos = this.TITRE_ALBUM.Trim() + "   " + editeur + "   " + date + "   " + pays + "   " + genre;
+            if (Outils.dejaEmprunté(this))
+            {
+                infos += " -> Déjà emprunté";
+            }
+            return infos;*/
+
+            string infos = this.TITRE_ALBUM.Trim();
             if (Outils.dejaEmprunté(this))
             {
                 infos += " -> Déjà emprunté";
