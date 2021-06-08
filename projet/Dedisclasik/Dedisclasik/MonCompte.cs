@@ -10,13 +10,17 @@ using System.Windows.Forms;
 
 namespace Dedisclasik
 {
-    public partial class InterfaceTemp : Form
+    public partial class MonCompte : Form
     {
-        public InterfaceTemp() 
+        public MonCompte() 
         {
             InitializeComponent();
             afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.id_abonné));
             Prolonger.Enabled = false;
+            vérifcationToutProlonger();
+            nomUtilisateur.Text = "nom";//Connexion.abonné.NOM_ABONNÉS;
+            prenomUtilisateur.Text = "prénom";//Connexion.abonné.PRÉNOM_ABONNÉS;
+            loginUtilisateur.Text = "login";//Connexion.abonné.LOGIN_ABONNÉS;
         }
 
         public void afficherEmprunts(List<string> albums)
@@ -52,12 +56,8 @@ namespace Dedisclasik
                         if (!Outils.dejaProlongé(emp))
                         {
                             emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
-                            MessageBox.Show("Prolongement effectué");
-                        }
-                        else
-                        {
                             Prolonger.Enabled = false;
-                            MessageBox.Show("Album déjà prolongé");
+                            MessageBox.Show("Prolongement effectué pour : \n" + titre);
                         }
                     }
                 }
@@ -91,6 +91,69 @@ namespace Dedisclasik
                     }
                 }
             }
+        }
+
+        private void ToutProlonger_Click(object sender, EventArgs e)
+        {
+            List<string> prolongés = new List<string>();
+            foreach (object objet in albumEmprunt.Items)
+            {
+                string titre = objet.ToString();
+                var id_album = from al in Outils.musique.ALBUMS
+                               where al.TITRE_ALBUM == titre
+                               select al.CODE_ALBUM;
+                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                {
+                    if (emp.CODE_ALBUM == id_album.First())
+                    {
+                        if (!Outils.dejaProlongé(emp))
+                        {
+                            prolongés.Add(titre);
+                            emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+                        }
+                    }
+                }
+            }
+            Outils.musique.SaveChanges();
+            string resultat = String.Join("\n", prolongés.ToArray());
+            MessageBox.Show("Prolongement effectué pour : \n" + resultat);
+            ToutProlonger.Enabled = false;
+            Prolonger.Enabled = false;
+        }
+
+        private void vérifcationToutProlonger()
+        {
+            ToutProlonger.Enabled = false;
+            foreach (object objet in albumEmprunt.Items)
+            {
+                string titre = objet.ToString();
+                var id_album = from al in Outils.musique.ALBUMS
+                               where al.TITRE_ALBUM == titre
+                               select al.CODE_ALBUM;
+                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                {
+                    if (emp.CODE_ALBUM == id_album.First())
+                    {
+                        if (!Outils.dejaProlongé(emp))
+                        {
+                            ToutProlonger.Enabled = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void retourButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void deconnexionButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            //new Connexion().ShowDialog(); //à vérifier
+            MessageBox.Show("Vous avez été déconnecté");
         }
     }
 }

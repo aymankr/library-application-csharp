@@ -70,7 +70,7 @@ namespace Dedisclasik
 
         private void MonCompte_Click(object sender, EventArgs e)
         {
-            InterfaceTemp interfaceT = new InterfaceTemp();
+            MonCompte interfaceT = new MonCompte();
             interfaceT.ShowDialog();
         }
     }
