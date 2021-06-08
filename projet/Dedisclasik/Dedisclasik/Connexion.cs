@@ -13,7 +13,7 @@ namespace Dedisclasik
     public partial class Connexion : Form
     {
 
-        public static ABONNÉS id_abonné { get; set; }
+        public static ABONNÉS abonne { get; set; }
 
         public Connexion()
         {
@@ -43,7 +43,7 @@ namespace Dedisclasik
             }
             else if (connexionValide(login, mdp))
             {
-                id_abonné = ABONNÉS.RechercheAbonne(login);
+                abonne = ABONNÉS.RechercheAbonne(login);
                 RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
                 Hide();
                 emprunt.ShowDialog();
@@ -52,7 +52,7 @@ namespace Dedisclasik
             else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
-        private bool connexionValide(String login, String mdp)
+        private bool connexionValide(string login, string mdp)
         {
             bool valide = false;
             var abonnes = (from a in Outils.musique.ABONNÉS
