@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PagedList;
 
 namespace Dedisclasik
 {
@@ -15,27 +16,32 @@ namespace Dedisclasik
         public RechercheAlbumEtEmprunt()
         {
             InitializeComponent();
+            pagesAlbums.Rows.Clear();
+            pagesAlbums.Columns.Clear();
+            pagesAlbums.ColumnCount = 6;
+            pagesAlbums.Columns[0].Name = "Titre";
+            pagesAlbums.Columns[0].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[1].Name = "Artiste(s)";
+            pagesAlbums.Columns[1].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[2].Name = "Date";
+            pagesAlbums.Columns[2].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[3].Name = "Pays";
+            pagesAlbums.Columns[3].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[4].Name = "Genre";
+            pagesAlbums.Columns[4].Width = pagesAlbums.Width;
+            pagesAlbums.Columns[5].Name = "Déjà emprunté";
+            pagesAlbums.Columns[5].Width = pagesAlbums.Width;
         }
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
             album.Items.Clear();
-            List<string> emprunter = new List<string>();
-            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            pagesAlbums.Rows.Clear();
+            pagesAlbums.Columns.Clear();
+            foreach (ALBUMS al in Outils.musique.ALBUMS)
             {
-                emprunter.Add(emp.ALBUMS.TITRE_ALBUM);
-            }
-            List<String> titres = ABONNÉS.RechercheTitre(recherche.Text);
-            foreach (String t in titres)
-            {
-                if (emprunter.Contains(t))
-                {
-                    album.Items.Add(t.Trim() + " -> Déjà emprunté");
-                }
-                else
-                {
-                    album.Items.Add(t);
-                }
+                album.Items.Add(al);
+                // pagesAlbums.Rows.Add(al.ToString());
             }
         }
 
@@ -47,13 +53,13 @@ namespace Dedisclasik
 
             if (album.SelectedItem != null && !album.SelectedItem.ToString().Contains("Déjà emprunté"))
             {
-                string titre = album.SelectedItem.ToString().Trim();
+                ALBUMS al = (ALBUMS)album.SelectedItem;
                 emprunt.CODE_ABONNÉ = Connexion.id_abonné;
-                emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
+                emprunt.CODE_ALBUM = al.CODE_ALBUM;
                 emprunt.DATE_EMPRUNT = date;
-                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI); 
+                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(al.GENRES.DÉLAI);
                 emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.id_abonné);
-                emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
+                emprunt.ALBUMS = m.ALBUMS.Find(al.CODE_ALBUM);
 
                 m.ABONNÉS.Find(Connexion.id_abonné).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);

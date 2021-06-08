@@ -34,14 +34,16 @@ namespace Dedisclasik
             this.recherche = new System.Windows.Forms.TextBox();
             this.emprunter = new System.Windows.Forms.Button();
             this.MonCompte = new System.Windows.Forms.Button();
+            this.pagesAlbums = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).BeginInit();
             this.SuspendLayout();
             // 
             // album
             // 
             this.album.FormattingEnabled = true;
-            this.album.Location = new System.Drawing.Point(445, 35);
+            this.album.Location = new System.Drawing.Point(12, 125);
             this.album.Name = "album";
-            this.album.Size = new System.Drawing.Size(328, 394);
+            this.album.Size = new System.Drawing.Size(692, 238);
             this.album.TabIndex = 0;
             // 
             // label1
@@ -81,11 +83,20 @@ namespace Dedisclasik
             this.MonCompte.UseVisualStyleBackColor = true;
             this.MonCompte.Click += new System.EventHandler(this.MonCompte_Click);
             // 
+            // pagesAlbums
+            // 
+            this.pagesAlbums.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.pagesAlbums.Location = new System.Drawing.Point(710, 12);
+            this.pagesAlbums.Name = "pagesAlbums";
+            this.pagesAlbums.Size = new System.Drawing.Size(78, 382);
+            this.pagesAlbums.TabIndex = 5;
+            // 
             // RechercheAlbumEtEmprunt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pagesAlbums);
             this.Controls.Add(this.MonCompte);
             this.Controls.Add(this.emprunter);
             this.Controls.Add(this.recherche);
@@ -93,6 +104,7 @@ namespace Dedisclasik
             this.Controls.Add(this.album);
             this.Name = "RechercheAlbumEtEmprunt";
             this.Text = "RechercheAlbumEtEmprunt";
+            ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,5 +117,6 @@ namespace Dedisclasik
         private System.Windows.Forms.TextBox recherche;
         private System.Windows.Forms.Button emprunter;
         private System.Windows.Forms.Button MonCompte;
+        private System.Windows.Forms.DataGridView pagesAlbums;
     }
 }
