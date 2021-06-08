@@ -153,6 +153,7 @@ namespace Dedisclasik
         {
             this.Close();
             //new Connexion().ShowDialog(); //à vérifier
+            MessageBox.Show("Vous avez été déconnecté");
         }
     }
 }
