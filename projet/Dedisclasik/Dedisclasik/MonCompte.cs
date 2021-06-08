@@ -21,6 +21,8 @@ namespace Dedisclasik
             nomUtilisateur.Text = "nom";//Connexion.abonné.NOM_ABONNÉS;
             prenomUtilisateur.Text = "prénom";//Connexion.abonné.PRÉNOM_ABONNÉS;
             loginUtilisateur.Text = "login";//Connexion.abonné.LOGIN_ABONNÉS;
+
+            //initDataGridView();
         }
 
         public void afficherEmprunts(List<string> albums)
@@ -34,7 +36,7 @@ namespace Dedisclasik
             {
                 albumEmprunt.Items.Add(alb);
             }
-
+            /*
             //modification vers grid
             if (Connexion.abonné.EMPRUNTER.ALBUMS != null)
             {
@@ -48,9 +50,9 @@ namespace Dedisclasik
             }
             else
             {
-                //affichage du messga e de liste vide
+                dataGridEmprunt[0].Value = "La liste est vide";//affichage du message de liste vide
             }
-
+            */
         }
 
         private void voirAlbums_Click(object sender, EventArgs e)
