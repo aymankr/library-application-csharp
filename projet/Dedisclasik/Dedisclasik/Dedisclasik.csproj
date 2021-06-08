@@ -97,11 +97,11 @@
     <Compile Include="Inscription.Designer.cs">
       <DependentUpon>Inscription.cs</DependentUpon>
     </Compile>
-    <Compile Include="InterfaceTemp.cs">
+    <Compile Include="MonCompte.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InterfaceTemp.Designer.cs">
-      <DependentUpon>InterfaceTemp.cs</DependentUpon>
+    <Compile Include="MonCompte.Designer.cs">
+      <DependentUpon>MonCompte.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuAbonné.cs">
       <SubType>Form</SubType>
@@ -148,8 +148,8 @@
     <EmbeddedResource Include="Inscription.resx">
       <DependentUpon>Inscription.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InterfaceTemp.resx">
-      <DependentUpon>InterfaceTemp.cs</DependentUpon>
+    <EmbeddedResource Include="MonCompte.resx">
+      <DependentUpon>MonCompte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuAbonné.resx">
       <DependentUpon>MenuAbonné.cs</DependentUpon>
