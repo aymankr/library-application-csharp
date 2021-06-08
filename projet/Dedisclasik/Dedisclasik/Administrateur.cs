@@ -22,7 +22,7 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom"}, dataGridView1);
 
-            // US4 : abonnés ayant prolongé leur emprunt
+            // US4 : abonnés ayant prolongé leur emprunt 
             var id_album = from al in Outils.musique.ALBUMS
                            select al.CODE_ALBUM;
             foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
