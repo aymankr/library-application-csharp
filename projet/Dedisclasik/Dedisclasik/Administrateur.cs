@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,8 @@ namespace Dedisclasik
         {
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
+            prec.Enabled = false;
+            suiv.Enabled = false;
         }
         //feedback avec de messages box
 
@@ -232,6 +235,51 @@ namespace Dedisclasik
             || (contientPrenom && r.Cells["Prénom"]
             .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower())))
                 .ToList().ForEach(row => row.Visible = true);
+        }
+
+
+
+
+        int pgNb = 1;
+        int pgSz = 15;
+        
+        private void activePaging()
+        {
+            prec.Enabled = true;
+            suiv.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            activePaging();
+            if (pgNb <= 1)
+            {
+                prec.Enabled = false;
+            }
+
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            var abos = Outils.musique.ALBUMS.ToList().Take(pgSz*pgNb).Skip(pgSz * (pgNb-1));
+            int i = 0;
+            foreach (ALBUMS a in abos)
+            {
+
+                string[] row = new string[] { a.TITRE_ALBUM };
+                dataGridView1.Rows.Add(row);
+
+
+            }
+            afficherMessageVide(listAbo.Text + " : test paging");
+        }
+        private void prec_Click(object sender, EventArgs e)
+        {
+            pgNb--;
+            button1_Click(sender, e);
+        }
+
+        private void suiv_Click(object sender, EventArgs e)
+        {
+            pgNb++;
+            button1_Click(sender, e);
         }
     }
 }

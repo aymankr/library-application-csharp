@@ -26,13 +26,15 @@ namespace Dedisclasik
             dg.Rows.Clear();
             dg.Columns.Clear();
             dg.ColumnCount = nbColonnes;
-
+ 
             int i = 0;
             foreach(string s in attributs)
             {
+                
                 dg.Columns[i].Name = s;
                 dg.Columns[i].Width = dg.Width / nbColonnes;
                 i++;
+                
             }
         }
 
