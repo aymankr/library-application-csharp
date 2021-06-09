@@ -8,6 +8,8 @@ namespace Dedisclasik
 {
     public static class Outils
     {
+        public static int pgNb = 1;
+        public static int pgSz = 15;
         public static MusiquePT2_NEntities musique { get; set; }
 
         public static bool dejaProlongé(EMPRUNTER emprunt)

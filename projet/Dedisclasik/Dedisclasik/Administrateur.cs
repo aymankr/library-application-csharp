@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Entity;
 
 namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
+
         public Administrateur()
         {
             InitializeComponent();
@@ -88,7 +90,10 @@ namespace Dedisclasik
         {
             List<ALBUMS> albs = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
-
+            var cmd = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                .Select(a => a.ALBUMS);
+            activePaging(cmd.Count());
             //  US8 : liste albums non empruntés depuis + d'un an 
             var albums = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null)
@@ -179,7 +184,7 @@ namespace Dedisclasik
         {
             labelRecherche.Text = "Recherche par nom ou prénom :";
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-            var abos = Outils.musique.ABONNÉS.ToList();
+            var abos = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
 
             // US 12 liste des abonnés
             foreach (ABONNÉS a in abos)
@@ -237,49 +242,69 @@ namespace Dedisclasik
                 .ToList().ForEach(row => row.Visible = true);
         }
 
-
-
-
-        int pgNb = 1;
-        int pgSz = 15;
-        
-        private void activePaging()
-        {
-            prec.Enabled = true;
-            suiv.Enabled = true;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            activePaging();
-            if (pgNb <= 1)
-            {
-                prec.Enabled = false;
-            }
+
+            var cmd = Outils.musique.ALBUMS;
+            activePaging(cmd.Count());
 
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-            var abos = Outils.musique.ALBUMS.ToList().Take(pgSz*pgNb).Skip(pgSz * (pgNb-1));
-            int i = 0;
-            foreach (ALBUMS a in abos)
+            var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (ALBUMS a in affiche)
             {
-
                 string[] row = new string[] { a.TITRE_ALBUM };
                 dataGridView1.Rows.Add(row);
-
-
             }
             afficherMessageVide(listAbo.Text + " : test paging");
         }
+        #endregion
+
+        #region Autres Bouttons
+        private void deconnect_Click(object sender, EventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) Close();
+        }
+
         private void prec_Click(object sender, EventArgs e)
         {
-            pgNb--;
+            Outils.pgNb--;
             button1_Click(sender, e);
         }
 
         private void suiv_Click(object sender, EventArgs e)
         {
-            pgNb++;
+            Outils.pgNb++;
             button1_Click(sender, e);
         }
+        #endregion
+
+        #region fonctions
+        private bool afficherMessageVide(string boutonSousTitre)
+        {
+            sousTitre.Text = boutonSousTitre;
+            bool estVide = false;
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Liste vide.");
+                estVide = true;
+            }
+            return estVide;
+        }
+        private void activePaging(int nbMax)
+        {
+            prec.Enabled = true;
+            suiv.Enabled = true;
+            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + nbMax;
+            if (Outils.pgNb <= 1)
+            {
+                prec.Enabled = false;
+            }
+            if (Outils.pgNb >= (int)(nbMax / Outils.pgSz) + 1)
+            {
+                suiv.Enabled = false;
+            }
+        }
+        #endregion
     }
 }
