@@ -15,10 +15,17 @@ namespace Dedisclasik
     public partial class Administrateur : Form
     {
         private String fonction = "";
+        private List<string> actions = new List<string>();
+        
+        int cptActions = 0;
 
         public Administrateur()
         {
+            
             InitializeComponent();
+            actions.Clear();
+            actions.Add("vide");
+
             prec.Enabled = false;
             suiv.Enabled = false;
         }
@@ -28,6 +35,7 @@ namespace Dedisclasik
         private void empruntProlong_Click(object sender, EventArgs e)
         {
             fonction = "prolong";
+            comparer();
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
             var cmd = Outils.musique.EMPRUNTER;
             int nbT = 0;
@@ -55,14 +63,16 @@ namespace Dedisclasik
         private void empruntRetard_Click(object sender, EventArgs e)
         {
             fonction = "retard";
+            comparer();
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US5 : abonnés ayant emprunts non rendu depuis plus de 10j
-            var emprunteurs = Outils.musique.EMPRUNTER
+            var cmd = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null).ToList()
                 .Where(a => (int)(dateNow - a.DATE_RETOUR_ATTENDUE).TotalDays >= 10).Select(a => a.ABONNÉS);
-
+            activePaging(cmd.Count());
+            var emprunteurs = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (ABONNÉS a in emprunteurs)
             {
                 string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
@@ -74,6 +84,7 @@ namespace Dedisclasik
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
             fonction = "top";
+            comparer();
             Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre d'emprunts" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
@@ -123,6 +134,7 @@ namespace Dedisclasik
         private void albumsNonEmprunts_Click(object sender, EventArgs e)
         {
             fonction = "fantome";
+            comparer();
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
             var cmd = Outils.musique.EMPRUNTER
@@ -140,6 +152,7 @@ namespace Dedisclasik
         private void listAbo_Click(object sender, EventArgs e)
         {
             fonction = "abo";
+            comparer();
             var cmd = Outils.musique.ABONNÉS;
             activePaging(cmd.Count());
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
@@ -157,6 +170,7 @@ namespace Dedisclasik
         private void button1_Click(object sender, EventArgs e)
         {
             fonction = "test";
+            comparer();
             var cmd = Outils.musique.EDITEURS;
             activePaging(cmd.Count());
 
@@ -184,27 +198,37 @@ namespace Dedisclasik
             switchNextPrev(sender, e);
         }
 
+        
         private void switchNextPrev(object sender, EventArgs e)
         {
+            
+
             switch (fonction)
             {
                 case "prolong":
+                    
                     empruntProlong_Click(sender, e);
+                    
                     break;
                 case "retard":
                     empruntRetard_Click(sender, e);
+                    
                     break;
                 case "top":
                     empruntMeilleurs_Click(sender, e);
+                    
                     break;
                 case "fantome":
                     albumsNonEmprunts_Click(sender, e);
+                    
                     break;
                 case "abo":
                     listAbo_Click(sender, e);
+                    
                     break;
                 case "test":
                     button1_Click(sender, e);
+                    
                     break;
 
             }
@@ -217,6 +241,17 @@ namespace Dedisclasik
         #endregion
 
         #region fonctions
+        private void comparer()
+        {
+            actions.Add(fonction);
+            cptActions++;
+            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
+            {
+                Outils.pgNb = 1;
+                
+
+            }
+        }
         private bool afficherMessageVide(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -227,12 +262,12 @@ namespace Dedisclasik
                 estVide = true;
             }
             return estVide;
-        }
+        }   
         private void activePaging(int nbMax)
         {
             prec.Enabled = true;
             suiv.Enabled = true;
-            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + nbMax;
+            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + (nbMax / Outils.pgSz+1).ToString();
             if (Outils.pgNb <= 1)
             {
                 prec.Enabled = false;
