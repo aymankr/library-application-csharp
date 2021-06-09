@@ -17,7 +17,7 @@ namespace Dedisclasik
         {
             InitializeComponent();
             Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
-        } 
+        }
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
@@ -31,6 +31,7 @@ namespace Dedisclasik
                 pagesAlbums.Rows[i].Tag = (ALBUMS)al;
                 i++;
             }
+
             /*album.Items.Clear();
             List<string> emprunter = new List<string>();
             foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
