@@ -22,7 +22,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntProlong()
         {
-            List<EMPRUNTER> listEmprunts = new List<EMPRUNTER>();
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
 
             var id_album = (from al in Outils.musique.ALBUMS
                             select al.CODE_ALBUM).ToList();
@@ -38,7 +38,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntRetard()
         {
-            List<EMPRUNTER> abos = new List<EMPRUNTER>();
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             var emprunteurs = Outils.musique.EMPRUNTER
@@ -53,7 +53,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listMeilleurEmprunt()
         {
-            List<ALBUMS> albums = new List<ALBUMS>();
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
@@ -70,6 +70,11 @@ namespace Dedisclasik
         {
             List<ABONNÉS> abos = new List<ABONNÉS>();
             DateTime dateNow = DateTime.Now;
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
+
+            // US6 remove abonnes qui n'ont pas empruntés depuis un an
+            var empruntsExpires = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
             var abonnesExpires = Outils.musique.EMPRUNTER
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
                 .Select(a => a.ABONNÉS).ToList();
@@ -83,7 +88,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listAlbumNonEmprunt()
         {
-            List<ALBUMS> albs = new List<ALBUMS>();
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             //  US8 : liste albums non empruntés depuis + d'un an 
@@ -119,63 +124,7 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-
-            // US4 : abonnés ayant prolongé leur emprunt
-            var id_album = from al in Outils.musique.ALBUMS
-                           select al.CODE_ALBUM;
-            foreach (EMPRUNTER emp in listEmpruntProlong())
-            {
-                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription("Emprunts qui ont été prolongés.");
-        }
-
-        private void empruntsEnRetardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-
-            foreach (EMPRUNTER emp in listEmpruntRetard())
-            {
-                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription("Abonnés ayant des empruntés non rapportés depuis 10 jours.");
-        }
-
-        private void top10MeilleursEmpruntsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
-
-            // US7 : les 10 plus empruntés de l'année
-            foreach (ALBUMS a in listMeilleurEmprunt())
-            {
-                dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
-            }
-            afficherDescription("Les 10 albums les plus empruntés dans l'année.");
-        }
-
-        private void albumsNonEmpruntésToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-
-            //  US8 : liste albums non empruntés depuis + d'un an 
-            foreach (ALBUMS a in listAlbumNonEmprunt()) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
-            afficherDescription("Albums non empruntés depuis plus d'un an.");
-        }
-
-        private void consulterLesAbonnésToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            labelRecherche.Text = "Recherche par nom ou prénom :";
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             var abos = Outils.musique.ABONNÉS.ToList();
 
             // US 12 liste des abonnés
