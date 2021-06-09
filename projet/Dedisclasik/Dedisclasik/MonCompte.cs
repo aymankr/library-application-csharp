@@ -35,14 +35,15 @@ namespace Dedisclasik
             string genre;
 
             DataGridViewImageColumn img = new DataGridViewImageColumn();
-            dataGridEmprunt.Columns.Add(img);
-            img.Image = null;
             img.HeaderText = "Pochette";
-            img.Name = null;
+            img.Width = dataGridEmprunt.Width / 6;
+            int numColonne = 4;
+            dataGridEmprunt.Columns.Insert(numColonne, img);
 
             dataGridEmprunt.Rows.Clear();
             if (Connexion.abonné.EMPRUNTER != null)
             {
+                int i = 0;
                 foreach (ALBUMS al in albums)
                 {
                     dataGridEmprunt.RowTemplate.Height = 100;
@@ -52,10 +53,9 @@ namespace Dedisclasik
                     if (al.ANNÉE_ALBUM != null) { annee = al.ANNÉE_ALBUM.ToString(); } else { annee = "Non renseigné"; }
                     string[] row = { al.TITRE_ALBUM, genre, editeur, annee };
 
-                    img.Image = ImagePochette(al.POCHETTE);
-                    img.Name = al.TITRE_ALBUM;
-
                     dataGridEmprunt.Rows.Add(row);
+                    dataGridEmprunt.Rows[i].Cells[numColonne].Value = ImagePochette(al.POCHETTE);
+                    i++;
                 }
             }
             else
