@@ -15,16 +15,16 @@ namespace Dedisclasik
     public partial class Administrateur : Form
     {
         private String fonction = "";
+        private List<string> actions = new List<string>();
+        
+        int cptActions = 0;
 
         public Administrateur()
         {
             
             InitializeComponent();
-            Outils.musique = new MusiquePT2_NEntities();
             actions.Clear();
             actions.Add("vide");
-            Outils.actions.Clear();
-            Outils.actions.Add("vide");
 
             prec.Enabled = false;
             suiv.Enabled = false;
