@@ -14,6 +14,7 @@ namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
+        private String fonction = "";
 
         public Administrateur()
         {
@@ -244,15 +245,15 @@ namespace Dedisclasik
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            var cmd = Outils.musique.ALBUMS;
+            fonction = "test";
+            var cmd = Outils.musique.EDITEURS;
             activePaging(cmd.Count());
 
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
-            foreach (ALBUMS a in affiche)
+            foreach (EDITEURS a in affiche)
             {
-                string[] row = new string[] { a.TITRE_ALBUM };
+                string[] row = new string[] { a.CODE_EDITEUR.ToString() };
                 dataGridView1.Rows.Add(row);
             }
             afficherMessageVide(listAbo.Text + " : test paging");
@@ -269,13 +270,38 @@ namespace Dedisclasik
         private void prec_Click(object sender, EventArgs e)
         {
             Outils.pgNb--;
-            button1_Click(sender, e);
+            switchNextPrev(sender, e);
         }
 
+        private void switchNextPrev(object sender, EventArgs e)
+        {
+            switch (fonction)
+            {
+                case "prolong":
+                    empruntProlong_Click(sender, e);
+                    break;
+                case "retard":
+                    empruntRetard_Click(sender, e);
+                    break;
+                case "top":
+                    empruntMeilleurs_Click(sender, e);
+                    break;
+                case "fantome":
+                    albumsNonEmprunts_Click(sender, e);
+                    break;
+                case "abo":
+                    listAbo_Click(sender, e);
+                    break;
+                case "test":
+                    button1_Click(sender, e);
+                    break;
+
+            }
+        }
         private void suiv_Click(object sender, EventArgs e)
         {
             Outils.pgNb++;
-            button1_Click(sender, e);
+            switchNextPrev(sender, e);
         }
         #endregion
 
