@@ -29,7 +29,6 @@ namespace Dedisclasik
         /// </summary>
         private void InitializeComponent()
         {
-            this.album = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.recherche = new System.Windows.Forms.TextBox();
             this.emprunter = new System.Windows.Forms.Button();
@@ -37,14 +36,6 @@ namespace Dedisclasik
             this.pagesAlbums = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).BeginInit();
             this.SuspendLayout();
-            // 
-            // album
-            // 
-            this.album.FormattingEnabled = true;
-            this.album.Location = new System.Drawing.Point(12, 125);
-            this.album.Name = "album";
-            this.album.Size = new System.Drawing.Size(156, 238);
-            this.album.TabIndex = 0;
             // 
             // label1
             // 
@@ -86,12 +77,12 @@ namespace Dedisclasik
             // pagesAlbums
             // 
             this.pagesAlbums.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pagesAlbums.Location = new System.Drawing.Point(174, 12);
+            this.pagesAlbums.Location = new System.Drawing.Point(12, 125);
             this.pagesAlbums.MultiSelect = false;
             this.pagesAlbums.Name = "pagesAlbums";
             this.pagesAlbums.ReadOnly = true;
             this.pagesAlbums.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pagesAlbums.Size = new System.Drawing.Size(614, 413);
+            this.pagesAlbums.Size = new System.Drawing.Size(776, 253);
             this.pagesAlbums.TabIndex = 5;
             // 
             // RechercheAlbumEtEmprunt
@@ -104,7 +95,6 @@ namespace Dedisclasik
             this.Controls.Add(this.emprunter);
             this.Controls.Add(this.recherche);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.album);
             this.Name = "RechercheAlbumEtEmprunt";
             this.Text = "RechercheAlbumEtEmprunt";
             ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).EndInit();
@@ -114,8 +104,6 @@ namespace Dedisclasik
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox album;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox recherche;
         private System.Windows.Forms.Button emprunter;

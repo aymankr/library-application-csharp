@@ -21,7 +21,6 @@ namespace Dedisclasik
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
-            album.Items.Clear();
             pagesAlbums.Rows.Clear();
             int i = 0;
             foreach (ALBUMS al in ABONNÉS.RechercheTitre(recherche.Text))
