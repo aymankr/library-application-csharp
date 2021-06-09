@@ -39,7 +39,7 @@ namespace Dedisclasik
             this.deconnect = new System.Windows.Forms.Button();
             this.sousTitre = new System.Windows.Forms.Label();
             this.listAbo = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.pg = new System.Windows.Forms.Label();
             this.prec = new System.Windows.Forms.Button();
             this.suiv = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -154,15 +154,15 @@ namespace Dedisclasik
             this.listAbo.UseVisualStyleBackColor = true;
             this.listAbo.Click += new System.EventHandler(this.listAbo_Click);
             // 
-            // label2
+            // pg
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(842, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Page ";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.pg.AutoSize = true;
+            this.pg.Location = new System.Drawing.Point(809, 64);
+            this.pg.Name = "pg";
+            this.pg.Size = new System.Drawing.Size(35, 13);
+            this.pg.TabIndex = 13;
+            this.pg.Text = "Page ";
+            this.pg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // prec
             // 
@@ -202,7 +202,7 @@ namespace Dedisclasik
             this.Controls.Add(this.button1);
             this.Controls.Add(this.suiv);
             this.Controls.Add(this.prec);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.pg);
             this.Controls.Add(this.listAbo);
             this.Controls.Add(this.sousTitre);
             this.Controls.Add(this.deconnect);
@@ -235,7 +235,7 @@ namespace Dedisclasik
         private System.Windows.Forms.Button deconnect;
         private System.Windows.Forms.Label sousTitre;
         private System.Windows.Forms.Button listAbo;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label pg;
         private System.Windows.Forms.Button prec;
         private System.Windows.Forms.Button suiv;
         private System.Windows.Forms.Button button1;

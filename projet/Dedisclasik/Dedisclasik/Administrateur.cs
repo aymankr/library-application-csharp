@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Entity;
 
 namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
+
         public Administrateur()
         {
             InitializeComponent();
@@ -20,7 +22,8 @@ namespace Dedisclasik
             suiv.Enabled = false;
         }
         //feedback avec de messages box
-
+        
+        #region bouttons requetes
         private void empruntProlong_Click(object sender, EventArgs e)
         {
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
@@ -48,6 +51,7 @@ namespace Dedisclasik
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null).ToList()
                 .Where(a => (int)(dateNow - a.DATE_RETOUR_ATTENDUE).TotalDays >= 10).Select(a => a.ABONNÉS);
+
             foreach (ABONNÉS a in emprunteurs)
             {
                 string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
@@ -58,14 +62,16 @@ namespace Dedisclasik
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre d'emprunts" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
-            // US7 : les 10 plus empruntés de l'année
-            var emprunteurs = Outils.musique.EMPRUNTER
+            var cmd = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
                 .Select(a => a.ALBUMS);
+            activePaging(cmd.Count());
+            // US7 : les 10 plus empruntés de l'année
+            var emprunteurs = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (ALBUMS a in emprunteurs)
             {
                 string[] row = new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() };
@@ -78,7 +84,6 @@ namespace Dedisclasik
         {
             DateTime dateNow = DateTime.Now;
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-
             // US6 remove abonnes qui n'ont pas empruntés depuis un an
             var empruntsExpires = Outils.musique.EMPRUNTER
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
@@ -107,17 +112,72 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
-
+            var cmd = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                .Select(a => a.ALBUMS);
+            activePaging(cmd.Count());
             //  US8 : liste albums non empruntés depuis + d'un an 
             //DateTime dernierEmprunt = musique.EMPRUNTER.OrderByDescending(a => a.DATE_EMPRUNT).Select(a => a.DATE_EMPRUNT).FirstOrDefault();
 
-            var emprunteurs = Outils.musique.EMPRUNTER
-                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
-                .Select(a => a.ALBUMS).ToList();
+            var emprunteurs = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (ALBUMS a in emprunteurs) dataGridView1.Rows.Add(a.TITRE_ALBUM);
             afficherMessageVide(albumsNonEmprunts.Text);
         }
 
+        private void listAbo_Click(object sender, EventArgs e)
+        {
+            var cmd = Outils.musique.ABONNÉS;
+            activePaging(cmd.Count());
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+
+            // US 12 liste des abonnés
+            foreach (ABONNÉS a in abos)
+            {
+                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            var cmd = Outils.musique.ALBUMS;
+            activePaging(cmd.Count());
+
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (ALBUMS a in affiche)
+            {
+                string[] row = new string[] { a.TITRE_ALBUM };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherMessageVide(listAbo.Text + " : test paging");
+        }
+        #endregion
+
+        #region Autres Bouttons
+        private void deconnect_Click(object sender, EventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) Close();
+        }
+
+        private void prec_Click(object sender, EventArgs e)
+        {
+            Outils.pgNb--;
+            button1_Click(sender, e);
+        }
+
+        private void suiv_Click(object sender, EventArgs e)
+        {
+            Outils.pgNb++;
+            button1_Click(sender, e);
+        }
+        #endregion
+
+        #region fonctions
         private bool afficherMessageVide(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -129,70 +189,20 @@ namespace Dedisclasik
             }
             return estVide;
         }
-
-        private void deconnect_Click(object sender, EventArgs e)
-        {
-            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes) Close();
-        }
-
-        private void listAbo_Click(object sender, EventArgs e)
-        {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-            var abos = Outils.musique.ABONNÉS.ToList();
-
-            // US 12 liste des abonnés
-            foreach (ABONNÉS a in abos)
-            {
-                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
-                dataGridView1.Rows.Add(row);
-            }
-            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
-        }
-
-
-
-
-        int pgNb = 1;
-        int pgSz = 15;
-        
-        private void activePaging()
+        private void activePaging(int nbMax)
         {
             prec.Enabled = true;
             suiv.Enabled = true;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            activePaging();
-            if (pgNb <= 1)
+            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + nbMax;
+            if (Outils.pgNb <= 1)
             {
                 prec.Enabled = false;
             }
-
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-            var abos = Outils.musique.ALBUMS.ToList().Take(pgSz*pgNb).Skip(pgSz * (pgNb-1));
-            int i = 0;
-            foreach (ALBUMS a in abos)
+            if (Outils.pgNb >= (int)(nbMax / Outils.pgSz) + 1)
             {
-
-                string[] row = new string[] { a.TITRE_ALBUM };
-                dataGridView1.Rows.Add(row);
-
-
+                suiv.Enabled = false;
             }
-            afficherMessageVide(listAbo.Text + " : test paging");
         }
-        private void prec_Click(object sender, EventArgs e)
-        {
-            pgNb--;
-            button1_Click(sender, e);
-        }
-
-        private void suiv_Click(object sender, EventArgs e)
-        {
-            pgNb++;
-            button1_Click(sender, e);
-        }
+        #endregion
     }
 }
