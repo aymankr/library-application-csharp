@@ -34,10 +34,11 @@ namespace Dedisclasik
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
 
-            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null || !mdp.Text.Equals(mdp2.Text))
+            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null)
             {
                 MessageBox.Show("Veuillez saisir les informations dans les champs spécifiés.");
             }
+            else if (!mdp.Text.Equals(mdp2.Text)) MessageBox.Show("Les mots de passes ne se correspondent pas.");
             else if (loginExiste(loginAbonne))
             {
                 MessageBox.Show("Le login existe déjà, réessayez.");
