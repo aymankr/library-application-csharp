@@ -15,12 +15,12 @@ namespace Dedisclasik
         public MonCompte() 
         {
             InitializeComponent();
-            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonne));
+            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonné));
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
-            nomUtilisateur.Text = "nom";//Connexion.abonné.NOM_ABONNÉS;
-            prenomUtilisateur.Text = "prénom";//Connexion.abonné.PRÉNOM_ABONNÉS;
-            loginUtilisateur.Text = "login";//Connexion.abonné.LOGIN_ABONNÉS;
+            nomUtilisateur.Text = Connexion.abonné.NOM_ABONNÉ.ToString();
+            prenomUtilisateur.Text = Connexion.abonné.PRÉNOM_ABONNÉ.ToString();
+            loginUtilisateur.Text = Connexion.abonné.LOGIN_ABONNÉ.ToString();
 
             //initDataGridView();
         }

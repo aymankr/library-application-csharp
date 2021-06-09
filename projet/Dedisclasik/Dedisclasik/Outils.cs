@@ -48,10 +48,5 @@ namespace Dedisclasik
             }
         }
 
-
-        public static bool ActiverPagination(int tailleListe)
-        {
-            return (tailleListe <= 20);
-        }
     }
 }
