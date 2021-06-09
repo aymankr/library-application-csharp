@@ -14,6 +14,7 @@ namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
+        private String fonction = "";
 
         public Administrateur()
         {
@@ -26,12 +27,21 @@ namespace Dedisclasik
         #region bouttons requetes
         private void empruntProlong_Click(object sender, EventArgs e)
         {
+            fonction = "prolong";
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-
+            var cmd = Outils.musique.EMPRUNTER;
+            int nbT = 0;
+            foreach (EMPRUNTER empr in cmd)
+            {
+                if (Outils.dejaProlongé(empr))
+                {
+                    nbT++;
+                }
+            }
+            activePaging(nbT);
             // US4 : abonnés ayant prolongé leur emprunt 
-            var id_album = from al in Outils.musique.ALBUMS
-                           select al.CODE_ALBUM;
-            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            var prolong = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (EMPRUNTER emp in prolong)
             {
                 if (Outils.dejaProlongé(emp))
                 {
@@ -44,6 +54,7 @@ namespace Dedisclasik
 
         private void empruntRetard_Click(object sender, EventArgs e)
         {
+            fonction = "retard";
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
@@ -62,6 +73,7 @@ namespace Dedisclasik
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
+            fonction = "top";
             Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre d'emprunts" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
@@ -110,6 +122,7 @@ namespace Dedisclasik
 
         private void albumsNonEmprunts_Click(object sender, EventArgs e)
         {
+            fonction = "fantome";
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
             var cmd = Outils.musique.EMPRUNTER
@@ -126,6 +139,7 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
+            fonction = "abo";
             var cmd = Outils.musique.ABONNÉS;
             activePaging(cmd.Count());
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
@@ -142,15 +156,15 @@ namespace Dedisclasik
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            var cmd = Outils.musique.ALBUMS;
+            fonction = "test";
+            var cmd = Outils.musique.EDITEURS;
             activePaging(cmd.Count());
 
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
-            foreach (ALBUMS a in affiche)
+            foreach (EDITEURS a in affiche)
             {
-                string[] row = new string[] { a.TITRE_ALBUM };
+                string[] row = new string[] { a.CODE_EDITEUR.ToString() };
                 dataGridView1.Rows.Add(row);
             }
             afficherMessageVide(listAbo.Text + " : test paging");
@@ -167,13 +181,38 @@ namespace Dedisclasik
         private void prec_Click(object sender, EventArgs e)
         {
             Outils.pgNb--;
-            button1_Click(sender, e);
+            switchNextPrev(sender, e);
         }
 
+        private void switchNextPrev(object sender, EventArgs e)
+        {
+            switch (fonction)
+            {
+                case "prolong":
+                    empruntProlong_Click(sender, e);
+                    break;
+                case "retard":
+                    empruntRetard_Click(sender, e);
+                    break;
+                case "top":
+                    empruntMeilleurs_Click(sender, e);
+                    break;
+                case "fantome":
+                    albumsNonEmprunts_Click(sender, e);
+                    break;
+                case "abo":
+                    listAbo_Click(sender, e);
+                    break;
+                case "test":
+                    button1_Click(sender, e);
+                    break;
+
+            }
+        }
         private void suiv_Click(object sender, EventArgs e)
         {
             Outils.pgNb++;
-            button1_Click(sender, e);
+            switchNextPrev(sender, e);
         }
         #endregion
 
