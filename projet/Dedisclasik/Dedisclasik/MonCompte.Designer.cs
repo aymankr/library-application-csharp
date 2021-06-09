@@ -46,7 +46,7 @@ namespace Dedisclasik
             // 
             // Prolonger
             // 
-            this.Prolonger.Location = new System.Drawing.Point(700, 161);
+            this.Prolonger.Location = new System.Drawing.Point(974, 161);
             this.Prolonger.Name = "Prolonger";
             this.Prolonger.Size = new System.Drawing.Size(75, 23);
             this.Prolonger.TabIndex = 1;
@@ -74,7 +74,7 @@ namespace Dedisclasik
             // 
             // ToutProlonger
             // 
-            this.ToutProlonger.Location = new System.Drawing.Point(547, 161);
+            this.ToutProlonger.Location = new System.Drawing.Point(821, 161);
             this.ToutProlonger.Name = "ToutProlonger";
             this.ToutProlonger.Size = new System.Drawing.Size(120, 23);
             this.ToutProlonger.TabIndex = 4;
@@ -84,7 +84,7 @@ namespace Dedisclasik
             // 
             // deconnexionButton
             // 
-            this.deconnexionButton.Location = new System.Drawing.Point(671, 12);
+            this.deconnexionButton.Location = new System.Drawing.Point(945, 12);
             this.deconnexionButton.Name = "deconnexionButton";
             this.deconnexionButton.Size = new System.Drawing.Size(117, 31);
             this.deconnexionButton.TabIndex = 5;
@@ -142,7 +142,7 @@ namespace Dedisclasik
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(341, 12);
+            this.label6.Location = new System.Drawing.Point(495, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(140, 25);
             this.label6.TabIndex = 11;
@@ -150,11 +150,13 @@ namespace Dedisclasik
             // 
             // dataGridEmprunt
             // 
+            this.dataGridEmprunt.AllowUserToAddRows = false;
             this.dataGridEmprunt.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridEmprunt.Location = new System.Drawing.Point(23, 223);
             this.dataGridEmprunt.Name = "dataGridEmprunt";
+            this.dataGridEmprunt.RowHeadersVisible = false;
             this.dataGridEmprunt.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridEmprunt.Size = new System.Drawing.Size(751, 248);
+            this.dataGridEmprunt.Size = new System.Drawing.Size(1026, 343);
             this.dataGridEmprunt.TabIndex = 12;
             this.dataGridEmprunt.SelectionChanged += new System.EventHandler(this.dataGridEmprunt_SelectionChanged);
             // 
@@ -162,7 +164,7 @@ namespace Dedisclasik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 494);
+            this.ClientSize = new System.Drawing.Size(1074, 578);
             this.Controls.Add(this.dataGridEmprunt);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.loginUtilisateur);
