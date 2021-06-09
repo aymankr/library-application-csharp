@@ -17,7 +17,7 @@ namespace Dedisclasik
             InitializeComponent();
 
             initDataGridView();
-            afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonné));
+            afficherEmprunts(EMPRUNTER.ListeAlbums());
 
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
@@ -27,7 +27,7 @@ namespace Dedisclasik
             loginUtilisateur.Text = Connexion.abonné.LOGIN_ABONNÉ.ToString();
         }
 
-        public void afficherEmprunts(List<string> albums)
+        public void afficherEmprunts(List<ALBUMS> albums)
         {
             string editeur;
             string annee;
@@ -36,12 +36,12 @@ namespace Dedisclasik
             dataGridEmprunt.Rows.Clear();
             if (Connexion.abonné.EMPRUNTER != null)
             {
-                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER )
+                foreach (ALBUMS al in albums )
                 {
-                    if (emp.ALBUMS.GENRES != null){ genre = emp.ALBUMS.GENRES.LIBELLÉ_GENRE.ToString(); } else { genre = "Non rensigné"; }
-                    if (emp.ALBUMS.EDITEURS != null) { editeur = emp.ALBUMS.EDITEURS.NOM_EDITEUR.ToString(); } else { editeur = "Non renseigné"; }
-                    if (emp.ALBUMS.ANNÉE_ALBUM != null) { annee = emp.ALBUMS.ANNÉE_ALBUM.ToString(); } else { annee = "Non renseigné"; }
-                    string[] row = { emp.ALBUMS.TITRE_ALBUM, genre, editeur, annee};
+                    if (al.GENRES != null){ genre = al.GENRES.LIBELLÉ_GENRE.ToString(); } else { genre = "Non rensigné"; }
+                    if (al.EDITEURS != null) { editeur = al.EDITEURS.NOM_EDITEUR.ToString(); } else { editeur = "Non renseigné"; }
+                    if (al.ANNÉE_ALBUM != null) { annee = al.ANNÉE_ALBUM.ToString(); } else { annee = "Non renseigné"; }
+                    string[] row = { al.TITRE_ALBUM, genre, editeur, annee};
                     dataGridEmprunt.Rows.Add(row);
                 }
             }
@@ -68,7 +68,7 @@ namespace Dedisclasik
                 var id_album = from al in Outils.musique.ALBUMS
                                where al.TITRE_ALBUM == titre
                                select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
                 {
                     if (emp.CODE_ALBUM == id_album.First())
                     {
@@ -97,7 +97,7 @@ namespace Dedisclasik
                     var id_album = from al in Outils.musique.ALBUMS
                                    where al.TITRE_ALBUM == titre
                                    select al.CODE_ALBUM;
-                    foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                    foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
                     {
                         if (emp.CODE_ALBUM == id_album.First())
                         {
@@ -127,7 +127,7 @@ namespace Dedisclasik
                     var id_album = from al in Outils.musique.ALBUMS
                                    where al.TITRE_ALBUM == titre
                                    select al.CODE_ALBUM;
-                    foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                    foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
                     {
                         if (emp.CODE_ALBUM == id_album.First())
                         {
@@ -156,7 +156,7 @@ namespace Dedisclasik
 
         public void initDataGridView()
         {
-            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année"}, dataGridEmprunt);
+            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année"},dataGridEmprunt);
         }
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
@@ -168,7 +168,7 @@ namespace Dedisclasik
                 var id_album = from al in Outils.musique.ALBUMS
                                where al.TITRE_ALBUM == titre
                                select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
                 {
                     if (emp.CODE_ALBUM == id_album.First())
                     {
