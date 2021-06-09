@@ -71,14 +71,14 @@ namespace Dedisclasik
             if (album.SelectedItem != null && !album.SelectedItem.ToString().Contains("Déjà emprunté"))
             {
                 string titre = album.SelectedItem.ToString().Trim();
-                emprunt.CODE_ABONNÉ = Connexion.abonne.CODE_ABONNÉ;
+                emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
                 emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
                 emprunt.DATE_EMPRUNT = date;
                 emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI); 
-                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonne.CODE_ABONNÉ);
+                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
                 emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
 
-                m.ABONNÉS.Find(Connexion.abonne.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
+                m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);
             }
             m.SaveChanges(); //gestion de la mise a jour de la lsite necessaire
