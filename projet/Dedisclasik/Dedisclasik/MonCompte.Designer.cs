@@ -29,7 +29,6 @@ namespace Dedisclasik
         /// </summary>
         private void InitializeComponent()
         {
-            this.albumEmprunt = new System.Windows.Forms.ListBox();
             this.Prolonger = new System.Windows.Forms.Button();
             this.dateRetourAttendue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,15 +43,6 @@ namespace Dedisclasik
             this.dataGridEmprunt = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmprunt)).BeginInit();
             this.SuspendLayout();
-            // 
-            // albumEmprunt
-            // 
-            this.albumEmprunt.FormattingEnabled = true;
-            this.albumEmprunt.Location = new System.Drawing.Point(23, 231);
-            this.albumEmprunt.Name = "albumEmprunt";
-            this.albumEmprunt.Size = new System.Drawing.Size(752, 186);
-            this.albumEmprunt.TabIndex = 0;
-            this.albumEmprunt.SelectedIndexChanged += new System.EventHandler(this.albumEmprunt_SelectedIndexChanged);
             // 
             // Prolonger
             // 
@@ -161,16 +151,18 @@ namespace Dedisclasik
             // dataGridEmprunt
             // 
             this.dataGridEmprunt.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridEmprunt.Location = new System.Drawing.Point(23, 453);
+            this.dataGridEmprunt.Location = new System.Drawing.Point(23, 223);
             this.dataGridEmprunt.Name = "dataGridEmprunt";
-            this.dataGridEmprunt.Size = new System.Drawing.Size(751, 235);
+            this.dataGridEmprunt.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridEmprunt.Size = new System.Drawing.Size(751, 248);
             this.dataGridEmprunt.TabIndex = 12;
+            this.dataGridEmprunt.SelectionChanged += new System.EventHandler(this.dataGridEmprunt_SelectionChanged);
             // 
             // MonCompte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 720);
+            this.ClientSize = new System.Drawing.Size(800, 494);
             this.Controls.Add(this.dataGridEmprunt);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.loginUtilisateur);
@@ -183,7 +175,6 @@ namespace Dedisclasik
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateRetourAttendue);
             this.Controls.Add(this.Prolonger);
-            this.Controls.Add(this.albumEmprunt);
             this.Name = "MonCompte";
             this.Text = "InterfaceTemp";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmprunt)).EndInit();
@@ -193,8 +184,6 @@ namespace Dedisclasik
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox albumEmprunt;
         private System.Windows.Forms.Button Prolonger;
         private System.Windows.Forms.Label dateRetourAttendue;
         private System.Windows.Forms.Label label1;
