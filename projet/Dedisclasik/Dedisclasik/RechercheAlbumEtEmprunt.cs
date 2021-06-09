@@ -23,16 +23,14 @@ namespace Dedisclasik
         {
             album.Items.Clear();
             pagesAlbums.Rows.Clear();
-            int i = 1;
+            int i = 0;
             foreach (ALBUMS al in ABONNÉS.RechercheTitre(recherche.Text))
             {
                 //album.Items.Add(al);
                 pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
-                pagesAlbums.Rows[i].Tag = al;
-                Console.WriteLine(pagesAlbums.Rows[i].Tag);
+                pagesAlbums.Rows[i].Tag = (ALBUMS)al;
                 i++;
             }
-
             /*album.Items.Clear();
             List<string> emprunter = new List<string>();
             foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
@@ -58,11 +56,10 @@ namespace Dedisclasik
             MusiquePT2_NEntities m = Outils.musique;
             EMPRUNTER emprunt = new EMPRUNTER();
             DateTime date = DateTime.Now;
-            ALBUMS al = (ALBUMS)pagesAlbums.CurrentRow.Tag;
-            Console.WriteLine(pagesAlbums.CurrentRow.Index);
+            ALBUMS al = pagesAlbums.CurrentRow.Tag as ALBUMS;
             if (al != null && !Outils.dejaEmprunté(al))
             {
-                string titre = al.ToString().Trim();
+                string titre = al.TITRE_ALBUM.Trim();
                 emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
                 emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
                 emprunt.DATE_EMPRUNT = date;
