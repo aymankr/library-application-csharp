@@ -99,7 +99,7 @@ namespace Dedisclasik
             // US7 : les 10 plus empruntés de l'année
             foreach (ALBUMS a in listMeilleurEmprunt())
             {
-                dataGridView1.Rows.Add( new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
+                dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
             }
             afficherDescription(empruntMeilleurs.Text + " : les 10 albums les plus empruntés dans l'année.");
         }
@@ -194,7 +194,16 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = Outils.musique.ABONNÉS.ToList();
 
+            // US 12 liste des abonnés
+            foreach (ABONNÉS a in abos)
+            {
+                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherDescription(listAbo.Text + " : liste des abonnés.");
         }
     }
 }
