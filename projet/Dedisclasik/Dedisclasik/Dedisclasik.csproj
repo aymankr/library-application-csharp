@@ -70,7 +70,6 @@
     <Compile Include="Administrateur.Designer.cs">
       <DependentUpon>Administrateur.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdministrateurTest.cs" />
     <Compile Include="ALBUMS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
