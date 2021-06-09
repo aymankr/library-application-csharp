@@ -177,7 +177,7 @@ namespace Dedisclasik
 
         public void initDataGridView()
         {
-            Outils.chargerDataGrid(4 ,new string[] { "Titre", "Genre", "Editeur", "Année"},dataGridEmprunt);
+            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année"}, dataGridEmprunt);
         }
     }
 }

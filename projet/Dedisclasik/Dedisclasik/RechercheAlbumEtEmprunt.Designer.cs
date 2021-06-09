@@ -43,7 +43,7 @@ namespace Dedisclasik
             this.album.FormattingEnabled = true;
             this.album.Location = new System.Drawing.Point(12, 125);
             this.album.Name = "album";
-            this.album.Size = new System.Drawing.Size(692, 238);
+            this.album.Size = new System.Drawing.Size(156, 238);
             this.album.TabIndex = 0;
             // 
             // label1
@@ -86,9 +86,12 @@ namespace Dedisclasik
             // pagesAlbums
             // 
             this.pagesAlbums.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pagesAlbums.Location = new System.Drawing.Point(710, 12);
+            this.pagesAlbums.Location = new System.Drawing.Point(174, 12);
+            this.pagesAlbums.MultiSelect = false;
             this.pagesAlbums.Name = "pagesAlbums";
-            this.pagesAlbums.Size = new System.Drawing.Size(78, 382);
+            this.pagesAlbums.ReadOnly = true;
+            this.pagesAlbums.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.pagesAlbums.Size = new System.Drawing.Size(614, 413);
             this.pagesAlbums.TabIndex = 5;
             // 
             // RechercheAlbumEtEmprunt

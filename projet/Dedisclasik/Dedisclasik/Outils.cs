@@ -54,19 +54,22 @@ namespace Dedisclasik
             return false;
         }
 
-        public static void chargerDataGrid(int nbColonnes, string[] attributs, System.Windows.Forms.DataGridView dg)
+        public static void chargerDataGrid(string[] attributs, System.Windows.Forms.DataGridView dg)
         {
             dg.Rows.Clear();
             dg.Columns.Clear();
-            dg.ColumnCount = nbColonnes;
+            int longueur = attributs.Length;
+            dg.ColumnCount = longueur;
 
             int i = 0;
             foreach (string s in attributs)
             {
                 dg.Columns[i].Name = s;
-                dg.Columns[i].Width = dg.Width / nbColonnes;
+                dg.Columns[i].Width = dg.Width / longueur;
                 i++;
             }
+            dg.ReadOnly=true;
+            dg.MultiSelect = false;
         }
 
 

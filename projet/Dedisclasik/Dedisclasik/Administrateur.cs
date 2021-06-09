@@ -92,6 +92,11 @@ namespace Dedisclasik
         {
             List<ABONNÉS> abos = new List<ABONNÉS>();
             DateTime dateNow = DateTime.Now;
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
+
+            // US6 remove abonnes qui n'ont pas empruntés depuis un an
+            var empruntsExpires = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
             var abonnesExpires = Outils.musique.EMPRUNTER
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
                 .Select(a => a.ABONNÉS).ToList();

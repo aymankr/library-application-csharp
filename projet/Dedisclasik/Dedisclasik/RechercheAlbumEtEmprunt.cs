@@ -16,30 +16,21 @@ namespace Dedisclasik
         public RechercheAlbumEtEmprunt()
         {
             InitializeComponent();
-            pagesAlbums.Rows.Clear();
-            pagesAlbums.Columns.Clear();
-            pagesAlbums.ColumnCount = 6;
-            pagesAlbums.Columns[0].Name = "Titre";
-            pagesAlbums.Columns[0].Width = pagesAlbums.Width;
-            pagesAlbums.Columns[1].Name = "Artiste(s)";
-            pagesAlbums.Columns[1].Width = pagesAlbums.Width;
-            pagesAlbums.Columns[2].Name = "Date";
-            pagesAlbums.Columns[2].Width = pagesAlbums.Width;
-            pagesAlbums.Columns[3].Name = "Pays";
-            pagesAlbums.Columns[3].Width = pagesAlbums.Width;
-            pagesAlbums.Columns[4].Name = "Genre";
-            pagesAlbums.Columns[4].Width = pagesAlbums.Width;
-            pagesAlbums.Columns[5].Name = "Déjà emprunté";
-            pagesAlbums.Columns[5].Width = pagesAlbums.Width;
+            Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
         }
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
             album.Items.Clear();
+            pagesAlbums.Rows.Clear();
+            int i = 1;
             foreach (ALBUMS al in ABONNÉS.RechercheTitre(recherche.Text))
             {
-                album.Items.Add(al);
-                // pagesAlbums.Rows.Add(al.ToString());
+                //album.Items.Add(al);
+                pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
+                pagesAlbums.Rows[i].Tag = al;
+                Console.WriteLine(pagesAlbums.Rows[i].Tag);
+                i++;
             }
 
             /*album.Items.Clear();
@@ -67,14 +58,15 @@ namespace Dedisclasik
             MusiquePT2_NEntities m = Outils.musique;
             EMPRUNTER emprunt = new EMPRUNTER();
             DateTime date = DateTime.Now;
-
-            if (album.SelectedItem != null && !album.SelectedItem.ToString().Contains("Déjà emprunté"))
+            ALBUMS al = (ALBUMS)pagesAlbums.CurrentRow.Tag;
+            Console.WriteLine(pagesAlbums.CurrentRow.Index);
+            if (al != null && !Outils.dejaEmprunté(al))
             {
-                string titre = album.SelectedItem.ToString().Trim();
+                string titre = al.ToString().Trim();
                 emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
                 emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
                 emprunt.DATE_EMPRUNT = date;
-                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI); 
+                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
                 emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
                 emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
 
