@@ -15,11 +15,18 @@ namespace Dedisclasik
     public partial class Administrateur : Form
     {
         private String fonction = "";
+        private List<string> actions = new List<string>();
+        
+        int cptActions = 0;
 
         public Administrateur()
         {
+            
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
+            actions.Clear();
+            actions.Add("vide");
+
             prec.Enabled = false;
             suiv.Enabled = false;
         }
@@ -246,6 +253,7 @@ namespace Dedisclasik
         private void button1_Click(object sender, EventArgs e)
         {
             fonction = "test";
+            comparer();
             var cmd = Outils.musique.EDITEURS;
             activePaging(cmd.Count());
 
@@ -273,27 +281,37 @@ namespace Dedisclasik
             switchNextPrev(sender, e);
         }
 
+        
         private void switchNextPrev(object sender, EventArgs e)
         {
+            
+
             switch (fonction)
             {
                 case "prolong":
+                    
                     empruntProlong_Click(sender, e);
+                    
                     break;
                 case "retard":
                     empruntRetard_Click(sender, e);
+                    
                     break;
                 case "top":
                     empruntMeilleurs_Click(sender, e);
+                    
                     break;
                 case "fantome":
                     albumsNonEmprunts_Click(sender, e);
+                    
                     break;
                 case "abo":
                     listAbo_Click(sender, e);
+                    
                     break;
                 case "test":
                     button1_Click(sender, e);
+                    
                     break;
 
             }
@@ -306,6 +324,17 @@ namespace Dedisclasik
         #endregion
 
         #region fonctions
+        private void comparer()
+        {
+            actions.Add(fonction);
+            cptActions++;
+            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
+            {
+                Outils.pgNb = 1;
+                
+
+            }
+        }
         private bool afficherMessageVide(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -316,12 +345,12 @@ namespace Dedisclasik
                 estVide = true;
             }
             return estVide;
-        }
+        }   
         private void activePaging(int nbMax)
         {
             prec.Enabled = true;
             suiv.Enabled = true;
-            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + nbMax;
+            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + (nbMax / Outils.pgSz+1).ToString();
             if (Outils.pgNb <= 1)
             {
                 prec.Enabled = false;
