@@ -20,7 +20,7 @@ namespace Dedisclasik
 
         private void empruntProlong_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
 
             // US4 : abonnés ayant prolongé leur emprunt 
             var id_album = from al in Outils.musique.ALBUMS
@@ -38,7 +38,7 @@ namespace Dedisclasik
 
         private void empruntRetard_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US5 : abonnés ayant emprunts non rendu depuis plus de 10j
@@ -55,7 +55,7 @@ namespace Dedisclasik
 
         private void empruntMeilleurs_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US7 : les 10 plus empruntés de l'année
@@ -74,7 +74,7 @@ namespace Dedisclasik
         private void purger_Click(object sender, EventArgs e)
         {
             DateTime dateNow = DateTime.Now;
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
 
             // US6 remove abonnes qui n'ont pas empruntés depuis un an
             var empruntsExpires = Outils.musique.EMPRUNTER
@@ -102,7 +102,7 @@ namespace Dedisclasik
 
         private void albumsNonEmprunts_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             //  US8 : liste albums non empruntés depuis + d'un an 
@@ -135,7 +135,7 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             var abos = Outils.musique.ABONNÉS.ToList();
 
             // US 12 liste des abonnés
