@@ -84,7 +84,7 @@ namespace Dedisclasik
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
-                .Select(a => a.ALBUMS);
+                .Select(a => a.ALBUMS).Distinct();
             foreach (ALBUMS a in emprunteurs)
             {
                 albums.Add(a);
