@@ -14,6 +14,7 @@ namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
+
         public Administrateur()
         {
             
