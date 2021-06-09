@@ -17,7 +17,7 @@ namespace Dedisclasik
         {
             InitializeComponent();
             Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
-        }
+        } 
 
         private void recherche_TextChanged(object sender, EventArgs e)
         {
