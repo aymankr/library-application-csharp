@@ -39,6 +39,10 @@ namespace Dedisclasik
             this.deconnect = new System.Windows.Forms.Button();
             this.sousTitre = new System.Windows.Forms.Label();
             this.listAbo = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.prec = new System.Windows.Forms.Button();
+            this.suiv = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,7 +93,7 @@ namespace Dedisclasik
             this.albumsNonEmprunts.Name = "albumsNonEmprunts";
             this.albumsNonEmprunts.Size = new System.Drawing.Size(154, 49);
             this.albumsNonEmprunts.TabIndex = 5;
-            this.albumsNonEmprunts.Text = "ALBUMS NON EMPRUNTÉS";
+            this.albumsNonEmprunts.Text = "NON EMPRUNTÉS DEPUIS UN AN";
             this.albumsNonEmprunts.UseVisualStyleBackColor = true;
             this.albumsNonEmprunts.Click += new System.EventHandler(this.albumsNonEmprunts_Click);
             // 
@@ -150,11 +154,55 @@ namespace Dedisclasik
             this.listAbo.UseVisualStyleBackColor = true;
             this.listAbo.Click += new System.EventHandler(this.listAbo_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(842, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Page ";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // prec
+            // 
+            this.prec.Location = new System.Drawing.Point(897, 59);
+            this.prec.Name = "prec";
+            this.prec.Size = new System.Drawing.Size(31, 23);
+            this.prec.TabIndex = 14;
+            this.prec.Text = "<";
+            this.prec.UseVisualStyleBackColor = true;
+            this.prec.Click += new System.EventHandler(this.prec_Click);
+            // 
+            // suiv
+            // 
+            this.suiv.Location = new System.Drawing.Point(934, 58);
+            this.suiv.Name = "suiv";
+            this.suiv.Size = new System.Drawing.Size(31, 23);
+            this.suiv.TabIndex = 15;
+            this.suiv.Text = ">";
+            this.suiv.UseVisualStyleBackColor = true;
+            this.suiv.Click += new System.EventHandler(this.suiv_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(579, 64);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 607);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.suiv);
+            this.Controls.Add(this.prec);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.listAbo);
             this.Controls.Add(this.sousTitre);
             this.Controls.Add(this.deconnect);
@@ -187,5 +235,9 @@ namespace Dedisclasik
         private System.Windows.Forms.Button deconnect;
         private System.Windows.Forms.Label sousTitre;
         private System.Windows.Forms.Button listAbo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button prec;
+        private System.Windows.Forms.Button suiv;
+        private System.Windows.Forms.Button button1;
     }
 }
