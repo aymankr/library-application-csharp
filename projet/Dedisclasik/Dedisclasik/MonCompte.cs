@@ -15,44 +15,42 @@ namespace Dedisclasik
         public MonCompte() 
         {
             InitializeComponent();
+
+            initDataGridView();
             afficherEmprunts(EMPRUNTER.ListeAlbums(Connexion.abonné));
+
             Prolonger.Enabled = false;
             vérifcationToutProlonger();
+
             nomUtilisateur.Text = Connexion.abonné.NOM_ABONNÉ.ToString();
             prenomUtilisateur.Text = Connexion.abonné.PRÉNOM_ABONNÉ.ToString();
             loginUtilisateur.Text = Connexion.abonné.LOGIN_ABONNÉ.ToString();
-
-            //initDataGridView();
         }
 
         public void afficherEmprunts(List<string> albums)
         {
-            albumEmprunt.Items.Clear();
-            if (albums.Count() <= 0)
+            string editeur;
+            string annee;
+            string genre;
+
+            dataGridEmprunt.Rows.Clear();
+            if (Connexion.abonné.EMPRUNTER != null)
             {
-                albumEmprunt.Items.Add("aucun emprunt en cours"); 
-            }
-            foreach (string alb in albums)
-            {
-                albumEmprunt.Items.Add(alb);
-            }
-            /*
-            //modification vers grid
-            if (Connexion.abonné.EMPRUNTER.ALBUMS != null)
-            {
-                foreach (ALBUMS al in Connexion.abonné.EMPRUNTER.ALBUMS)
+                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER )
                 {
-                    dataGridEmprunt[0].Value = al.TITRE_ALBUM;
-                    dataGridEmprunt[1].Value = al.GENRES;
-                    if () { dataGridEmprunt[2].Value = al.EDITEURS; } else { dataGridEmprunt[2].Value = "Non renseigné"; }
-                    dataGridEmprunt[3].Value = al.ANNÉE_ALBUM;
+                    if (emp.ALBUMS.GENRES != null){ genre = emp.ALBUMS.GENRES.LIBELLÉ_GENRE.ToString(); } else { genre = "Non rensigné"; }
+                    if (emp.ALBUMS.EDITEURS != null) { editeur = emp.ALBUMS.EDITEURS.NOM_EDITEUR.ToString(); } else { editeur = "Non renseigné"; }
+                    if (emp.ALBUMS.ANNÉE_ALBUM != null) { annee = emp.ALBUMS.ANNÉE_ALBUM.ToString(); } else { annee = "Non renseigné"; }
+                    string[] row = { emp.ALBUMS.TITRE_ALBUM, genre, editeur, annee};
+                    dataGridEmprunt.Rows.Add(row);
                 }
             }
             else
             {
-                dataGridEmprunt[0].Value = "La liste est vide";//affichage du message de liste vide
+                string[] row = {"Aucun emprunt en cours"};
+                dataGridEmprunt.Rows.Add(row);
             }
-            */
+            
         }
 
         private void voirAlbums_Click(object sender, EventArgs e)
@@ -62,9 +60,11 @@ namespace Dedisclasik
 
         private void Prolonger_Click(object sender, EventArgs e)
         {
-            if (albumEmprunt.SelectedItem != null && !albumEmprunt.SelectedItem.ToString().Contains("aucun emprunt en cours"))
-            {
-                string titre = albumEmprunt.SelectedItem.ToString();
+             if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null 
+                        && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
+             {
+                string titre = dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Trim();
+                
                 var id_album = from al in Outils.musique.ALBUMS
                                where al.TITRE_ALBUM == titre
                                select al.CODE_ALBUM;
@@ -75,60 +75,37 @@ namespace Dedisclasik
                         if (!Outils.dejaProlongé(emp))
                         {
                             emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+                            dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
                             Prolonger.Enabled = false;
                             MessageBox.Show("Prolongement effectué pour : \n" + titre);
+                            vérifcationToutProlonger();
                         }
                     }
                 }
             }
             Outils.musique.SaveChanges();
         }
-        
-        
 
-        private void albumEmprunt_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (albumEmprunt.SelectedItem != null && !albumEmprunt.SelectedItem.ToString().Contains("aucun emprunt en cours"))
-            {
-                string titre = albumEmprunt.SelectedItem.ToString();
-                var id_album = from al in Outils.musique.ALBUMS
-                               where al.TITRE_ALBUM == titre
-                               select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
-                {
-                    if (emp.CODE_ALBUM == id_album.First())
-                    {
-                        dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
-                        if (Outils.dejaProlongé(emp))
-                        {
-                            Prolonger.Enabled = false;
-                        }
-                        else
-                        {
-                            Prolonger.Enabled = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void ToutProlonger_Click(object sender, EventArgs e)
+        private void ToutProlonger_Click(object sender, EventArgs e) 
         {
             List<string> prolongés = new List<string>();
-            foreach (object objet in albumEmprunt.Items)
+            foreach(DataGridViewRow row in dataGridEmprunt.Rows)
             {
-                string titre = objet.ToString();
-                var id_album = from al in Outils.musique.ALBUMS
-                               where al.TITRE_ALBUM == titre
-                               select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                if (row.Cells[0].Value != null)
                 {
-                    if (emp.CODE_ALBUM == id_album.First())
+                    string titre = row.Cells[0].Value.ToString();
+                    var id_album = from al in Outils.musique.ALBUMS
+                                   where al.TITRE_ALBUM == titre
+                                   select al.CODE_ALBUM;
+                    foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
                     {
-                        if (!Outils.dejaProlongé(emp))
+                        if (emp.CODE_ALBUM == id_album.First())
                         {
-                            prolongés.Add(titre);
-                            emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+                            if (!Outils.dejaProlongé(emp))
+                            {
+                                prolongés.Add(titre);
+                                emp.DATE_RETOUR_ATTENDUE = emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+                            }
                         }
                     }
                 }
@@ -140,23 +117,25 @@ namespace Dedisclasik
             Prolonger.Enabled = false;
         }
 
-        private void vérifcationToutProlonger()
+        private void vérifcationToutProlonger() 
         {
             ToutProlonger.Enabled = false;
-            foreach (object objet in albumEmprunt.Items)
+            foreach(DataGridViewRow row in dataGridEmprunt.Rows)
             {
-                string titre = objet.ToString();
-                var id_album = from al in Outils.musique.ALBUMS
-                               where al.TITRE_ALBUM == titre
-                               select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
-                {
-                    if (emp.CODE_ALBUM == id_album.First())
+                if (row.Cells[0].Value != null) {
+                    string titre = row.Cells[0].Value.ToString();
+                    var id_album = from al in Outils.musique.ALBUMS
+                                   where al.TITRE_ALBUM == titre
+                                   select al.CODE_ALBUM;
+                    foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
                     {
-                        if (!Outils.dejaProlongé(emp))
+                        if (emp.CODE_ALBUM == id_album.First())
                         {
-                            ToutProlonger.Enabled = true;
-                            break;
+                            if (!Outils.dejaProlongé(emp))
+                            {
+                                ToutProlonger.Enabled = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -178,6 +157,33 @@ namespace Dedisclasik
         public void initDataGridView()
         {
             Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année"}, dataGridEmprunt);
+        }
+
+        private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
+                        && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
+            {
+                string titre = dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Trim();
+                var id_album = from al in Outils.musique.ALBUMS
+                               where al.TITRE_ALBUM == titre
+                               select al.CODE_ALBUM;
+                foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+                {
+                    if (emp.CODE_ALBUM == id_album.First())
+                    {
+                        dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
+                        if (Outils.dejaProlongé(emp))
+                        {
+                            Prolonger.Enabled = false;
+                        }
+                        else
+                        {
+                            Prolonger.Enabled = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }
