@@ -26,6 +26,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntProlong()
         {
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
             List<EMPRUNTER> listEmprunts = new List<EMPRUNTER>();
 
             var prolong = Outils.musique.EMPRUNTER;
@@ -53,6 +54,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntRetard()
         {
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             List<EMPRUNTER> abos = new List<EMPRUNTER>();
             DateTime dateNow = DateTime.Now;
 
@@ -72,6 +74,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listMeilleurEmprunt()
         {
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             List<ALBUMS> albums = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
 
@@ -110,6 +113,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listAlbumNonEmprunt()
         {
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             List<ALBUMS> albs = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
             var cmd = Outils.musique.EMPRUNTER
@@ -214,6 +218,8 @@ namespace Dedisclasik
 
         private void consulterLesAbonnésToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = Outils.musique.ABONNÉS.ToList();
             Outils.fonction = "abo";
             Outils.comparer();
 
