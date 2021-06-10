@@ -60,10 +60,13 @@ namespace Dedisclasik
                     /*
                     foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
                     {
-                        if(emp.ABONNÉS.Equals(al)) { emprunt = emp; }
+                        if(emp.ALBUMS.CODE_ALBUM == al.CODE_ALBUM) { emprunt = emp; }
                     }
-                    if(emprunt.DATE_EMPRUNT != null && emprunt.)
-                    if (Outils.dejaProlongé(emprunt)) { dejaProlonge = "X"; }
+                    if(emprunt != null )
+                    {
+                        Console.Write("second if");
+                        if (Outils.dejaProlongé(emprunt)) { dejaProlonge = "X"; }
+                    }
                     */
                     string[] row = { al.TITRE_ALBUM, genre, editeur, annee, dejaProlonge};
 
@@ -141,6 +144,7 @@ namespace Dedisclasik
 
         private void vérifcationToutProlonger()
         {
+            int i = 0;
             ToutProlonger.Enabled = false;
             foreach (DataGridViewRow row in dataGridEmprunt.Rows)
             {
@@ -157,11 +161,18 @@ namespace Dedisclasik
                             if (!Outils.dejaProlongé(emp))
                             {
                                 ToutProlonger.Enabled = true;
+                                Console.Write("pas prolongé");
                                 break;
+                            }
+                            else
+                            {
+                                //Console.Write("Prolongé");
+                                //dataGridEmprunt.Rows[i].Cells[4].Value = "X"; //mystere pour le non fonctionnement
                             }
                         }
                     }
                 }
+                i++;
             }
         }
 
@@ -278,6 +289,7 @@ namespace Dedisclasik
                 m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);
                 */
+                //Outils.musique.EMPRUNTER.
                 pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "";
             }
             Outils.musique.SaveChanges();
