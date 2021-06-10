@@ -13,11 +13,18 @@ namespace Dedisclasik
 {
     public partial class MonCompte : Form
     {
+        private int numColonne = 4;
+
         public MonCompte()
         {
             InitializeComponent();
 
             initDataGridView();
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            img.HeaderText = "Pochette";
+            img.Width = dataGridEmprunt.Width / 6;
+            dataGridEmprunt.Columns.Insert(numColonne, img);
+
             afficherEmprunts(EMPRUNTER.ListeAlbums());
 
             Prolonger.Enabled = false;
@@ -33,12 +40,6 @@ namespace Dedisclasik
             string editeur;
             string annee;
             string genre;
-
-            DataGridViewImageColumn img = new DataGridViewImageColumn();
-            img.HeaderText = "Pochette";
-            img.Width = dataGridEmprunt.Width / 6;
-            int numColonne = 4;
-            dataGridEmprunt.Columns.Insert(numColonne, img);
 
             dataGridEmprunt.Rows.Clear();
             if (Connexion.abonné.EMPRUNTER != null)
@@ -156,21 +157,18 @@ namespace Dedisclasik
             }
         }
 
-        private void retourButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void deconnexionButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            /*this.Close();
             //new Connexion().ShowDialog(); //à vérifier
-            MessageBox.Show("Vous avez été déconnecté");
+            MessageBox.Show("Vous avez été déconnecté");*/
+            Outils.Deconnexion(this);
         }
 
         public void initDataGridView()
         {
-            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année" }, dataGridEmprunt); //voir pour rajouter une colonne peut etre
+            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année" }, dataGridEmprunt); 
+            Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
         }
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
@@ -208,6 +206,68 @@ namespace Dedisclasik
                 image = Image.FromStream(ms);
             }
             return (Image)(new Bitmap(image, new Size(100, 100)));
+        }
+
+        private void emprunter_Click(object sender, EventArgs e)
+        {
+            MusiquePT2_NEntities m = Outils.musique;
+            EMPRUNTER emprunt = new EMPRUNTER();
+            DateTime date = DateTime.Now;
+            ALBUMS al = pagesAlbums.CurrentRow.Tag as ALBUMS;
+            if (al != null && !Outils.dejaEmprunté(al))
+            {
+                string titre = al.TITRE_ALBUM.Trim();
+                emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
+                emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
+                emprunt.DATE_EMPRUNT = date;
+                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
+                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
+                emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
+
+                m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
+                m.EMPRUNTER.Add(emprunt);
+            }
+            m.SaveChanges(); //gestion de la mise a jour de la lsite necessaire
+            AfficherAlbums();
+        }
+
+        private void rechercheTitre_TextChanged(object sender, EventArgs e)
+        {
+            AfficherAlbums();
+        }
+
+        private void AfficherAlbums()
+        {
+            pagesAlbums.Rows.Clear();
+            int i = 0;
+            foreach (ALBUMS al in ABONNÉS.RechercheTitre(rechercheTitre.Text))
+            {
+                pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
+                pagesAlbums.Rows[i].Tag = (ALBUMS)al;
+                i++;
+            }
+        }
+
+        private void rendre_Click(object sender, EventArgs e)
+        {
+            if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
+                       && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
+            {
+                
+            }
+        }
+
+        private void ongletsAbonné_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            afficherEmprunts(EMPRUNTER.ListeAlbums());
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            /*this.Close();
+            //new Connexion().ShowDialog(); //à vérifier
+            MessageBox.Show("Vous avez été déconnecté");*/
+            Outils.Deconnexion(this);
         }
     }
 }
