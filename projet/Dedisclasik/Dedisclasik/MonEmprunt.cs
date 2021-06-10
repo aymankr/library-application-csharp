@@ -10,10 +10,10 @@ namespace Dedisclasik
     {
         public static List<ALBUMS> ListeAlbums()
         {
-            var emprunts = (from a in Outils.musique.EMPRUNTER
+            var albums = (from a in Outils.musique.EMPRUNTER
                             where a.CODE_ABONNÉ == Connexion.abonné.CODE_ABONNÉ && a.DATE_RETOUR == null
                             select a.ALBUMS).ToList();
-            return emprunts;
+            return albums;
         }
         
         public static ALBUMS typeGenre(string titre)

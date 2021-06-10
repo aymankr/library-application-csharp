@@ -13,14 +13,14 @@ namespace Dedisclasik
 {
     public partial class MonCompte : Form
     {
-        private int numColonne = 4;
+        private int numColonne = 5; //nombre de colonne nécessaire pour l'affichage des pochettes
         private List<ALBUMS> ToutLesAlbums;
 
         public MonCompte()
         {
             InitializeComponent();
 
-            ToutLesAlbums = Outils.musique.ALBUMS.ToList(); //modification necessaire au niveau de l'emprunt, syncro necessaire?
+            ToutLesAlbums = Outils.musique.ALBUMS.ToList();
 
             initDataGridView();
             DataGridViewImageColumn img = new DataGridViewImageColumn();
@@ -43,6 +43,7 @@ namespace Dedisclasik
             string editeur;
             string annee;
             string genre;
+            string dejaProlonge = "";
 
             dataGridEmprunt.Rows.Clear();
             if (Connexion.abonné.EMPRUNTER != null)
@@ -55,7 +56,16 @@ namespace Dedisclasik
                     if (al.GENRES != null) { genre = al.GENRES.LIBELLÉ_GENRE.ToString(); } else { genre = "Non rensigné"; }
                     if (al.EDITEURS != null) { editeur = al.EDITEURS.NOM_EDITEUR.ToString(); } else { editeur = "Non renseigné"; }
                     if (al.ANNÉE_ALBUM != null) { annee = al.ANNÉE_ALBUM.ToString(); } else { annee = "Non renseigné"; }
-                    string[] row = { al.TITRE_ALBUM, genre, editeur, annee };
+                    EMPRUNTER emprunt = null;
+                    /*
+                    foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
+                    {
+                        if(emp.ABONNÉS.Equals(al)) { emprunt = emp; }
+                    }
+                    if(emprunt.DATE_EMPRUNT != null && emprunt.)
+                    if (Outils.dejaProlongé(emprunt)) { dejaProlonge = "X"; }
+                    */
+                    string[] row = { al.TITRE_ALBUM, genre, editeur, annee, dejaProlonge};
 
                     dataGridEmprunt.Rows.Add(row);
                     dataGridEmprunt.Rows[i].Cells[numColonne].Value = ImagePochette(al.POCHETTE);
@@ -162,9 +172,9 @@ namespace Dedisclasik
 
         public void initDataGridView()
         {
-            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année" }, dataGridEmprunt); 
+            Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année", "Déjà prolongé" }, dataGridEmprunt);
             Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
-            AfficherAlbums();
+            InitialiserAlbums();
         }
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
@@ -224,7 +234,7 @@ namespace Dedisclasik
                 m.EMPRUNTER.Add(emprunt);
                 pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "X";
             }
-            m.SaveChanges(); //gestion de la mise a jour de la lsite necessaire
+            m.SaveChanges();
         }
 
         private void rechercheTitre_TextChanged(object sender, EventArgs e)
@@ -237,10 +247,10 @@ namespace Dedisclasik
             pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Titre") && r.Cells["Titre"]
             .Value.ToString().Trim().ToLower().Contains(rechercheTitre.Text.ToString().ToLower()))
                 .ToList().ForEach(row => row.Visible = true);
-          
+
         }
 
-        private void AfficherAlbums()
+        private void InitialiserAlbums()
         {
             int i = 0;
             foreach (ALBUMS al in ToutLesAlbums)
@@ -256,8 +266,21 @@ namespace Dedisclasik
             if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
                        && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
             {
-                
+                /*
+                string titre = al.TITRE_ALBUM.Trim();
+                emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
+                emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
+                emprunt.DATE_EMPRUNT = date;
+                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
+                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
+                emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
+
+                m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
+                m.EMPRUNTER.Add(emprunt);
+                */
+                pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "";
             }
+            Outils.musique.SaveChanges();
         }
 
         private void ongletsAbonné_SelectedIndexChanged(object sender, EventArgs e)
