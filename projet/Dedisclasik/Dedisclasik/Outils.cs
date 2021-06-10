@@ -34,17 +34,17 @@ namespace Dedisclasik
             dg.Rows.Clear();
             dg.Columns.Clear();
             dg.ColumnCount = nbColonnes;
- 
+
             int i = 0;
-            foreach(string s in attributs)
+            foreach (string s in attributs)
             {
                 dg.Columns[i].Name = s;
                 dg.Columns[i].Width = dg.Width / nbColonnes;
-                i++; 
+                i++;
             }
         }
 
-        public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab )
+        public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab)
         {
             btPrec.Enabled = true;
             btNext.Enabled = true;
@@ -59,7 +59,7 @@ namespace Dedisclasik
             }
             if (pgNb >= (int)nb)
             {
-                btNext.Enabled = false ;
+                btNext.Enabled = false;
             }
 
         }
@@ -98,11 +98,11 @@ namespace Dedisclasik
             musique.EMPRUNTER.Remove(getEmprunt());
             musique.SaveChanges();
         }
-        
+
         #endregion
 
         #region get
-        #region get
+        
         public static ABONNÉS getAbo()
         {
             return musique.ABONNÉS.Where(a => a.NOM_ABONNÉ.Trim().Equals("test") && a.PRÉNOM_ABONNÉ.Trim().Equals("unitaire")
@@ -124,4 +124,5 @@ namespace Dedisclasik
         }
         #endregion
     }
+
 }
