@@ -17,8 +17,6 @@ namespace Dedisclasik
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
         }
-        //feedback avec de messages box
-
 
         public List<EMPRUNTER> listEmpruntProlong()
         {
