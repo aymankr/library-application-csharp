@@ -53,7 +53,7 @@ namespace Dedisclasik
             this.listPaysBox.Location = new System.Drawing.Point(405, 106);
             this.listPaysBox.Name = "listPaysBox";
             this.listPaysBox.Size = new System.Drawing.Size(100, 21);
-            this.listPaysBox.TabIndex = 28;
+            this.listPaysBox.TabIndex = 5;
             // 
             // button1
             // 
@@ -61,7 +61,7 @@ namespace Dedisclasik
             this.button1.Location = new System.Drawing.Point(472, 209);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(55, 55);
-            this.button1.TabIndex = 27;
+            this.button1.TabIndex = 8;
             this.button1.Text = "Annuler";
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -88,14 +88,14 @@ namespace Dedisclasik
             this.login.Location = new System.Drawing.Point(106, 106);
             this.login.Name = "login";
             this.login.Size = new System.Drawing.Size(100, 20);
-            this.login.TabIndex = 24;
+            this.login.TabIndex = 2;
             // 
             // ajout
             // 
             this.ajout.Location = new System.Drawing.Point(411, 209);
             this.ajout.Name = "ajout";
             this.ajout.Size = new System.Drawing.Size(55, 55);
-            this.ajout.TabIndex = 22;
+            this.ajout.TabIndex = 7;
             this.ajout.Text = "OK";
             this.ajout.UseVisualStyleBackColor = true;
             this.ajout.Click += new System.EventHandler(this.ajout_Click);
@@ -132,21 +132,21 @@ namespace Dedisclasik
             this.prenom.Location = new System.Drawing.Point(405, 56);
             this.prenom.Name = "prenom";
             this.prenom.Size = new System.Drawing.Size(100, 20);
-            this.prenom.TabIndex = 18;
+            this.prenom.TabIndex = 4;
             // 
             // mdp
             // 
             this.mdp.Location = new System.Drawing.Point(106, 156);
             this.mdp.Name = "mdp";
             this.mdp.Size = new System.Drawing.Size(100, 20);
-            this.mdp.TabIndex = 17;
+            this.mdp.TabIndex = 3;
             // 
             // nom
             // 
             this.nom.Location = new System.Drawing.Point(106, 56);
             this.nom.Name = "nom";
             this.nom.Size = new System.Drawing.Size(100, 20);
-            this.nom.TabIndex = 16;
+            this.nom.TabIndex = 1;
             // 
             // label4
             // 
@@ -162,7 +162,7 @@ namespace Dedisclasik
             this.mdp2.Location = new System.Drawing.Point(405, 156);
             this.mdp2.Name = "mdp2";
             this.mdp2.Size = new System.Drawing.Size(100, 20);
-            this.mdp2.TabIndex = 29;
+            this.mdp2.TabIndex = 6;
             // 
             // label6
             // 
@@ -197,6 +197,7 @@ namespace Dedisclasik
             this.Name = "Inscription";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inscription";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Inscription_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

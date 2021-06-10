@@ -44,7 +44,7 @@ namespace Dedisclasik
             this.connexion_button.Location = new System.Drawing.Point(244, 219);
             this.connexion_button.Name = "connexion_button";
             this.connexion_button.Size = new System.Drawing.Size(137, 23);
-            this.connexion_button.TabIndex = 15;
+            this.connexion_button.TabIndex = 3;
             this.connexion_button.Text = "Se connecter";
             this.connexion_button.UseVisualStyleBackColor = true;
             this.connexion_button.Click += new System.EventHandler(this.connexion_Click);
@@ -54,7 +54,7 @@ namespace Dedisclasik
             this.inscription_button.Location = new System.Drawing.Point(310, 278);
             this.inscription_button.Name = "inscription_button";
             this.inscription_button.Size = new System.Drawing.Size(97, 23);
-            this.inscription_button.TabIndex = 14;
+            this.inscription_button.TabIndex = 4;
             this.inscription_button.Text = "Inscrivez-vous";
             this.inscription_button.UseVisualStyleBackColor = true;
             this.inscription_button.Click += new System.EventHandler(this.inscription_Click);
@@ -83,14 +83,14 @@ namespace Dedisclasik
             this.mdpConnexion.Location = new System.Drawing.Point(307, 161);
             this.mdpConnexion.Name = "mdpConnexion";
             this.mdpConnexion.Size = new System.Drawing.Size(100, 20);
-            this.mdpConnexion.TabIndex = 11;
+            this.mdpConnexion.TabIndex = 2;
             // 
             // loginConnexion
             // 
             this.loginConnexion.Location = new System.Drawing.Point(307, 113);
             this.loginConnexion.Name = "loginConnexion";
             this.loginConnexion.Size = new System.Drawing.Size(100, 20);
-            this.loginConnexion.TabIndex = 10;
+            this.loginConnexion.TabIndex = 1;
             // 
             // label2
             // 

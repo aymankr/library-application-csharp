@@ -80,5 +80,13 @@ namespace Dedisclasik
                         select p.NOM_PAYS.Trim()).ToArray();
             listPaysBox.Items.AddRange(pays);
         }
+
+        private void Inscription_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Tab))
+            {
+                nom.Focus();
+            }
+        }
     }
 }
