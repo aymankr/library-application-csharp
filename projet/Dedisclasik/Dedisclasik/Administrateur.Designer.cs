@@ -196,19 +196,9 @@ namespace Dedisclasik
             this.labelRecherche.TabIndex = 18;
             this.labelRecherche.Text = "Recherche :";
             // 
-            // label2
-            // 
-            this.pg.AutoSize = true;
-            this.pg.Location = new System.Drawing.Point(809, 64);
-            this.pg.Name = "pg";
-            this.pg.Size = new System.Drawing.Size(35, 13);
-            this.pg.TabIndex = 13;
-            this.pg.Text = "Page ";
-            this.pg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // prec
             // 
-            this.prec.Location = new System.Drawing.Point(897, 59);
+            this.prec.Location = new System.Drawing.Point(649, 83);
             this.prec.Name = "prec";
             this.prec.Size = new System.Drawing.Size(31, 23);
             this.prec.TabIndex = 14;
@@ -218,7 +208,7 @@ namespace Dedisclasik
             // 
             // suiv
             // 
-            this.suiv.Location = new System.Drawing.Point(934, 58);
+            this.suiv.Location = new System.Drawing.Point(686, 83);
             this.suiv.Name = "suiv";
             this.suiv.Size = new System.Drawing.Size(31, 23);
             this.suiv.TabIndex = 15;
@@ -234,23 +224,19 @@ namespace Dedisclasik
             this.pg.Size = new System.Drawing.Size(38, 13);
             this.pg.TabIndex = 21;
             this.pg.Text = "Page :";
+            this.pg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 607);
-            this.Controls.Add(this.pg);
-            this.Controls.Add(this.suiv);
-            this.Controls.Add(this.prec);
             this.Controls.Add(this.labelRecherche);
             this.Controls.Add(this.recherche);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.suiv);
             this.Controls.Add(this.prec);
             this.Controls.Add(this.pg);
-            this.Controls.Add(this.listAbo);
             this.Controls.Add(this.sousTitre);
             this.Controls.Add(this.deconnect);
             this.Controls.Add(this.label1);

@@ -15,8 +15,9 @@ namespace Dedisclasik
     public partial class Administrateur : Form
     {
         public Administrateur()
-        {  
+        {
             InitializeComponent();
+            Outils.musique = new MusiquePT2_NEntities();
             Outils.actions.Clear();
             Outils.actions.Add("vide");
             Outils.cptActions = 0;
@@ -28,7 +29,7 @@ namespace Dedisclasik
         #region lists
         public List<EMPRUNTER> listEmpruntProlong()
         {
-            
+
             List<EMPRUNTER> listEmprunts = new List<EMPRUNTER>();
             var prolong = Outils.musique.EMPRUNTER;
             //nb total de page
@@ -42,7 +43,7 @@ namespace Dedisclasik
             }
             //affichage label/boutons
             Outils.activePaging(nbT, prec, suiv, pg);
-            
+
 
             foreach (EMPRUNTER emp in prolong)
             {
@@ -65,7 +66,7 @@ namespace Dedisclasik
 
             Outils.activePaging(cmd.Count(), prec, suiv, pg);
 
-            var emprunteurs  = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
+            var emprunteurs = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (EMPRUNTER a in emprunteurs)
             {
                 abos.Add(a);
@@ -77,8 +78,8 @@ namespace Dedisclasik
         {
             List<ALBUMS> albums = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
-            
-            
+
+
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
@@ -125,7 +126,7 @@ namespace Dedisclasik
             }
             return albs;
         }
-    #endregion
+        #endregion
         private bool afficherDescription(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -155,44 +156,32 @@ namespace Dedisclasik
             Outils.pgNb--;
             switchNextPrev(sender, e);
         }
-
-        
         private void switchNextPrev(object sender, EventArgs e)
         {
 
             switch (Outils.fonction)
             {
                 case "prolong":
-                    
-                    empruntProlong_Click(sender, e);
-                    
+                    empruntsProlongésToolStripMenuItem_Click(sender, e);
                     break;
                 case "retard":
-                    empruntRetard_Click(sender, e);
-                    
-                    break;
-                case "top":
-                    empruntMeilleurs_Click(sender, e);
-                    
+                    empruntsEnRetardToolStripMenuItem_Click(sender, e);
                     break;
                 case "fantome":
-                    albumsNonEmprunts_Click(sender, e);
-                    
+                    albumsNonEmpruntésToolStripMenuItem_Click(sender, e);
                     break;
                 case "abo":
-                    listAbo_Click(sender, e);
-                    
+                    consulterLesAbonnésToolStripMenuItem_Click(sender, e);
                     break;
-                case "test":
-                    button1_Click(sender, e);
-                    
+                case "top":
+                    top10MeilleursEmpruntsToolStripMenuItem_Click(sender, e);
                     break;
-
             }
         }
         private void suiv_Click(object sender, EventArgs e)
         {
-
+            Outils.pgNb++;
+            switchNextPrev(sender, e);
         }
 
         private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
