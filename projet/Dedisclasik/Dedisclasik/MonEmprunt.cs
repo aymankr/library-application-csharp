@@ -23,13 +23,5 @@ namespace Dedisclasik
                             select a);
             return album.First();
         }
-        
-        public static ALBUMS typeGenre(string titre)
-        {
-            var album = (from a in Outils.musique.ALBUMS
-                            where a.TITRE_ALBUM == titre
-                            select a);
-            return album.First();
-        }
     }
 }
