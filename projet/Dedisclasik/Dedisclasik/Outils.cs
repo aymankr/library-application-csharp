@@ -91,6 +91,15 @@ namespace Dedisclasik
             musique.EMPRUNTER.Remove(getEmprunt());
             musique.SaveChanges();
         }
+        public static void comparer()
+        {
+            actions.Add(fonction);
+            cptActions++;
+            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
+            {
+                pgNb = 1;
+            }
+        }
 
         public static ABONNÉS getAbo()
         {
