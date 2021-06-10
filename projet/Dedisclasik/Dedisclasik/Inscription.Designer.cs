@@ -48,10 +48,11 @@ namespace Dedisclasik
             // 
             // listPaysBox
             // 
+            this.listPaysBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listPaysBox.FormattingEnabled = true;
             this.listPaysBox.Location = new System.Drawing.Point(405, 106);
             this.listPaysBox.Name = "listPaysBox";
-            this.listPaysBox.Size = new System.Drawing.Size(121, 21);
+            this.listPaysBox.Size = new System.Drawing.Size(100, 21);
             this.listPaysBox.TabIndex = 28;
             // 
             // button1
@@ -69,9 +70,9 @@ namespace Dedisclasik
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(246, 109);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(36, 13);
+            this.label5.Size = new System.Drawing.Size(85, 13);
             this.label5.TabIndex = 26;
-            this.label5.Text = "Pays :";
+            this.label5.Text = "Pays (facultatif) :";
             // 
             // loginAbo
             // 

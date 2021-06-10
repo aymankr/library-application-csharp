@@ -34,22 +34,25 @@ namespace Dedisclasik
             abonne.LOGIN_ABONNÉ = loginAbonne;
             abonne.PASSWORD_ABONNÉ = mdpAbonne;
 
-            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals("") || listPaysBox.SelectedItem == null)
+            if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals(""))
             {
                 MessageBox.Show("Veuillez saisir les informations dans les champs spécifiés.");
             }
-            else if (!mdp.Text.Equals(mdp2.Text)) MessageBox.Show("Les mots de passes ne se correspondent pas.");
+            else if (!mdp.Text.Equals(mdp2.Text)) MessageBox.Show("Mot de passe non confirmé.");
             else if (loginExiste(loginAbonne))
             {
                 MessageBox.Show("Le login existe déjà, réessayez.");
             }
             else
             {
-                string paysAbonne = listPaysBox.SelectedItem.ToString();
-                var pays = (from p in musique.PAYS
-                            where paysAbonne.Trim() == p.NOM_PAYS
-                            select p.CODE_PAYS);
-                abonne.CODE_PAYS = pays.First();
+                if (listPaysBox.SelectedItem != null)
+                {
+                    string paysAbonne = listPaysBox.SelectedItem.ToString().Trim();
+                    var pays = (from p in musique.PAYS
+                                where paysAbonne.Equals(p.NOM_PAYS.Trim())
+                                select p.CODE_PAYS);
+                    abonne.CODE_PAYS = pays.First();
+                }
                 musique.ABONNÉS.Add(abonne);
                 musique.SaveChanges();
                 new Connexion().ShowDialog();

@@ -36,45 +36,19 @@ namespace Dedisclasik
             return listEmprunts;
         }
 
-        private void empruntProlong_Click(object sender, EventArgs e)
+        public List<EMPRUNTER> listEmpruntRetard()
         {
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-
-            // US4 : abonnés ayant prolongé leur emprunt
-            var id_album = from al in Outils.musique.ALBUMS
-                           select al.CODE_ALBUM;
-            foreach (EMPRUNTER emp in listEmpruntProlong())
-            {
-                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription(empruntProlong.Text + " : emprunts qui ont été prolongés.");
-        }
-
-        public List<ABONNÉS> listEmpruntRetard()
-        {
-            List<ABONNÉS> abos = new List<ABONNÉS>();
+            List<EMPRUNTER> abos = new List<EMPRUNTER>();
             DateTime dateNow = DateTime.Now;
-            Outils.musique = new MusiquePT2_NEntities(); // nécessaire pour la synchronisation pour le .SaveChanges de la base
 
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null).ToList()
-                .Where(a => (int)(dateNow - a.DATE_RETOUR_ATTENDUE).TotalDays >= 10).Select(a => a.ABONNÉS);
-            foreach (ABONNÉS a in emprunteurs)
+                .Where(a => (int)(dateNow - a.DATE_RETOUR_ATTENDUE).TotalDays >= 10).ToList();
+            foreach (EMPRUNTER a in emprunteurs)
             {
                 abos.Add(a);
             }
             return abos;
-        }
-
-        private void empruntRetard_Click(object sender, EventArgs e)
-        {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-
-            foreach (ABONNÉS a in listEmpruntRetard())
-            {
-                dataGridView1.Rows.Add(new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription(empruntRetard.Text + " : abonnés ayant des empruntés non rapportés depuis 10 jours.");
         }
 
         public List<ALBUMS> listMeilleurEmprunt()
@@ -92,18 +66,6 @@ namespace Dedisclasik
             return albums;
         }
 
-        private void empruntMeilleurs_Click(object sender, EventArgs e)
-        {
-            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
-
-            // US7 : les 10 plus empruntés de l'année
-            foreach (ALBUMS a in listMeilleurEmprunt())
-            {
-                dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
-            }
-            afficherDescription(empruntMeilleurs.Text + " : les 10 albums les plus empruntés dans l'année.");
-        }
-
         public List<ABONNÉS> listAbonnesPurge()
         {
             List<ABONNÉS> abos = new List<ABONNÉS>();
@@ -117,34 +79,6 @@ namespace Dedisclasik
                 abos.Add(a);
             }
             return abos;
-        }
-
-        private void purger_Click(object sender, EventArgs e)
-        {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-            DateTime dateNow = DateTime.Now;
-
-            // US6 remove abonnes qui n'ont pas empruntés depuis un an
-            foreach (ABONNÉS a in listAbonnesPurge())
-            {
-                dataGridView1.Rows.Add(new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ });
-            }
-
-            if (!afficherDescription(purger.Text + " : purger les abonnés n'ayant pas emprunté depuis plus d'un an."))
-            {
-                var confirmResult = MessageBox.Show("Êtes-vous sûr de vouloir tout supprimer ?", "Purger", MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    var empruntsExpires = Outils.musique.EMPRUNTER
-                        .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
-                    var abonnesExpires = Outils.musique.EMPRUNTER
-                        .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
-                        .Select(a => a.ABONNÉS).ToList();
-                    Outils.musique.EMPRUNTER.RemoveRange(empruntsExpires);
-                    Outils.musique.ABONNÉS.RemoveRange(abonnesExpires);
-                    Outils.musique.SaveChanges();
-                }
-            }
         }
 
         public List<ALBUMS> listAlbumNonEmprunt()
@@ -163,15 +97,6 @@ namespace Dedisclasik
                 albs.Add(a);
             }
             return albs;
-        }
-
-        private void albumsNonEmprunts_Click(object sender, EventArgs e)
-        {
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-
-            //  US8 : liste albums non empruntés depuis + d'un an 
-            foreach (ALBUMS a in listAlbumNonEmprunt()) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
-            afficherDescription(albumsNonEmprunts.Text + " : albums non empruntés depuis plus d'un an.");
         }
 
         private bool afficherDescription(string boutonSousTitre)
@@ -194,6 +119,62 @@ namespace Dedisclasik
 
         private void listAbo_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
+            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+
+            // US4 : abonnés ayant prolongé leur emprunt
+            var id_album = from al in Outils.musique.ALBUMS
+                           select al.CODE_ALBUM;
+            foreach (EMPRUNTER emp in listEmpruntProlong())
+            {
+                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
+            }
+            afficherDescription("Emprunts qui ont été prolongés.");
+        }
+
+        private void empruntsEnRetardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
+            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+
+            foreach (EMPRUNTER emp in listEmpruntRetard())
+            {
+                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
+            }
+            afficherDescription("Abonnés ayant des empruntés non rapportés depuis 10 jours.");
+        }
+
+        private void top10MeilleursEmpruntsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labelRecherche.Text = "Recherche par titre :";
+            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
+
+            // US7 : les 10 plus empruntés de l'année
+            foreach (ALBUMS a in listMeilleurEmprunt())
+            {
+                dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
+            }
+            afficherDescription("Les 10 albums les plus empruntés dans l'année.");
+        }
+
+        private void albumsNonEmpruntésToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labelRecherche.Text = "Recherche par titre :";
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+
+            //  US8 : liste albums non empruntés depuis + d'un an 
+            foreach (ALBUMS a in listAlbumNonEmprunt()) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
+            afficherDescription("Albums non empruntés depuis plus d'un an.");
+        }
+
+        private void consulterLesAbonnésToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labelRecherche.Text = "Recherche par nom ou prénom :";
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
             var abos = Outils.musique.ABONNÉS.ToList();
 
@@ -203,7 +184,54 @@ namespace Dedisclasik
                 string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
                 dataGridView1.Rows.Add(row);
             }
-            afficherDescription(listAbo.Text + " : liste des abonnés.");
+            afficherDescription("Liste des abonnés.");
+        }
+
+        private void purgerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            DateTime dateNow = DateTime.Now;
+
+            // US6 remove abonnes qui n'ont pas empruntés depuis un an
+            foreach (ABONNÉS a in listAbonnesPurge())
+            {
+                dataGridView1.Rows.Add(new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ });
+            }
+
+            if (!afficherDescription("Purger les abonnés n'ayant pas emprunté depuis plus d'un an."))
+            {
+                var confirmResult = MessageBox.Show("Êtes-vous sûr de vouloir tout supprimer ?", "Purger", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var empruntsExpires = Outils.musique.EMPRUNTER
+                        .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0).ToList();
+                    var abonnesExpires = Outils.musique.EMPRUNTER
+                        .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                        .Select(a => a.ABONNÉS).ToList();
+                    Outils.musique.EMPRUNTER.RemoveRange(empruntsExpires);
+                    Outils.musique.ABONNÉS.RemoveRange(abonnesExpires);
+                    Outils.musique.SaveChanges();
+                }
+            }
+        }
+
+        private void recherche_TextChanged(object sender, EventArgs e)
+        {
+            bool contientNom = dataGridView1.Columns.Contains("Nom");
+            bool contientPrenom = dataGridView1.Columns.Contains("Prénom");
+
+            //pour abonnés
+            dataGridView1.Rows.OfType<DataGridViewRow>()
+                .ToList().ForEach(row => row.Visible = false);
+
+            //recherche avancée
+            dataGridView1.Rows.OfType<DataGridViewRow>().Where(r => dataGridView1.Columns.Contains("Titre") && r.Cells["Titre"]
+            .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower())
+            || (contientNom && r.Cells["Nom"]
+            .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower()))
+            || (contientPrenom && r.Cells["Prénom"]
+            .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower())))
+                .ToList().ForEach(row => row.Visible = true);
         }
     }
 }

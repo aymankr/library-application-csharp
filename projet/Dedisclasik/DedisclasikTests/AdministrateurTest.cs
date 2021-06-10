@@ -15,32 +15,31 @@ namespace DedisclasikTests
         [TestMethod]
         public void TestEmpruntsProlonges()
         {
-            List<EMPRUNTER> listEmpruntsProlong = new List<EMPRUNTER>();
+            Outils.chargerElements();
+            //supprimerElements();
+            ABONNÉS abo = Outils.getAbo();
+            EMPRUNTER emp = Outils.getEmprunt();
+            /*List<EMPRUNTER> listEmpruntsProlong = new List<EMPRUNTER>();
             listEmpruntsProlong.AddRange(admin.listEmpruntProlong());
 
-            // emprunt qui n'a pas été prolongé : Mozart: Bastien und Bastienne
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 283).First();
-            int codeAlbum1 = album1.CODE_ALBUM;
-
             List<int> codeAlbums = new List<int>();
-            foreach(EMPRUNTER e in listEmpruntsProlong)
+            foreach (EMPRUNTER e in listEmpruntsProlong)
             {
                 codeAlbums.Add(e.ALBUMS.CODE_ALBUM);
             }
-            Assert.IsFalse(codeAlbums.Contains(codeAlbum1));
+            Assert.IsFalse(codeAlbums.Contains(emp.CODE_ALBUM));*/
 
-            // qui a été prolongé : mozart complete
-            EMPRUNTER album2 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 4).First();
-            int codeAlbum2 = album2.CODE_ALBUM;
+            Assert.IsFalse(Outils.dejaProlongé(emp));
 
-            List<int> codeAlbums2 = new List<int>();
-            foreach (EMPRUNTER e in listEmpruntsProlong)
-            {
-                codeAlbums2.Add(e.ALBUMS.CODE_ALBUM);
-            }
-            Assert.IsTrue(codeAlbums2.Contains(codeAlbum2));
+            emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+            m.SaveChanges();
+
+            Assert.IsTrue(Outils.dejaProlongé(emp));
+
+            Outils.supprimerElements();
         }
-        
+
+        /*
         [TestMethod]
         public void testEmpruntsRetard()
         {
@@ -86,7 +85,7 @@ namespace DedisclasikTests
             album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-25 16:50:26.967");
             m.SaveChanges();
         }
-        /* public void testMeilleursEmprunts()
+         public void testMeilleursEmprunts()
          {
              // get liste meilleurs emprunts
              // vérifier qu'un emprunt n'est pas présent dans la liste des meilleurs
@@ -117,7 +116,7 @@ namespace DedisclasikTests
                  codeAlbums2.Add(e.ALBUMS.CODE_ALBUM);
              }
              Assert.IsTrue(codeAlbums2.Contains(codeAlbum2));
-         }*/
+         }
 
         [TestMethod]
         public void testAlbumNonEmprunt()
@@ -127,7 +126,7 @@ namespace DedisclasikTests
             // modifier (reculer de 1 an) sa date du dernier emprunt
             // vérifier qu'il est présent dans la liste
 
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 424).First();
+            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 648).First();
 
             List<ALBUMS> listEmpruntsRetard = new List<ALBUMS>();
             listEmpruntsRetard.AddRange(admin.listAlbumNonEmprunt());
@@ -165,7 +164,6 @@ namespace DedisclasikTests
             // purger
             // vérifier que la liste est vide
 
-
         }
         public void testInscription()
         {
@@ -182,6 +180,6 @@ namespace DedisclasikTests
             // vérifier que les listes ont les mêmes contenus
 
             // ne pas faire US admin
-        }
+        }*/
     }
 }
