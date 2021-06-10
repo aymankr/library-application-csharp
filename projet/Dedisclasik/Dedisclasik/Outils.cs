@@ -22,17 +22,30 @@ namespace Dedisclasik
             return dejaProlongé;
         }
 
-        public static void chargerDataGrid(int nbColonnes, string[] attributs, System.Windows.Forms.DataGridView dg)
+        public static bool dejaEmprunté(ALBUMS album)
+        {
+            foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
+            {
+                if (album.Equals(emprunt.ALBUMS))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void chargerDataGrid(string[] attributs, System.Windows.Forms.DataGridView dg)
         {
             dg.Rows.Clear();
             dg.Columns.Clear();
-            dg.ColumnCount = nbColonnes;
+            int longueur = attributs.Length;
+            dg.ColumnCount = longueur;
 
             int i = 0;
-            foreach(string s in attributs)
+            foreach (string s in attributs)
             {
                 dg.Columns[i].Name = s;
-                dg.Columns[i].Width = dg.Width / nbColonnes;
+                dg.Columns[i].Width = dg.Width / longueur;
                 i++;
             }
         public static bool dejaEmprunté(ALBUMS album)
