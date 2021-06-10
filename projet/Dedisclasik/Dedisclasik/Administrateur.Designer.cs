@@ -193,6 +193,46 @@ namespace Dedisclasik
             this.labelRecherche.TabIndex = 18;
             this.labelRecherche.Text = "Recherche :";
             // 
+            // pg
+            // 
+            this.pg.AutoSize = true;
+            this.pg.Location = new System.Drawing.Point(809, 64);
+            this.pg.Name = "pg";
+            this.pg.Size = new System.Drawing.Size(35, 13);
+            this.pg.TabIndex = 13;
+            this.pg.Text = "Page ";
+            this.pg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // prec
+            // 
+            this.prec.Location = new System.Drawing.Point(897, 59);
+            this.prec.Name = "prec";
+            this.prec.Size = new System.Drawing.Size(31, 23);
+            this.prec.TabIndex = 14;
+            this.prec.Text = "<";
+            this.prec.UseVisualStyleBackColor = true;
+            this.prec.Click += new System.EventHandler(this.prec_Click);
+            // 
+            // suiv
+            // 
+            this.suiv.Location = new System.Drawing.Point(934, 58);
+            this.suiv.Name = "suiv";
+            this.suiv.Size = new System.Drawing.Size(31, 23);
+            this.suiv.TabIndex = 15;
+            this.suiv.Text = ">";
+            this.suiv.UseVisualStyleBackColor = true;
+            this.suiv.Click += new System.EventHandler(this.suiv_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(579, 64);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

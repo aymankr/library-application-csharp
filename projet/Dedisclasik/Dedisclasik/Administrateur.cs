@@ -114,23 +114,88 @@ namespace Dedisclasik
 
         private bool afficherDescription(string boutonSousTitre)
         {
-            sousTitre.Text = boutonSousTitre;
-            bool estVide = false;
-            if (dataGridView1.Rows.Count == 0)
+            Outils.fonction = "abo";
+            Outils.comparer();
+            var cmd = Outils.musique.ABONNÉS;
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
+            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            var abos = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+
+            // US 12 liste des abonnés
+            foreach (ABONNÉS a in abos)
             {
-                MessageBox.Show("Liste vide.");
-                estVide = true;
+                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
+                dataGridView1.Rows.Add(row);
             }
-            return estVide;
+            afficherMessageVide(listAbo.Text + " : liste des abonnés.");
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Outils.fonction = "test";
+            Outils.comparer();
+            var cmd = Outils.musique.EDITEURS;
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
+
+            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (EDITEURS a in affiche)
+            {
+                string[] row = new string[] { a.CODE_EDITEUR.ToString() };
+                dataGridView1.Rows.Add(row);
+            }
+            afficherMessageVide(listAbo.Text + " : test paging");
+        }
+        #endregion
+
+        #region Autres Bouttons
         private void deconnect_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes) Close();
         }
 
-        private void listAbo_Click(object sender, EventArgs e)
+        private void prec_Click(object sender, EventArgs e)
+        {
+            Outils.pgNb--;
+            switchNextPrev(sender, e);
+        }
+
+        
+        private void switchNextPrev(object sender, EventArgs e)
+        {
+
+            switch (Outils.fonction)
+            {
+                case "prolong":
+                    
+                    empruntProlong_Click(sender, e);
+                    
+                    break;
+                case "retard":
+                    empruntRetard_Click(sender, e);
+                    
+                    break;
+                case "top":
+                    empruntMeilleurs_Click(sender, e);
+                    
+                    break;
+                case "fantome":
+                    albumsNonEmprunts_Click(sender, e);
+                    
+                    break;
+                case "abo":
+                    listAbo_Click(sender, e);
+                    
+                    break;
+                case "test":
+                    button1_Click(sender, e);
+                    
+                    break;
+
+            }
+        }
+        private void suiv_Click(object sender, EventArgs e)
         {
 
         }
@@ -194,8 +259,8 @@ namespace Dedisclasik
             // US 12 liste des abonnés
             foreach (ABONNÉS a in abos)
             {
-                string[] row = new string[] { a.NOM_ABONNÉ, a.PRÉNOM_ABONNÉ };
-                dataGridView1.Rows.Add(row);
+                MessageBox.Show("Liste vide.");
+                estVide = true;
             }
             afficherDescription("Liste des abonnés.");
         }
