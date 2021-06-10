@@ -13,7 +13,8 @@ namespace Dedisclasik
 {
     public partial class MonCompte : Form
     {
-        private int numColonne = 5; //nombre de colonne nécessaire pour l'affichage des pochettes
+        private int numColonneEmprunt = 5; //nombre de colonne nécessaire pour l'affichage des pochettes dans mon compte
+        private int numColonneAlbums = 6; //nombre de colonne nécessaire pour l'affichage des pochettes dans la Discothèque
         private List<ALBUMS> ToutLesAlbums;
 
         public MonCompte()
@@ -26,7 +27,14 @@ namespace Dedisclasik
             DataGridViewImageColumn img = new DataGridViewImageColumn();
             img.HeaderText = "Pochette";
             img.Width = dataGridEmprunt.Width / 6;
-            dataGridEmprunt.Columns.Insert(numColonne, img);
+            dataGridEmprunt.Columns.Insert(numColonneEmprunt, img);
+
+            DataGridViewImageColumn img2 = new DataGridViewImageColumn();
+            img2.HeaderText = "Pochette";
+            img2.Width = pagesAlbums.Width / 7;
+            pagesAlbums.Columns.Insert(numColonneAlbums, img2);
+
+            InitialiserAlbums();
 
             afficherEmprunts(EMPRUNTER.ListeAlbums());
 
@@ -65,10 +73,10 @@ namespace Dedisclasik
                     if(emprunt.DATE_EMPRUNT != null && emprunt.)
                     if (Outils.dejaProlongé(emprunt)) { dejaProlonge = "X"; }
                     */
-                    string[] row = { al.TITRE_ALBUM, genre, editeur, annee, dejaProlonge};
+                    string[] row = { al.TITRE_ALBUM, genre, editeur, annee, dejaProlonge };
 
                     dataGridEmprunt.Rows.Add(row);
-                    dataGridEmprunt.Rows[i].Cells[numColonne].Value = ImagePochette(al.POCHETTE);
+                    dataGridEmprunt.Rows[i].Cells[numColonneEmprunt].Value = ImagePochette(al.POCHETTE);
                     i++;
                 }
             }
@@ -174,7 +182,6 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année", "Déjà prolongé" }, dataGridEmprunt);
             Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
-            InitialiserAlbums();
         }
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
@@ -204,14 +211,20 @@ namespace Dedisclasik
             }
         }
 
-        private Image ImagePochette(byte[] byteMap)
+        public static Image ImagePochette(byte[] byteMap)
         {
-            Image image;
-            using (var ms = new MemoryStream(byteMap))
+            Image img = null;
+            if (byteMap != null)
             {
-                image = Image.FromStream(ms);
+                Image image;
+                using (var ms = new MemoryStream(byteMap))
+                {
+                    image = Image.FromStream(ms);
+                }
+                img = (Image)(new Bitmap(image, new Size(100, 100)));
             }
-            return (Image)(new Bitmap(image, new Size(100, 100)));
+
+            return img;
         }
 
         private void emprunter_Click(object sender, EventArgs e)
@@ -255,7 +268,9 @@ namespace Dedisclasik
             int i = 0;
             foreach (ALBUMS al in ToutLesAlbums)
             {
+                pagesAlbums.RowTemplate.Height = 100;
                 pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
+                pagesAlbums.Rows[i].Cells[numColonneAlbums].Value = ImagePochette(al.POCHETTE);
                 pagesAlbums.Rows[i].Tag = (ALBUMS)al;
                 i++;
             }
