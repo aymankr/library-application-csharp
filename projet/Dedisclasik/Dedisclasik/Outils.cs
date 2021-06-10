@@ -126,7 +126,6 @@ namespace Dedisclasik
             return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
                 && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
         }
-        #endregion
 
         public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab)
         {
@@ -159,10 +158,13 @@ namespace Dedisclasik
             }
         }
 
-        public static void Deconnexion(Form fenetre)
+        public static EMPRUNTER getEmprunt()
         {
-            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes) fenetre.Close();
+            EMPRUNTER emp = getEmprunt();
+            ABONNÉS abo = getAbo();
+            return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
+                && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
         }
+        #endregion
     }
 }
