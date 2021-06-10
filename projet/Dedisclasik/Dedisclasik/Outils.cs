@@ -48,12 +48,10 @@ namespace Dedisclasik
         {
             btPrec.Enabled = true;
             btNext.Enabled = true;
-            float nbPP = nbMax / pgSz;
+            float nbPP = (float)nbMax / (float)pgSz;
             int nb;
             int nn = (int)nbPP;
-
             if ((float)nn == nbPP) nb = nbMax / pgSz; else nb = nbMax / pgSz + 1;
-            if (nb == 0) nb = 1;
             lab.Text = "Page : " + pgNb.ToString() + "/" + ((int)nb).ToString();
             if (pgNb <= 1)
             {
@@ -61,7 +59,7 @@ namespace Dedisclasik
             }
             if (pgNb >= (int)nb)
             {
-                btNext.Enabled = false;
+                btNext.Enabled = false ;
             }
 
             
