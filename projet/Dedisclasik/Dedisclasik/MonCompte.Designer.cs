@@ -174,11 +174,13 @@ namespace Dedisclasik
             // 
             // pagesAlbums
             // 
+            this.pagesAlbums.AllowUserToAddRows = false;
             this.pagesAlbums.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.pagesAlbums.Location = new System.Drawing.Point(7, 139);
             this.pagesAlbums.MultiSelect = false;
             this.pagesAlbums.Name = "pagesAlbums";
             this.pagesAlbums.ReadOnly = true;
+            this.pagesAlbums.RowHeadersVisible = false;
             this.pagesAlbums.RowHeadersWidth = 51;
             this.pagesAlbums.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.pagesAlbums.Size = new System.Drawing.Size(875, 365);
@@ -331,7 +333,7 @@ namespace Dedisclasik
             this.mon_compte.Location = new System.Drawing.Point(4, 22);
             this.mon_compte.Name = "mon_compte";
             this.mon_compte.Padding = new System.Windows.Forms.Padding(3);
-            this.mon_compte.Size = new System.Drawing.Size(889, 509);
+            this.mon_compte.Size = new System.Drawing.Size(889, 508);
             this.mon_compte.TabIndex = 1;
             this.mon_compte.Text = "Mon compte";
             this.mon_compte.UseVisualStyleBackColor = true;
