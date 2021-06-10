@@ -9,25 +9,44 @@ namespace DedisclasikTests
     [TestClass]
     public class AdministrateurTest
     {
-        private MusiquePT2_NEntities m = new MusiquePT2_NEntities();
         private Administrateur admin = new Administrateur();
+        private Inscription inscription = new Inscription();
+        private MusiquePT2_NEntities m = new MusiquePT2_NEntities();
 
         [TestMethod]
         public void TestEmpruntsProlonges()
         {
-            /*Outils.chargerElements();
-            //supprimerElements();
-            EMPRUNTER emp = Outils.getEmprunt();
+            inscription.inscrire("test", "unitaire", "testdu33", "123");
+            ABONNÉS abo = Outils.getAbo();
+            EMPRUNTER emp = Outils.creerEmprunt(abo, "2021-03-10 16:50:26.967", "2021-03-10 17:50:26.967");
 
+            //l'emprunt n'est pas prolongé
             Assert.IsFalse(Outils.dejaProlongé(emp));
 
+            //l'emprunt est prolongé
+            /*
             emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
             m.SaveChanges();
-
             Assert.IsTrue(Outils.dejaProlongé(emp));
+            */
 
-            Outils.supprimerEmprunt();
-            Outils.supprimerAbonnes();*/
+            Outils.supprimerEmprunt(emp);
+            Outils.supprimerAbonnes();
+        }
+
+        [TestMethod]
+        public void testEmpruntsEnRetard()
+        {
+            inscription.inscrire("test", "unitaire", "testdu33", "123");
+            ABONNÉS abo = Outils.getAbo();
+            EMPRUNTER emp = Outils.creerEmprunt(abo, "2021-03-10 16:50:26.967", "2021-03-10 17:50:26.967");
+
+            //l'emprunt est en retard
+            DateTime dateNow = DateTime.Now;
+            Assert.IsTrue((int)(dateNow - emp.DATE_RETOUR_ATTENDUE).TotalDays >= 10);
+
+            Outils.supprimerEmprunt(emp);
+            Outils.supprimerAbonnes();
         }
 
         /*
@@ -155,22 +174,6 @@ namespace DedisclasikTests
             // purger
             // vérifier que la liste est vide
 
-        }
-        public void testInscription()
-        {
-            // get liste abos
-            // inscrire nouvel abo
-            // vérifier qu'il existe dans la liste
-
-            // ne pas faire US admin
-        }
-        public void testListeAbos()
-        {
-            // get liste abos par la fonction admin
-            // get liste abos par requete de la base
-            // vérifier que les listes ont les mêmes contenus
-
-            // ne pas faire US admin
         }*/
     }
 }
