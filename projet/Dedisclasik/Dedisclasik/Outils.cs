@@ -8,11 +8,13 @@ namespace Dedisclasik
 {
     public static class Outils
     {
+        #region attributs pagination
         public static int pgNb = 1;
         public static int pgSz = 15;
         public static String fonction = "";
         public static List<string> actions = new List<string>();
         public static int cptActions = 0;
+        #endregion
         public static MusiquePT2_NEntities musique { get; set; }
 
         public static bool dejaProlongé(EMPRUNTER emprunt)
@@ -35,11 +37,9 @@ namespace Dedisclasik
             int i = 0;
             foreach(string s in attributs)
             {
-                
                 dg.Columns[i].Name = s;
                 dg.Columns[i].Width = dg.Width / nbColonnes;
-                i++;
-                
+                i++; 
             }
         }
 
@@ -66,31 +66,7 @@ namespace Dedisclasik
                 pgNb = 1;
             }
         }
-
-        public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab )
-        {
-            btPrec.Enabled = true;
-            btNext.Enabled = true;
-            lab.Text = "Page : " + pgNb.ToString() + "/" + (nbMax / pgSz + 1).ToString();
-            if (pgNb <= 1)
-            {
-                btPrec.Enabled = false;
-            }
-            if (pgNb >= (int)(nbMax / pgSz) + 1)
-            {
-                btNext.Enabled = false;
-            }
-        }
-        public static void comparer()
-        {
-            actions.Add(fonction);
-            cptActions++;
-            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
-            {
-                pgNb = 1;
-            }
-        }
-
+        #region gestion elements
         public static void chargerElements()
         {
             ABONNÉS abo = new ABONNÉS();
@@ -115,7 +91,9 @@ namespace Dedisclasik
             musique.EMPRUNTER.Remove(getEmprunt());
             musique.SaveChanges();
         }
+        #endregion
 
+        #region get
         public static ABONNÉS getAbo()
         {
             return musique.ABONNÉS.Where(a => a.NOM_ABONNÉ.Trim().Equals("test") && a.PRÉNOM_ABONNÉ.Trim().Equals("unitaire")
@@ -135,5 +113,6 @@ namespace Dedisclasik
             return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
                 && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
         }
+        #endregion
     }
 }

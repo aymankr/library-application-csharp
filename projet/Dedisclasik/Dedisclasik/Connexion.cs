@@ -33,23 +33,26 @@ namespace Dedisclasik
         {
             string login = loginConnexion.Text;
             string mdp = mdpConnexion.Text;
-
-           if (connexionAdminValide())
-            {
-                Hide();
-                Administrateur administrateur = new Administrateur();
-                administrateur.ShowDialog();
-                Show();
-            }
-            else if (connexionValide(login, mdp))
-            {
-                abonne = ABONNÉS.RechercheAbonne(login);
-                RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
-                Hide();
-                emprunt.ShowDialog();
-                Show();
-            }
-            else MessageBox.Show("Connexion échouée, réessayez.");
+            Hide();
+            Administrateur administrateur = new Administrateur();
+            administrateur.ShowDialog();
+            Show();
+            //if (connexionAdminValide())
+            //{
+            //    Hide();
+            //    Administrateur administrateur = new Administrateur();
+            //    administrateur.ShowDialog();
+            //    Show();
+            //}
+            //else if (connexionValide(login, mdp))
+            //{
+            //    abonne = ABONNÉS.RechercheAbonne(login);
+            //    RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+            //    Hide();
+            //    emprunt.ShowDialog();
+            //    Show();
+            //}
+            //else MessageBox.Show("Connexion échouée, réessayez.");
         }
 
         private bool connexionValide(string login, string mdp)
