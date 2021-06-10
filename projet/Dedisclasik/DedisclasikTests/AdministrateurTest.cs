@@ -15,19 +15,9 @@ namespace DedisclasikTests
         [TestMethod]
         public void TestEmpruntsProlonges()
         {
-            Outils.chargerElements();
+            /*Outils.chargerElements();
             //supprimerElements();
-            ABONNÉS abo = Outils.getAbo();
             EMPRUNTER emp = Outils.getEmprunt();
-            /*List<EMPRUNTER> listEmpruntsProlong = new List<EMPRUNTER>();
-            listEmpruntsProlong.AddRange(admin.listEmpruntProlong());
-
-            List<int> codeAlbums = new List<int>();
-            foreach (EMPRUNTER e in listEmpruntsProlong)
-            {
-                codeAlbums.Add(e.ALBUMS.CODE_ALBUM);
-            }
-            Assert.IsFalse(codeAlbums.Contains(emp.CODE_ALBUM));*/
 
             Assert.IsFalse(Outils.dejaProlongé(emp));
 
@@ -36,7 +26,8 @@ namespace DedisclasikTests
 
             Assert.IsTrue(Outils.dejaProlongé(emp));
 
-            Outils.supprimerElements();
+            Outils.supprimerEmprunt();
+            Outils.supprimerAbonnes();*/
         }
 
         /*
