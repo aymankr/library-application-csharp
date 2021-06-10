@@ -20,6 +20,7 @@ namespace Dedisclasik
             Outils.musique = new MusiquePT2_NEntities();
             Outils.actions.Clear();
             Outils.actions.Add("vide");
+            Outils.cptActions = 0;
             prec.Enabled = false;
             suiv.Enabled = false;
         }
@@ -143,6 +144,9 @@ namespace Dedisclasik
             var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
+                Outils.actions.Clear();
+                Outils.actions.Add("vide");
+                Outils.cptActions = 0;
                 Close();
             }
         }
