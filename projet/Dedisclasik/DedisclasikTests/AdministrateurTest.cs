@@ -14,23 +14,19 @@ namespace DedisclasikTests
         private MusiquePT2_NEntities m = new MusiquePT2_NEntities();
 
         [TestMethod]
-        public void TestEmpruntsProlonges()
+        public void prolongement()
         {
             inscription.inscrire("test", "unitaire", "testdu33", "123");
             ABONNÉS abo = Outils.getAbo();
-            EMPRUNTER emp = Outils.creerEmprunt(abo, "2021-03-10 16:50:26.967", "2021-03-10 17:50:26.967");
+            EMPRUNTER emp1 = Outils.creerEmprunt(abo, "2021-03-10 16:50:26.967", "2021-03-10 17:50:26.967");
 
             //l'emprunt n'est pas prolongé
-            Assert.IsFalse(Outils.dejaProlongé(emp));
+            Assert.IsFalse(Outils.dejaProlongé(emp1));
 
             //l'emprunt est prolongé
-            /*
-            emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
-            m.SaveChanges();
-            Assert.IsTrue(Outils.dejaProlongé(emp));
-            */
+            Assert.IsTrue(emp1.DATE_RETOUR_ATTENDUE < emp1.DATE_RETOUR_ATTENDUE.AddDays(emp1.ALBUMS.GENRES.DÉLAI));
 
-            Outils.supprimerEmprunt(emp);
+            Outils.supprimerEmprunt(emp1);
             Outils.supprimerAbonnes();
         }
 
@@ -48,53 +44,21 @@ namespace DedisclasikTests
             Outils.supprimerEmprunt(emp);
             Outils.supprimerAbonnes();
         }
+        
+
+        [TestMethod]
+        public void tetsMeilleursEmprunts()
+        {
+
+        }
+
+        [TestMethod]
+        public void AlbumsNonEmpruntes()
+        {
+
+        }
 
         /*
-        [TestMethod]
-        public void testEmpruntsRetard()
-        {
-            // get liste emprunts retards de 10j
-            // vérifier qu'un emprunt n'est pas en retard de 10j (qu'il n'est pas présent dans la liste)
-            // modif sa date d'emprunt et la reculer
-            // vérifier que cet emprunt est présent dans la liste
-
-            // un emprunt en retard : 
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 321).Where(a => a.CODE_ABONNÉ == 35).First();
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-06 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-25 16:50:26.967");
-            m.SaveChanges();
-
-            List<ABONNÉS> listEmpruntsRetard = new List<ABONNÉS>();
-            listEmpruntsRetard.AddRange(admin.listEmpruntRetard());
-
-            int codeAbo = album1.CODE_ABONNÉ;
-
-            List<int> codeAbos = new List<int>();
-            foreach (ABONNÉS e in listEmpruntsRetard)
-            {
-                codeAbos.Add(e.CODE_ABONNÉ);
-            }
-            Assert.IsFalse(codeAbos.Contains(codeAbo));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-03-21 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-05-15 16:50:26.967");
-            m.SaveChanges();
-
-            // vérification en retard
-            listEmpruntsRetard.Clear();
-            listEmpruntsRetard.AddRange(admin.listEmpruntRetard());
-            codeAbos.Clear();
-
-            foreach (ABONNÉS e in listEmpruntsRetard)
-            {
-                codeAbos.Add(e.CODE_ABONNÉ);
-            }
-            Assert.IsTrue(codeAbos.Contains(codeAbo));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-06 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-25 16:50:26.967");
-            m.SaveChanges();
-        }
          public void testMeilleursEmprunts()
          {
              // get liste meilleurs emprunts
