@@ -141,7 +141,12 @@ namespace Dedisclasik
         private void deconnect_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes) Close();
+            if (confirmResult == DialogResult.Yes)
+            {
+                Close();
+                Outils.actions.Clear();
+                Outils.actions.Add("vide");
+            }
         }
 
         private void prec_Click(object sender, EventArgs e)

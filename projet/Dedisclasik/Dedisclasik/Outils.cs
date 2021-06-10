@@ -61,7 +61,7 @@ namespace Dedisclasik
         {
             actions.Add(fonction);
             cptActions++;
-            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
+            if (!(actions[cptActions].Equals(actions[cptActions - 1]))) //ss disconnect
             {
                 pgNb = 1;
             }
