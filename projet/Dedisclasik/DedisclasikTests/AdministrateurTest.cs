@@ -55,6 +55,21 @@ namespace DedisclasikTests
         [TestMethod]
         public void AlbumsNonEmpruntes()
         {
+            inscription.inscrire("test", "unitaire", "testdu33", "123");
+            ABONNÉS abo = Outils.getAbo();
+            EMPRUNTER emp = Outils.creerEmprunt(abo, "2018-03-10 16:50:26.967", "2018-03-10 17:50:26.967");
+
+            //l'emprunt n'a pas été emprunté depuis plus d'un an
+            DateTime dateNow = DateTime.Now;
+            Assert.IsTrue((int)(dateNow - emp.DATE_EMPRUNT).TotalDays > 365);
+
+            Outils.supprimerEmprunt(emp);
+            Outils.supprimerAbonnes();
+        }
+
+        [TestMethod]
+        public void testPurge()
+        {
 
         }
 
@@ -91,46 +106,6 @@ namespace DedisclasikTests
              }
              Assert.IsTrue(codeAlbums2.Contains(codeAlbum2));
          }
-
-        [TestMethod]
-        public void testAlbumNonEmprunt()
-        {
-            // get liste albums non empruntés depuis plus d'un an
-            // vérifier qu'un album ayant déjà été emprunté recemment n'est pas présent dans cette liste
-            // modifier (reculer de 1 an) sa date du dernier emprunt
-            // vérifier qu'il est présent dans la liste
-
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 648).First();
-
-            List<ALBUMS> listEmpruntsRetard = new List<ALBUMS>();
-            listEmpruntsRetard.AddRange(admin.listAlbumNonEmprunt());
-
-            int codeAlbum = album1.CODE_ALBUM;
-
-            List<int> codeAlbums = new List<int>();
-            foreach (ALBUMS e in listEmpruntsRetard)
-            {
-                codeAlbums.Add(e.CODE_ALBUM);
-            }
-            Assert.IsFalse(codeAlbums.Contains(codeAlbum));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2020-03-21 16:50:26.967");
-            m.SaveChanges();
-
-            // vérification en retard
-            listEmpruntsRetard.Clear();
-            listEmpruntsRetard.AddRange(admin.listAlbumNonEmprunt());
-            codeAlbums.Clear();
-
-            foreach (ALBUMS e in listEmpruntsRetard)
-            {
-                codeAlbums.Add(e.CODE_ALBUM);
-            }
-            Assert.IsTrue(codeAlbums.Contains(codeAlbum));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-04 16:25:59.707");
-            m.SaveChanges();
-        }
 
         public void testPurge()
         {
