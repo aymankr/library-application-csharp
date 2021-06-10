@@ -14,6 +14,7 @@ namespace Dedisclasik
         public static String fonction = "";
         public static List<string> actions = new List<string>();
         public static int cptActions = 0;
+        public static bool multipleVerif = true;
         #endregion
         public static MusiquePT2_NEntities musique { get; set; }
 
@@ -47,15 +48,23 @@ namespace Dedisclasik
         {
             btPrec.Enabled = true;
             btNext.Enabled = true;
-            lab.Text = "Page : " + pgNb.ToString() + "/" + (nbMax / pgSz + 1).ToString();
+            float nbPP = nbMax / pgSz;
+            int nb;
+            int nn = (int)nbPP;
+
+            if ((float)nn == nbPP) nb = nbMax / pgSz; else nb = nbMax / pgSz + 1;
+            if (nb == 0) nb = 1;
+            lab.Text = "Page : " + pgNb.ToString() + "/" + ((int)nb).ToString();
             if (pgNb <= 1)
             {
                 btPrec.Enabled = false;
             }
-            if (pgNb >= (int)(nbMax / pgSz) + 1)
+            if (pgNb >= (int)nb)
             {
                 btNext.Enabled = false;
             }
+
+            
         }
         public static void comparer()
         {
@@ -64,6 +73,7 @@ namespace Dedisclasik
             if (!(actions[cptActions].Equals(actions[cptActions - 1]))) //ss disconnect
             {
                 pgNb = 1;
+                multipleVerif = true;
             }
         }
         #region gestion elements

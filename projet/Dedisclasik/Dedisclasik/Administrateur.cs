@@ -143,8 +143,6 @@ namespace Dedisclasik
             if (confirmResult == DialogResult.Yes)
             {
                 Close();
-                Outils.actions.Clear();
-                Outils.actions.Add("vide");
             }
         }
 
@@ -200,7 +198,7 @@ namespace Dedisclasik
 
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-            var cmd = listEmpruntProlong();
+            var cmd = listEmpruntProlong().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
             // US4 : abonnés ayant prolongé leur emprunt
             foreach (EMPRUNTER emp in cmd)
             {
@@ -215,8 +213,8 @@ namespace Dedisclasik
             Outils.comparer();
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-
-            foreach (EMPRUNTER emp in listEmpruntRetard())
+            var cmd = listEmpruntRetard().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (EMPRUNTER emp in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
             }
@@ -230,7 +228,8 @@ namespace Dedisclasik
             labelRecherche.Text = "Recherche par titre :";
             Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
             // US7 : les 10 plus empruntés de l'année
-            foreach (ALBUMS a in listMeilleurEmprunt())
+            var cmd = listMeilleurEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
+            foreach (ALBUMS a in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
             }
@@ -243,9 +242,9 @@ namespace Dedisclasik
             Outils.comparer();
             labelRecherche.Text = "Recherche par titre :";
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-
+            var cmd = listAlbumNonEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
             //  US8 : liste albums non empruntés depuis + d'un an 
-            foreach (ALBUMS a in listAlbumNonEmprunt()) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
+            foreach (ALBUMS a in cmd) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
             afficherDescription("Albums non empruntés depuis plus d'un an.");
         }
 
@@ -258,7 +257,7 @@ namespace Dedisclasik
             var cmd = Outils.musique.ABONNÉS.ToList();
             Outils.activePaging(cmd.Count(), prec, suiv, pg);
 
-            var abos = cmd;
+            var abos = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1)); ;
 
             // US 12 liste des abonnés
             foreach (ABONNÉS a in abos)
