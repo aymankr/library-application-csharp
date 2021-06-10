@@ -44,9 +44,9 @@ namespace Dedisclasik
             else if (connexionValide(login, mdp))
             {
                 abonné = ABONNÉS.RechercheAbonne(login);
-                RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+                MonCompte compteAbonné = new MonCompte();
                 Hide();
-                emprunt.ShowDialog();
+                compteAbonné.ShowDialog();
                 Show();
             }
             else MessageBox.Show("Connexion échouée, réessayez.");

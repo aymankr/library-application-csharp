@@ -130,8 +130,9 @@ namespace Dedisclasik
 
         private void deconnect_Click(object sender, EventArgs e)
         {
-            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes) Close();
+            /*var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) Close();*/
+            Outils.Deconnexion(this);
         }
 
         private void listAbo_Click(object sender, EventArgs e)
