@@ -220,9 +220,11 @@ namespace Dedisclasik
             bool contientNom = dataGridView1.Columns.Contains("Nom");
             bool contientPrenom = dataGridView1.Columns.Contains("Prénom");
 
+            //pour abonnés
             dataGridView1.Rows.OfType<DataGridViewRow>()
                 .ToList().ForEach(row => row.Visible = false);
 
+            //recherche avancée
             dataGridView1.Rows.OfType<DataGridViewRow>().Where(r => dataGridView1.Columns.Contains("Titre") && r.Cells["Titre"]
             .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower())
             || (contientNom && r.Cells["Nom"]
