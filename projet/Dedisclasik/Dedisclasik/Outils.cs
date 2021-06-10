@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dedisclasik
 {
@@ -62,6 +63,12 @@ namespace Dedisclasik
             }
             dg.ReadOnly=true;
             dg.MultiSelect = false;
+        }
+
+        public static void Deconnexion(Form fenetre)
+        {
+            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) fenetre.Close();
         }
     }
 }
