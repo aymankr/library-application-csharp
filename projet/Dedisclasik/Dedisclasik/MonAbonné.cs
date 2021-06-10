@@ -17,19 +17,6 @@ namespace Dedisclasik
             return abonné.First();
         }
 
-        public static List<ALBUMS> RechercheAlbum(string titre, string editeur, string genre)
-        {
-            var albums = (from a in Outils.musique.ALBUMS
-                          where a.TITRE_ALBUM.Contains(titre) && a.EDITEURS.NOM_EDITEUR.Contains(editeur) && a.GENRES.LIBELLÉ_GENRE.Contains(genre)
-                          select a).ToList();
-            /*List<String> albums = new List<String>();
-            foreach (string t in titres)
-            {
-                albums.Add(t);
-            }*/
-            return albums;
-        }
-
         public static int IdAlbum(string titre)
         {
             var id = (from a in Outils.musique.ALBUMS
