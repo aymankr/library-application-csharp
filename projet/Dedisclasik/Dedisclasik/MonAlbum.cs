@@ -11,6 +11,7 @@ namespace Dedisclasik
         /*override
         public string ToString()
         {
+            /*string nonPrécisé = "Non précisée";
             string date = nonPrécisé;
             if (this.ANNÉE_ALBUM != null)
             {
@@ -88,7 +89,7 @@ namespace Dedisclasik
 
         public string getDejaEmprunter()
         {
-            string infos="";
+            string infos = "";
             if (Outils.dejaEmprunté(this))
             {
                 infos = "X";
