@@ -45,6 +45,9 @@ namespace Dedisclasik
             this.purgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recherche = new System.Windows.Forms.TextBox();
             this.labelRecherche = new System.Windows.Forms.Label();
+            this.prec = new System.Windows.Forms.Button();
+            this.suiv = new System.Windows.Forms.Button();
+            this.pg = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -223,21 +226,23 @@ namespace Dedisclasik
             this.suiv.UseVisualStyleBackColor = true;
             this.suiv.Click += new System.EventHandler(this.suiv_Click);
             // 
-            // button1
+            // pg
             // 
-            this.button1.Location = new System.Drawing.Point(579, 64);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.pg.AutoSize = true;
+            this.pg.Location = new System.Drawing.Point(558, 88);
+            this.pg.Name = "pg";
+            this.pg.Size = new System.Drawing.Size(38, 13);
+            this.pg.TabIndex = 21;
+            this.pg.Text = "Page :";
             // 
             // Administrateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 607);
+            this.Controls.Add(this.pg);
+            this.Controls.Add(this.suiv);
+            this.Controls.Add(this.prec);
             this.Controls.Add(this.labelRecherche);
             this.Controls.Add(this.recherche);
             this.Controls.Add(this.toolStrip1);
