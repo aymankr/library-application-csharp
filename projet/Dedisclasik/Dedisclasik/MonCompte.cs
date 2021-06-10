@@ -240,7 +240,7 @@ namespace Dedisclasik
         {
             pagesAlbums.Rows.Clear();
             int i = 0;
-            foreach (ALBUMS al in ABONNÉS.RechercheTitre(rechercheTitre.Text))
+            foreach (ALBUMS al in ABONNÉS.RechercheAlbum(rechercheTitre.Text, rechercheEditeur.Text, rechercheGenre.Text))
             {
                 pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
                 pagesAlbums.Rows[i].Tag = (ALBUMS)al;
@@ -268,6 +268,16 @@ namespace Dedisclasik
             //new Connexion().ShowDialog(); //à vérifier
             MessageBox.Show("Vous avez été déconnecté");*/
             Outils.Deconnexion(this);
+        }
+
+        private void rechercheGenre_TextChanged(object sender, EventArgs e)
+        {
+            AfficherAlbums(); //liste a précharger et faire recherche directment dans la liste et pas en requetes
+        }
+
+        private void rechercheEditeur_TextChanged(object sender, EventArgs e)
+        {
+            AfficherAlbums();
         }
     }
 }
