@@ -16,17 +16,32 @@ namespace Dedisclasik
         {
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
+            Outils.actions.Clear();
+            Outils.actions.Add("vide");
+            Outils.cptActions = 0;
+            prec.Enabled = false;
+            suiv.Enabled = false;
         }
         //feedback avec de messages box
-
 
         public List<EMPRUNTER> listEmpruntProlong()
         {
             List<EMPRUNTER> listEmprunts = new List<EMPRUNTER>();
 
-            var id_album = (from al in Outils.musique.ALBUMS
-                            select al.CODE_ALBUM).ToList();
-            foreach (EMPRUNTER emp in Outils.musique.EMPRUNTER)
+            var prolong = Outils.musique.EMPRUNTER;
+            //nb total de page
+            int nbT = 0;
+            foreach (EMPRUNTER empr in prolong)
+            {
+                if (Outils.dejaProlongé(empr))
+                {
+                    nbT++;
+                }
+            }
+            //affichage label/boutons
+            Outils.activePaging(nbT, prec, suiv, pg);
+
+            foreach (EMPRUNTER emp in prolong)
             {
                 if (Outils.dejaProlongé(emp))
                 {
@@ -41,9 +56,13 @@ namespace Dedisclasik
             List<EMPRUNTER> abos = new List<EMPRUNTER>();
             DateTime dateNow = DateTime.Now;
 
-            var emprunteurs = Outils.musique.EMPRUNTER
+            var cmd = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null).ToList()
                 .Where(a => (int)(dateNow - a.DATE_RETOUR_ATTENDUE).TotalDays >= 10).ToList();
+
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
+
+            var emprunteurs = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (EMPRUNTER a in emprunteurs)
             {
                 abos.Add(a);
@@ -55,10 +74,13 @@ namespace Dedisclasik
         {
             List<ALBUMS> albums = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
+
+
             var emprunteurs = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_EMPRUNT.Year == dateNow.Year)
                 .OrderByDescending(a => a.ALBUMS.EMPRUNTER.Count).Take(10).ToList()
                 .Select(a => a.ALBUMS).Distinct();
+            Outils.activePaging(emprunteurs.Count(), prec, suiv, pg);
             foreach (ALBUMS a in emprunteurs)
             {
                 albums.Add(a);
@@ -85,7 +107,10 @@ namespace Dedisclasik
         {
             List<ALBUMS> albs = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
-
+            var cmd = Outils.musique.EMPRUNTER
+                .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
+                .Select(a => a.ALBUMS);
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
             //  US8 : liste albums non empruntés depuis + d'un an 
             var albums = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null)
@@ -117,20 +142,17 @@ namespace Dedisclasik
             if (confirmResult == DialogResult.Yes) Close();
         }
 
-        private void listAbo_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.fonction = "prolong";
+            Outils.comparer();
+
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+            var cmd = listEmpruntProlong().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
 
             // US4 : abonnés ayant prolongé leur emprunt
-            var id_album = from al in Outils.musique.ALBUMS
-                           select al.CODE_ALBUM;
-            foreach (EMPRUNTER emp in listEmpruntProlong())
+            foreach (EMPRUNTER emp in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
             }
@@ -139,10 +161,14 @@ namespace Dedisclasik
 
         private void empruntsEnRetardToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.fonction = "retard";
+            Outils.comparer();
+
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
             Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+            var cmd = listEmpruntRetard().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
 
-            foreach (EMPRUNTER emp in listEmpruntRetard())
+            foreach (EMPRUNTER emp in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
             }
@@ -151,11 +177,15 @@ namespace Dedisclasik
 
         private void top10MeilleursEmpruntsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.fonction = "top";
+            Outils.comparer();
+
             labelRecherche.Text = "Recherche par titre :";
             Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
+            var cmd = listMeilleurEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
 
             // US7 : les 10 plus empruntés de l'année
-            foreach (ALBUMS a in listMeilleurEmprunt())
+            foreach (ALBUMS a in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
             }
@@ -164,19 +194,29 @@ namespace Dedisclasik
 
         private void albumsNonEmpruntésToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.fonction = "fantome";
+            Outils.comparer();
+
             labelRecherche.Text = "Recherche par titre :";
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            var cmd = listAlbumNonEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
 
             //  US8 : liste albums non empruntés depuis + d'un an 
-            foreach (ALBUMS a in listAlbumNonEmprunt()) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
+            foreach (ALBUMS a in cmd) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
             afficherDescription("Albums non empruntés depuis plus d'un an.");
         }
 
         private void consulterLesAbonnésToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Outils.fonction = "abo";
+            Outils.comparer();
+
             labelRecherche.Text = "Recherche par nom ou prénom :";
             Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
-            var abos = Outils.musique.ABONNÉS.ToList();
+            var cmd = Outils.musique.ABONNÉS.ToList();
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
+
+            var abos = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
 
             // US 12 liste des abonnés
             foreach (ABONNÉS a in abos)
@@ -232,6 +272,41 @@ namespace Dedisclasik
             || (contientPrenom && r.Cells["Prénom"]
             .Value.ToString().Trim().ToLower().Contains(recherche.Text.ToString().ToLower())))
                 .ToList().ForEach(row => row.Visible = true);
+        }
+
+        private void switchNextPrev(object sender, EventArgs e)
+        {
+
+            switch (Outils.fonction)
+            {
+                case "prolong":
+                    empruntsProlongésToolStripMenuItem_Click(sender, e);
+                    break;
+                case "retard":
+                    empruntsEnRetardToolStripMenuItem_Click(sender, e);
+                    break;
+                case "fantome":
+                    albumsNonEmpruntésToolStripMenuItem_Click(sender, e);
+                    break;
+                case "abo":
+                    consulterLesAbonnésToolStripMenuItem_Click(sender, e);
+                    break;
+                case "top":
+                    top10MeilleursEmpruntsToolStripMenuItem_Click(sender, e);
+                    break;
+            }
+        }
+
+        private void prec_Click(object sender, EventArgs e)
+        {
+            Outils.pgNb--;
+            switchNextPrev(sender, e);
+        }
+
+        private void suiv_Click(object sender, EventArgs e)
+        {
+            Outils.pgNb++;
+            switchNextPrev(sender, e);
         }
     }
 }

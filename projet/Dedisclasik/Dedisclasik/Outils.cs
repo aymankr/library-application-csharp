@@ -8,6 +8,14 @@ namespace Dedisclasik
 {
     public static class Outils
     {
+        #region attributs pagination
+        public static int pgNb = 1;
+        public static int pgSz = 15;
+        public static String fonction = "";
+        public static List<string> actions = new List<string>();
+        public static int cptActions = 0;
+        public static bool multipleVerif = true;
+        #endregion
         public static MusiquePT2_NEntities musique { get; set; }
 
         public static bool dejaProlongé(EMPRUNTER emprunt)
@@ -36,6 +44,7 @@ namespace Dedisclasik
             }
         }
 
+        #region gestion elements
         public static void chargerElements()
         {
             ABONNÉS abo = new ABONNÉS();
@@ -60,7 +69,9 @@ namespace Dedisclasik
             musique.EMPRUNTER.Remove(getEmprunt());
             musique.SaveChanges();
         }
+        #endregion
 
+        #region get
         public static ABONNÉS getAbo()
         {
             return musique.ABONNÉS.Where(a => a.NOM_ABONNÉ.Trim().Equals("test") && a.PRÉNOM_ABONNÉ.Trim().Equals("unitaire")
@@ -79,6 +90,38 @@ namespace Dedisclasik
             ABONNÉS abo = getAbo();
             return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
                 && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
+        }
+        #endregion
+
+        public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab)
+        {
+            btPrec.Enabled = true;
+            btNext.Enabled = true;
+            float nbPP = (float)nbMax / (float)pgSz;
+            int nb;
+            int nn = (int)nbPP;
+            if ((float)nn == nbPP) nb = nbMax / pgSz; else nb = nbMax / pgSz + 1;
+            lab.Text = "Page : " + pgNb.ToString() + "/" + ((int)nb).ToString();
+            if (pgNb <= 1)
+            {
+                btPrec.Enabled = false;
+            }
+            if (pgNb >= (int)nb)
+            {
+                btNext.Enabled = false;
+            }
+
+
+        }
+        public static void comparer()
+        {
+            actions.Add(fonction);
+            cptActions++;
+            if (!(actions[cptActions].Equals(actions[cptActions - 1]))) //ss disconnect
+            {
+                pgNb = 1;
+                multipleVerif = true;
+            }
         }
     }
 }
