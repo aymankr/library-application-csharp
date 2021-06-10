@@ -14,11 +14,6 @@ namespace Dedisclasik
 {
     public partial class Administrateur : Form
     {
-        private String fonction = "";
-        private List<string> actions = new List<string>();
-        
-        int cptActions = 0;
-
         public Administrateur()
         {
             
@@ -26,6 +21,8 @@ namespace Dedisclasik
             Outils.musique = new MusiquePT2_NEntities();
             actions.Clear();
             actions.Add("vide");
+            Outils.actions.Clear();
+            Outils.actions.Add("vide");
 
             prec.Enabled = false;
             suiv.Enabled = false;
@@ -101,7 +98,7 @@ namespace Dedisclasik
             var cmd = Outils.musique.EMPRUNTER
                 .Where(a => dateNow.Year - a.DATE_EMPRUNT.Year > 0)
                 .Select(a => a.ALBUMS);
-            activePaging(cmd.Count());
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
             //  US8 : liste albums non empruntés depuis + d'un an 
             var albums = Outils.musique.EMPRUNTER
                 .Where(a => a.DATE_RETOUR == null)
@@ -252,10 +249,10 @@ namespace Dedisclasik
 
         private void button1_Click(object sender, EventArgs e)
         {
-            fonction = "test";
-            comparer();
+            Outils.fonction = "test";
+            Outils.comparer();
             var cmd = Outils.musique.EDITEURS;
-            activePaging(cmd.Count());
+            Outils.activePaging(cmd.Count(), prec, suiv, pg);
 
             Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
             var affiche = cmd.ToList().Take(Outils.pgSz * Outils.pgNb).Skip(Outils.pgSz * (Outils.pgNb - 1));
@@ -284,9 +281,8 @@ namespace Dedisclasik
         
         private void switchNextPrev(object sender, EventArgs e)
         {
-            
 
-            switch (fonction)
+            switch (Outils.fonction)
             {
                 case "prolong":
                     
@@ -324,17 +320,7 @@ namespace Dedisclasik
         #endregion
 
         #region fonctions
-        private void comparer()
-        {
-            actions.Add(fonction);
-            cptActions++;
-            if (!(actions[cptActions].Equals(actions[cptActions - 1])))
-            {
-                Outils.pgNb = 1;
-                
-
-            }
-        }
+        
         private bool afficherMessageVide(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -346,20 +332,7 @@ namespace Dedisclasik
             }
             return estVide;
         }   
-        private void activePaging(int nbMax)
-        {
-            prec.Enabled = true;
-            suiv.Enabled = true;
-            pg.Text = "Page : " + Outils.pgNb.ToString() + "/" + (nbMax / Outils.pgSz+1).ToString();
-            if (Outils.pgNb <= 1)
-            {
-                prec.Enabled = false;
-            }
-            if (Outils.pgNb >= (int)(nbMax / Outils.pgSz) + 1)
-            {
-                suiv.Enabled = false;
-            }
-        }
+       
         #endregion
     }
 }
