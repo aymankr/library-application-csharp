@@ -15,7 +15,7 @@ namespace Dedisclasik
     public partial class Administrateur : Form
     {
         public Administrateur()
-        {
+        {  
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
             Outils.actions.Clear();

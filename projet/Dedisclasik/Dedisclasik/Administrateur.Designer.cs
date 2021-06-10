@@ -231,6 +231,9 @@ namespace Dedisclasik
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 607);
+            this.Controls.Add(this.pg);
+            this.Controls.Add(this.suiv);
+            this.Controls.Add(this.prec);
             this.Controls.Add(this.labelRecherche);
             this.Controls.Add(this.recherche);
             this.Controls.Add(this.toolStrip1);
@@ -269,10 +272,8 @@ namespace Dedisclasik
         private System.Windows.Forms.ToolStripMenuItem purgerToolStripMenuItem;
         private System.Windows.Forms.TextBox recherche;
         private System.Windows.Forms.Label labelRecherche;
-        private System.Windows.Forms.Button listAbo;
-        private System.Windows.Forms.Label pg;
         private System.Windows.Forms.Button prec;
         private System.Windows.Forms.Button suiv;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label pg;
     }
 }

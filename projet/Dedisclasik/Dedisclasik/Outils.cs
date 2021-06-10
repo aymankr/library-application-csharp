@@ -102,6 +102,7 @@ namespace Dedisclasik
         #endregion
 
         #region get
+        #region get
         public static ABONNÉS getAbo()
         {
             return musique.ABONNÉS.Where(a => a.NOM_ABONNÉ.Trim().Equals("test") && a.PRÉNOM_ABONNÉ.Trim().Equals("unitaire")
