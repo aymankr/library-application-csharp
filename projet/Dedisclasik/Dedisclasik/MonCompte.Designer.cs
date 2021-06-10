@@ -168,7 +168,7 @@ namespace Dedisclasik
             this.dataGridEmprunt.RowHeadersVisible = false;
             this.dataGridEmprunt.RowHeadersWidth = 51;
             this.dataGridEmprunt.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridEmprunt.Size = new System.Drawing.Size(857, 249);
+            this.dataGridEmprunt.Size = new System.Drawing.Size(857, 350);
             this.dataGridEmprunt.TabIndex = 12;
             this.dataGridEmprunt.SelectionChanged += new System.EventHandler(this.dataGridEmprunt_SelectionChanged);
             // 
@@ -181,7 +181,7 @@ namespace Dedisclasik
             this.pagesAlbums.ReadOnly = true;
             this.pagesAlbums.RowHeadersWidth = 51;
             this.pagesAlbums.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pagesAlbums.Size = new System.Drawing.Size(875, 254);
+            this.pagesAlbums.Size = new System.Drawing.Size(875, 365);
             this.pagesAlbums.TabIndex = 13;
             // 
             // par_titre
@@ -277,7 +277,7 @@ namespace Dedisclasik
             this.ongletsAbonné.Location = new System.Drawing.Point(1, 4);
             this.ongletsAbonné.Name = "ongletsAbonné";
             this.ongletsAbonné.SelectedIndex = 0;
-            this.ongletsAbonné.Size = new System.Drawing.Size(897, 427);
+            this.ongletsAbonné.Size = new System.Drawing.Size(897, 534);
             this.ongletsAbonné.TabIndex = 23;
             this.ongletsAbonné.SelectedIndexChanged += new System.EventHandler(this.ongletsAbonné_SelectedIndexChanged);
             // 
@@ -296,7 +296,7 @@ namespace Dedisclasik
             this.discothèque.Location = new System.Drawing.Point(4, 22);
             this.discothèque.Name = "discothèque";
             this.discothèque.Padding = new System.Windows.Forms.Padding(3);
-            this.discothèque.Size = new System.Drawing.Size(889, 401);
+            this.discothèque.Size = new System.Drawing.Size(889, 508);
             this.discothèque.TabIndex = 0;
             this.discothèque.Text = "Discothèque";
             this.discothèque.UseVisualStyleBackColor = true;
@@ -331,7 +331,7 @@ namespace Dedisclasik
             this.mon_compte.Location = new System.Drawing.Point(4, 22);
             this.mon_compte.Name = "mon_compte";
             this.mon_compte.Padding = new System.Windows.Forms.Padding(3);
-            this.mon_compte.Size = new System.Drawing.Size(889, 401);
+            this.mon_compte.Size = new System.Drawing.Size(889, 509);
             this.mon_compte.TabIndex = 1;
             this.mon_compte.Text = "Mon compte";
             this.mon_compte.UseVisualStyleBackColor = true;
@@ -367,7 +367,7 @@ namespace Dedisclasik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 431);
+            this.ClientSize = new System.Drawing.Size(899, 542);
             this.Controls.Add(this.ongletsAbonné);
             this.Name = "MonCompte";
             this.Text = "InterfaceTemp";
