@@ -101,12 +101,6 @@
     <Compile Include="MonCompte.Designer.cs">
       <DependentUpon>MonCompte.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuAbonné.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MenuAbonné.Designer.cs">
-      <DependentUpon>MenuAbonné.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -131,12 +125,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RechercheAlbumEtEmprunt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RechercheAlbumEtEmprunt.Designer.cs">
-      <DependentUpon>RechercheAlbumEtEmprunt.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Administrateur.resx">
       <DependentUpon>Administrateur.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,9 +137,6 @@
     <EmbeddedResource Include="MonCompte.resx">
       <DependentUpon>MonCompte.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuAbonné.resx">
-      <DependentUpon>MenuAbonné.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -161,9 +146,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RechercheAlbumEtEmprunt.resx">
-      <DependentUpon>RechercheAlbumEtEmprunt.cs</DependentUpon>
-    </EmbeddedResource>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

@@ -14,10 +14,13 @@ namespace Dedisclasik
     public partial class MonCompte : Form
     {
         private int numColonne = 4;
+        private List<ALBUMS> ToutLesAlbums;
 
         public MonCompte()
         {
             InitializeComponent();
+
+            ToutLesAlbums = Outils.musique.ALBUMS.ToList(); //modification necessaire au niveau de l'emprunt, syncro necessaire?
 
             initDataGridView();
             DataGridViewImageColumn img = new DataGridViewImageColumn();
@@ -65,11 +68,6 @@ namespace Dedisclasik
                 dataGridEmprunt.Rows.Add(row);
             }
 
-        }
-
-        private void voirAlbums_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void Prolonger_Click(object sender, EventArgs e)
@@ -159,9 +157,6 @@ namespace Dedisclasik
 
         private void deconnexionButton_Click(object sender, EventArgs e)
         {
-            /*this.Close();
-            //new Connexion().ShowDialog(); //à vérifier
-            MessageBox.Show("Vous avez été déconnecté");*/
             Outils.Deconnexion(this);
         }
 
@@ -169,6 +164,7 @@ namespace Dedisclasik
         {
             Outils.chargerDataGrid(new string[] { "Titre", "Genre", "Editeur", "Année" }, dataGridEmprunt); 
             Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
+            AfficherAlbums();
         }
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
@@ -226,21 +222,28 @@ namespace Dedisclasik
 
                 m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);
+                pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "X";
             }
             m.SaveChanges(); //gestion de la mise a jour de la lsite necessaire
-            AfficherAlbums();
         }
 
         private void rechercheTitre_TextChanged(object sender, EventArgs e)
         {
-            AfficherAlbums();
+            //recherche de base 
+            pagesAlbums.Rows.OfType<DataGridViewRow>()
+                .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
+
+            //recherche avancée
+            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Titre") && r.Cells["Titre"]
+            .Value.ToString().Trim().ToLower().Contains(rechercheTitre.Text.ToString().ToLower()))
+                .ToList().ForEach(row => row.Visible = true);
+          
         }
 
         private void AfficherAlbums()
         {
-            pagesAlbums.Rows.Clear();
             int i = 0;
-            foreach (ALBUMS al in ABONNÉS.RechercheAlbum(rechercheTitre.Text, rechercheEditeur.Text, rechercheGenre.Text))
+            foreach (ALBUMS al in ToutLesAlbums)
             {
                 pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
                 pagesAlbums.Rows[i].Tag = (ALBUMS)al;
@@ -264,20 +267,31 @@ namespace Dedisclasik
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*this.Close();
-            //new Connexion().ShowDialog(); //à vérifier
-            MessageBox.Show("Vous avez été déconnecté");*/
             Outils.Deconnexion(this);
         }
 
         private void rechercheGenre_TextChanged(object sender, EventArgs e)
         {
-            AfficherAlbums(); //liste a précharger et faire recherche directment dans la liste et pas en requetes
+            //recherche de base 
+            pagesAlbums.Rows.OfType<DataGridViewRow>()
+                .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
+
+            //recherche avancée
+            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Genre") && r.Cells["Genre"]
+            .Value.ToString().Trim().ToLower().Contains(rechercheGenre.Text.ToString().ToLower()))
+                .ToList().ForEach(row => row.Visible = true);
         }
 
         private void rechercheEditeur_TextChanged(object sender, EventArgs e)
         {
-            AfficherAlbums();
+            //recherche de base 
+            pagesAlbums.Rows.OfType<DataGridViewRow>()
+                .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
+
+            //recherche avancée
+            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Editeur") && r.Cells["Editeur"]
+            .Value.ToString().Trim().ToLower().Contains(rechercheEditeur.Text.ToString().ToLower()))
+                .ToList().ForEach(row => row.Visible = true);
         }
     }
 }
