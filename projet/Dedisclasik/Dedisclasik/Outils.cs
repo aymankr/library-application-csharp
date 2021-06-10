@@ -67,28 +67,33 @@ namespace Dedisclasik
         }
 
         #region gestion elements
-        public static void chargerElements()
+        public static EMPRUNTER creerEmprunt(ABONNÉS abo, string dateEmprunt, string dateRetourAttendue)
         {
-            ABONNÉS abo = new ABONNÉS();
-            abo.NOM_ABONNÉ = "test";
-            abo.PRÉNOM_ABONNÉ = "unitaire";
-            abo.LOGIN_ABONNÉ = "testdu33";
-            abo.PASSWORD_ABONNÉ = "123";
-            musique.ABONNÉS.Add(abo);
-            musique.SaveChanges();
-
             EMPRUNTER emp = new EMPRUNTER();
             emp.CODE_ABONNÉ = abo.CODE_ABONNÉ;
-            emp.CODE_ALBUM = getAlbum().CODE_ALBUM;
-            emp.DATE_EMPRUNT = DateTime.Parse("2021-06-05 16:50:26.967");
-            emp.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-10 16:50:26.967");
+
+            var listAlbumsEmprunts = (from a in musique.ALBUMS join j in musique.EMPRUNTER on a.CODE_ALBUM equals j.CODE_ALBUM select a).ToList();
+            var listAlbumsNonEmpruntes = musique.ALBUMS.ToList().Except(listAlbumsEmprunts);
+            ALBUMS alb = listAlbumsNonEmpruntes.First();
+            emp.CODE_ALBUM = alb.CODE_ALBUM;
+            emp.DATE_EMPRUNT = DateTime.Parse(dateEmprunt);
+            emp.DATE_RETOUR_ATTENDUE = DateTime.Parse(dateRetourAttendue);
             musique.EMPRUNTER.Add(emp);
             musique.SaveChanges();
+
+            return emp;
         }
-        public static void supprimerElements()
+
+        public static void supprimerEmprunt(EMPRUNTER emp)
         {
-            musique.ABONNÉS.Remove(getAbo());
-            musique.EMPRUNTER.Remove(getEmprunt());
+            musique.EMPRUNTER.Remove(emp);
+            musique.SaveChanges();
+        }
+
+        public static void supprimerAbonnes()
+        {
+            ABONNÉS abo = getAbo();
+            musique.ABONNÉS.Remove(abo);
             musique.SaveChanges();
         }
         #endregion
@@ -108,7 +113,8 @@ namespace Dedisclasik
 
         public static EMPRUNTER getEmprunt()
         {
-            EMPRUNTER emp = getEmprunt();
+            musique = new MusiquePT2_NEntities();
+            ALBUMS emp = getAlbum();
             ABONNÉS abo = getAbo();
             return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
                 && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
