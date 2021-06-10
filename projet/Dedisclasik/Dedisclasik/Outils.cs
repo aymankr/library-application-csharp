@@ -39,7 +39,6 @@ namespace Dedisclasik
                 dg.Columns[i].Name = s;
                 dg.Columns[i].Width = dg.Width / nbColonnes;
                 i++;
-                
             }
         }
 
