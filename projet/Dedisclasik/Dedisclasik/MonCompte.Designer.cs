@@ -112,16 +112,6 @@ namespace Dedisclasik
             this.deconnexionButton.UseVisualStyleBackColor = true;
             this.deconnexionButton.Click += new System.EventHandler(this.deconnexionButton_Click);
             // 
-            // retourButton
-            // 
-            this.retourButton.Location = new System.Drawing.Point(12, 12);
-            this.retourButton.Name = "retourButton";
-            this.retourButton.Size = new System.Drawing.Size(92, 24);
-            this.retourButton.TabIndex = 6;
-            this.retourButton.Text = "Retour";
-            this.retourButton.UseVisualStyleBackColor = true;
-            this.retourButton.Click += new System.EventHandler(this.retourButton_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
