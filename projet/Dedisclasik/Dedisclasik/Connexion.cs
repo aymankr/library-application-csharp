@@ -73,5 +73,13 @@ namespace Dedisclasik
 
             return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
         }
+
+        private void Connexion_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Tab))
+            {
+                loginConnexion.Focus();
+            }
+        }
     }
 }

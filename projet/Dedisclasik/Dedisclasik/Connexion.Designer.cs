@@ -127,6 +127,7 @@ namespace Dedisclasik
             this.Name = "Connexion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connexion";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Connexion_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
