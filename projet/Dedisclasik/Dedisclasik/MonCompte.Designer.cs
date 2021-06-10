@@ -52,11 +52,11 @@ namespace Dedisclasik
             this.discotheque = new System.Windows.Forms.Label();
             this.ongletsAbonné = new System.Windows.Forms.TabControl();
             this.discothèque = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.mon_compte = new System.Windows.Forms.TabPage();
             this.Prénom = new System.Windows.Forms.Label();
             this.Login = new System.Windows.Forms.Label();
             this.Nom = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmprunt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).BeginInit();
             this.ongletsAbonné.SuspendLayout();
@@ -248,6 +248,7 @@ namespace Dedisclasik
             this.rechercheGenre.Name = "rechercheGenre";
             this.rechercheGenre.Size = new System.Drawing.Size(190, 20);
             this.rechercheGenre.TabIndex = 20;
+            this.rechercheGenre.TextChanged += new System.EventHandler(this.rechercheGenre_TextChanged);
             // 
             // rechercheEditeur
             // 
@@ -256,6 +257,7 @@ namespace Dedisclasik
             this.rechercheEditeur.Name = "rechercheEditeur";
             this.rechercheEditeur.Size = new System.Drawing.Size(190, 20);
             this.rechercheEditeur.TabIndex = 21;
+            this.rechercheEditeur.TextChanged += new System.EventHandler(this.rechercheEditeur_TextChanged);
             // 
             // discotheque
             // 
@@ -298,6 +300,16 @@ namespace Dedisclasik
             this.discothèque.TabIndex = 0;
             this.discothèque.Text = "Discothèque";
             this.discothèque.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(756, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 31);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Déconnexion";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // mon_compte
             // 
@@ -350,16 +362,6 @@ namespace Dedisclasik
             this.Nom.Size = new System.Drawing.Size(35, 13);
             this.Nom.TabIndex = 18;
             this.Nom.Text = "Nom :";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(756, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 31);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Déconnexion";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MonCompte
             // 

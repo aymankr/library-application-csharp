@@ -22,7 +22,7 @@ namespace Dedisclasik
         {
             pagesAlbums.Rows.Clear();
             int i = 0;
-            foreach (ALBUMS al in ABONNÉS.RechercheTitre(recherche.Text))
+            foreach (ALBUMS al in ABONNÉS.RechercheAlbum(recherche.Text, "", ""))
             {
                 //album.Items.Add(al);
                 pagesAlbums.Rows.Add(al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter());
