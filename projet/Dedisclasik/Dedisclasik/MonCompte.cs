@@ -289,25 +289,7 @@ namespace Dedisclasik
 
         private void rendre_Click(object sender, EventArgs e)
         {
-            if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
-                       && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
-            {
-                /*
-                string titre = al.TITRE_ALBUM.Trim();
-                emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
-                emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
-                emprunt.DATE_EMPRUNT = date;
-                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
-                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
-                emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
-
-                m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
-                m.EMPRUNTER.Add(emprunt);
-                */
-                //Outils.musique.EMPRUNTER.
-                pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "";
-            }
-            Outils.musique.SaveChanges();
+            
         }
 
         private void ongletsAbonné_SelectedIndexChanged(object sender, EventArgs e)
