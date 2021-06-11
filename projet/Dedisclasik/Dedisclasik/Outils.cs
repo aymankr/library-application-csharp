@@ -20,13 +20,14 @@ namespace Dedisclasik
             }
             return dejaProlongé;
         }
+        
 
         public static void chargerDataGrid(int nbColonnes, string[] attributs, System.Windows.Forms.DataGridView dg)
         {
             dg.Rows.Clear();
             dg.Columns.Clear();
             dg.ColumnCount = nbColonnes;
-
+            
             int i = 0;
             foreach(string s in attributs)
             {
@@ -36,15 +37,18 @@ namespace Dedisclasik
             }
         }
 
-        public static EMPRUNTER creerEmprunt(ABONNÉS abo, string dateEmprunt, string dateRetourAttendue)
+        public static EMPRUNTER creerEmprunt(ABONNÉS abo, string dateEmprunt, string dateRetourAttendue, ALBUMS album)
         {
             EMPRUNTER emp = new EMPRUNTER();
             emp.CODE_ABONNÉ = abo.CODE_ABONNÉ;
-
-            var listAlbumsEmprunts = (from a in musique.ALBUMS join j in musique.EMPRUNTER on a.CODE_ALBUM equals j.CODE_ALBUM select a).ToList();
-            var listAlbumsNonEmpruntes = musique.ALBUMS.ToList().Except(listAlbumsEmprunts);
-            ALBUMS alb = listAlbumsNonEmpruntes.First();
-            emp.CODE_ALBUM = alb.CODE_ALBUM;
+            if (album == null)
+            {
+                var listAlbumsEmprunts = (from a in musique.ALBUMS join j in musique.EMPRUNTER on a.CODE_ALBUM equals j.CODE_ALBUM select a).ToList();
+                var listAlbumsNonEmpruntes = musique.ALBUMS.ToList().Except(listAlbumsEmprunts);
+                ALBUMS alb = listAlbumsNonEmpruntes.First();
+                emp.CODE_ALBUM = alb.CODE_ALBUM;
+            }
+            else emp.CODE_ALBUM = album.CODE_ALBUM;
             emp.DATE_EMPRUNT = DateTime.Parse(dateEmprunt);
             emp.DATE_RETOUR_ATTENDUE = DateTime.Parse(dateRetourAttendue);
             musique.EMPRUNTER.Add(emp);
@@ -68,25 +72,14 @@ namespace Dedisclasik
 
         public static ABONNÉS getAbo()
         {
-            musique = new MusiquePT2_NEntities(); // nécessaire pour la synchronisation avec les tests
             return musique.ABONNÉS.Where(a => a.NOM_ABONNÉ.Trim().Equals("test") && a.PRÉNOM_ABONNÉ.Trim().Equals("unitaire")
                     && a.LOGIN_ABONNÉ.Trim().Equals("testdu33") && a.PASSWORD_ABONNÉ.Trim().Equals("123")).FirstOrDefault();
         }
 
         public static ALBUMS getAlbum()
         {
-            musique = new MusiquePT2_NEntities();
             return musique.ALBUMS.Where(a => a.TITRE_ALBUM.Trim().Equals("Bach: Rampal")
                 && a.ALLÉE_ALBUM.Equals("C") && a.CASIER_ALBUM == 7).FirstOrDefault();
-        }
-
-        public static EMPRUNTER getEmprunt()
-        {
-            musique = new MusiquePT2_NEntities();
-            ALBUMS emp = getAlbum();
-            ABONNÉS abo = getAbo();
-            return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
-                && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
         }
     }
 }
