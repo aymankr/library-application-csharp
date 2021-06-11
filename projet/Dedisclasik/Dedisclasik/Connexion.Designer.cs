@@ -114,6 +114,7 @@ namespace Dedisclasik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(622, 367);
             this.Controls.Add(this.connexion_button);
             this.Controls.Add(this.inscription_button);
