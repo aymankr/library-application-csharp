@@ -1,228 +1,207 @@
-Pipeline disabled
-<!--
-[![pipeline status](https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/badges/master/pipeline.svg)](https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/pipelines)
--->
+<!--> Ceci doit être le fichier README.md à la racine de votre dépôt <-->
 
-# Comment dupliquer ce dépôt
+# Informations générales
 
-<!-- Vous pouvez `forker` ce projet (la fourchette en haut à droite sur la page principale du dépôt) dans votre espace pour travailler tranquillement sur une copie privée, ou `commiter` dans ce dépôt si vous avez les droits de `Developer`.
-Mais lors du `fork` l’organisation (`issues`, `milestones`, `labels`) est réinitialisée. -->
+## Equipe
 
-L'un des membres de l'équipe (`maintainer`) doit réaliser cette étape.
+- Numéro d'équipe : [3].[4]
+- Nom de la base de données : [N]_MusiquePT2
+- Composition de l'équipe :
+  - Damien GAVLAK (maintainer git)
+  - Ayman KACHMAR
+  - Alexandre MALAGNAC
+  - Julien FREYLON
+  - Victor JOSSO
+  - Raphael Bailhet
 
-Pour faire une copie intégrale du dépôt, il faut passer par la fonction `export/import` de `Gitlab` :  https://docs.gitlab.com/ee/user/project/settings/import_export.html .
-La démarche est alors la suivante :
-- depuis `Gitlab` : créer un nouveau projet (le `+` dans le bandeau principal), sélectionner `import project` puis  `from Gitlab export`,
-- donner un nom au nouveau projet (par exemple `m2106_bd_pt_agile_import`) et choisir le fichier d'export (TODO:),
-- lancer `import project`,
-- vous avez votre copie personnelle du dépôt.
+## Projet
 
-# Mise en place de l'environnement technique
+Donner ici le nom et une description courte du projet avec un screenshot représentatif de l'application.
 
-Vous devez installer le même environnement technique que pour le module "M2106 BD"
-(voir https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_etd/-/blob/master/README.md).
-En particulier on vous demande
-- d'utiliser les postes du département ou les machines virtuelles `VDI` avec les ressources du département (**solution recommandée cette année**),
-- mais vous pouvez éventuellement déployer, sur votre machine personnelle, les outils `SQL Server`, `SSMS` et `Visual Studio`. On vous recommande alors les versions suivantes :
-  - `SQL Server 2019` : https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads .
-  - `SSMS 18` : https://docs.microsoft.com/fr-fr/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15 .
-  - `Visual Studio 2019` : https://visualstudio.microsoft.com/fr/downloads/ .
+Nom du projet :
 
-***Note 1*** : Concertez-vous dans votre équipe afin de disposer de la même version de `Visual Studio`, du framework `.NET` et du module `Entity Framework`.
+Dedisclasik (chemin du projet : projet/Dedisclasik)
 
-***Note 2*** : Pour `Visual Studio`, il est possible après 30 jours d'utilisation, que le logiciel vous demande de mettre à jour votre licence. Il suffit normalement, dans le menu `aide / enregistrer le produit`, de donner votre compte `Microsoft` (à créer si nécessaire).
+Description :
 
-Vous allez travailler sur une version modifiée de la base `MusiqueSQL` utilisée dans le module `M2106 BD` :
-- sur le serveur `info-dormeur`, accessible avec authentification Windows depuis les postes du département ou depuis les machines virtuelles `VDI`, vous trouverez une base de données nommée `x_MusiquePT2` avec `x` une lettre entre `A` et `U` correspondant à votre équipe. Les accès aux tables sont en lecture seule pour les membres de l'équipe, à l'exception des tables `ABONNES` et `EMPRUNTER` pour lesquelles vous avez un accès en lecture/écriture.
-- une procédure pour récupérer cette base est également donnée ici : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/databases/README.md.
+Client du projet : Georges Dedisclaisk
+La demande du client était un logiciel de gestion d'une discothèque d'albums, les albums étant contenus dans une base de données prévue à cet effet.
+Nous pouvons nous inscrire, et nous connecter à un compte. Une fois connecté, nous pouvons emprunter et consulter les albums présent dans la discothèque, 
+ainsi rendre des albums précèdement empruntés. Un algorithme de suggestion d'albums est également disponible pour les abonnés.
+Nous pouvons prolonger la date de retour attendue d'un album (une seule fois seulement).
+Le gérant de la discothèque peut se connecter en tant qu'administrateur afin d'avoir accés à différentes informations.
 
-# Schémas de la base de données
+Remerciements spéciaux à :
+- Damien GAVLAK pour la gestion du git et du projet en général;
+- Ayman KACHMAR pour la réalisation d'une grande partie des US demandées lors du projet.
+- Toute l'équipe, parce que la création de cette apllication aurait été impossible sans l'intervention de chacun de nous.
 
-Dans le cadre de ce projet, on considère la base de données `MusiquePT2` avec le schéma relationnel suivant :
+Vous pouvez également préciser ici quelques éléments qui pourraient nous aider à compiler/déployer ou tester votre application :
+voici une étape de première utilisation en tant qu'abonné :
+- lancer l'application et s'inscrire
+- se connecter
+- consulter, emprunter, et rendre un album
+- consulter ses emprunts et prolonger un ou tout les emprunts
+- se déconnecter
+en tant qu'administrateur :
+- se connecter avec un nom d'utilisateur : "dedisk" et un mot de passe : "admin"
+- consulter des informations d'emprunts...etc
+- pouvoir purger
+- se déconnecter
 
-![schema](schema.jpg)
+![appli](appli.png)
 
-dérivé du schéma conceptuel suivant :
+# User Stories
 
-![mcd](mcd.jpg)
+## US1: En tant que futur client de la discothèque, je souhaite pouvoir être abonné afin de pouvoir emprunter des albums.
 
-# Organisation en équipes
+- [ ] US implémentée (on peut emprunter et rendre un album)
 
-Vous disposez d'un serveur `Discord` pour le module "M2204/M2106 - Méthodes Agiles et Bases de Données" (https://discord.gg/Dv8DpwGV). Avec l'aide de la commande '!auth' du bot d'authentification CAS, vous serez nommés sous le format "S2x - Prénom Nom" (avec `x` votre groupe) et vous serez affecté à une équipe `y`, numéro d'équipe dans le groupe. Vous aurez accès à des canaux texte/audio spécifiques à votre équipe.
+Cas limite et détails:
+- [X] Qu’est-ce qui se passe si on essaie de s’inscrire avec un login déjà existant ?
+- [X] Est-ce que le choix du pays est bien un menu déroulant ?
+- [X] Est-ce que les champs sont bien limités à 32 caractères ?
+- [ ] Peut-on s'inscrire avec un nom vide ?
+- [ ] Peut-on s'inscrire avec un nom qui ne contient qu'un espace ?
+- [X] Est-ce qu'il est bien possible de s'inscrire sans pays (car c'est facultatif) ?
+- [X] L'ordre des champs est correct lorsqu'on appuie sur "TAB"
 
-<!--
-Vous devez également vous inscrire dans vos équipes sur le cours Moodle de méthodes agiles (https://moodle1.u-bordeaux.fr/course/view.php?id=5598), cela vous permettra en particulier d'obtenir les consignes pour les rétrospectives et de réaliser un certain nombre de remises.
--->
+## US2: En tant qu’abonné, je souhaite pouvoir consulter les albums que j'ai empruntés.
+- [X] US implémentée
 
-# Utilisation de Gitlab pour gérer son projet
+Cas limite et détails:
+- [X] Qu’est-ce qui se passe si j’essaie d’emprunter un album déjà emprunté ? (Penser à essayer tous les cas, comme cliquer 2 fois sur le bouton “emprunter”)
+- [ ] Qu’est-ce qui se passe si j’emprunte, je retourne, et que je ré-emprunte le même album ?
+- [X] Est-ce que la date de retour est bien basée sur les délais de la table "Genre" ?
+- [X] Est-ce que je distingue bien les albums disponibles des empruntés dans l'affichage ?
+- [X] Est-ce que je vois bien toutes les informations sur les albums (casier, rangée, année d'édition...)
 
-Voici les étapes à suivre pour gérer efficacement votre projet.
+## US3: En tant qu’abonné, je souhaite prolonger l'emprunt d'un album pour un mois supplémentaire (cette opération n’est possible qu’une fois par emprunt).
+- [X] US implémentée
 
-- Une vidéo de démonstration du workflow `Gitlab` : https://box.iut.u-bordeaux.fr/f/a9c716978bb448a18d50/
-- Une vidéo qui illustre la création de 2 `user-story` (2 branches) conduisant à une situation de conflit : https://u.pcloud.link/publink/show?code=XZKb19XZbwI3jcwQWkJG4wTbeV8hP8AN37H7
-- Une vidéo qui montre comment résoudre un conflit, mis en évidence lors d'une `merge-request`, et en passant par une opération de `rebase` de branche : https://u.pcloud.link/publink/show?code=XZrY19XZEnTclA32bkbpdAFnfsU9e5bf43FX
+Cas limite et détails:
+- [X] Qu’est-ce qui se passe si on essaie de re-prolonger ? (Penser à essayer un peu tous les cas, comme cliquer 2 fois sur le bouton “prolonger”)
+- [X] Est-ce que je ne peux prolonger que les non rendus ?
 
-## Constituer son équipe
+## US11: En tant que client du projet, je souhaite une proposition de maquette d’IHM qui après validation pourra donner lieu à un développement.
 
-Le `maintainer` doit constituer son équipe :
--	inviter les autres membres de l’équipe en tant que `developer`,
--	inviter vos enseignants `B. Mery`, `G. Passault`, `P. Ramet` et `E. Sopena` en tant que `reporter`.
+- [X] L'interface est fonctionnelle
+- [X] L'interface est ergonomique (UX)
+- [X] L'interface est esthétique (UI)
 
-## Configurer Visual Studio
+## US4: En tant qu’administrateur je souhaite connaître les emprunts qui ont été prolongés.
+- [X] US implémentée
 
-Depuis la version 2019 de `Visual Studio`, l'expérience `Git` a été grandement améliorée : https://docs.microsoft.com/fr-fr/visualstudio/version-control/git-with-visual-studio?view=vs-2019 .
-Une nouvelle section permet de suivre les modifications `Git` (distincte de la section dédiée à `Team explorer`). L'intégration avec `Github` est bien sur proposée nativement et le `plugin` pour `Gitlab` (https://marketplace.visualstudio.com/items?itemName=MysticBoy.GitLabExtensionforVisualStudio) est toujours disponible. Cependant il n'a pas été complètement mis à jour avec la version 2019 et **on vous recommande de ne pas l'utiliser cette année**.
+Cas limite et détails:
+- [X] Vois-je suffisamment d’infos par emprunt (nom de l'emprunteur, dates, album...) ?
+- [ ] Est-ce qu'ils sont triés par date ?
 
-<!--
-1. Installer l’extension `GitLab` (https://marketplace.visualstudio.com/items?itemName=MysticBoy.GitLabExtensionforVisualStudio),
-puis exécuter `GitLab_Extension_for_Visual_Studio_v1.0.189.vsix`,
-2. Sous `Visual Studio`, menu `Affichage / Team Explorer`,
-3. Se connecter,
-4. Créer dépôt (fenêtre `Team Explorer`), en ajoutant le `.gitignore` « visual studio »,
-5. Bouton `Home` (fenêtre `Team Explorer`), vous êtes prêt à travailler !
+## US5: En tant qu’administrateur de la discothèque en ligne, je souhaite lister les abonnés ayant des emprunts non rapportés en retard de 10 jours.
+- [X] US implémentée
 
-![gitlab](gitlab.png)
- -->
+Cas limite et détails:
+- [X] Vois-je suffisamment d’infos par emprunt (nom de l'emprunteur, dates, album...) ?
+- [ ] Est-ce qu'ils sont triés par date ?
 
-## Définir et affecter une `issue` (ou `user-story`)
+## US6: En tant qu'administrateur de la discothèque en ligne, j'aimerais pouvoir purger les abonnés n'ayant pas emprunté depuis plus d'un an.
+- [X] US implémentée
 
-Lorsque vous vous apprêtez à prendre une nouvelle tâche (une `issue`), rendez-vous dans la section `issues` et assignez-vous une `issue` de la liste `ToDo`. Les `issues` sont en fait des tâches à faire, elles peuvent être attribuées à une ou plusieurs personnes. Par défaut, vous avez les listes : `Open`, `ToDo`, `Doing`, `Closed`.
+Cas limite et détails:
+- [X] Vérifier qu’on a bien une confirmation qui nous indique quels utilisateurs vont être purgés
+- [ ] Vérifier que les utilisateurs qui ont des emprunts en cours ne sont de toutes façons pas purgés
 
-Vous pouvez aussi regrouper les `issues` par jalons (ou `milestones`), qui peuvent représenter par exemple des sprints dans une méthodologie agile. Le jalon est terminé lorsque toutes ses `issues` sont `Closed`.
+## US7: En tant qu’administrateur de la discothèque, je souhaite connaître les 10 albums les plus empruntés dans l'année.
+- [X] US implémentée
 
-***Note*** : Sous la présentation Gitlab `Board`, on peut déplacer facilement les différentes issues en fonction de leur état d’avancement.
+Cas limite et détails:
+- [X] Bien vérifier que c’est ceux de l’année et pas de toute la base de données
 
-## Créer une `merge request` pour débuter votre contribution
+## US8: En tant qu’administrateur de la discothèque en ligne, je souhaite connaître les albums qui n’ont pas été empruntés depuis plus d’un an.
+- [X] US implémentée
 
-Une fois assigné, glissez l’`issue` vers la liste `Doing`. Ouvrez ensuite l’`issue` puis cliquez sur `Create Merge Request`. Cette action va créer automatiquement une `merge-request` avec le statut `WIP` (Work In Progress). La branche de travail associée à cette dernière est également créée.
-Dans votre environnement de développement, pensez à faire un `git pull` pour être sûr d’être à jour. La nouvelle branche que vous venez de créer a été synchronisée. Basculez sur cette branche avec un `git switch` (ou `git checkout` si votre `git` n'est pas suffisamment récent).
+Cas limite et détails:
+- [X] Vérifier que les albums qui n’ont jamais été empruntés apparaissent bien
+- [ ] On a demandé également de trier par date décroissante d’emprunt (les empruntés le plus récemment doivent apparaître en premier)
 
-<!--
-***Depuis `Visual Studio`*** :
--	onglet `Team Explorer / synchroniser / validations entrantes / tirer` pour mettre à jour votre copie locale,
--	puis aller sur `Branches / Remotes`, un double-clic sur la nouvelle branche pour qu’elle soit créée en local et pour pouvoir basculer dessus.
--->
+## US9: En tant qu’abonné, je souhaite prolonger l'emprunt de tous mes emprunts.
+- [X] US implémentée
 
-## Passez en mode relecture (ou `review`)
+Cas limite et détails:
+- [X] Vérifier que les emprunts rendus ne sont pas prolongés
+- [X] Vérifier que les déjà prolongés ne sont pas prolongés
 
-Une fois l’`issue` traitée, allez voir dans `GitLab` votre `merge-request`. Il se peut que vous ayez des conflits à régler. Vous pouvez tenter de les résoudre automatiquement sur l'interface web de `GitLab`, ou via votre environnement de développement. Une fois résolu, faites un `git commit` pour valider votre `merge`.
+## US10: En tant qu’abonné, je souhaite que le logiciel me suggère des albums à emprunter qui peuvent me plaire.
+- [X] US implémentée
 
-On vous recommande de `rebaser` votre branche de travail par rapport à la branche stable (`master` ou `develop`). Des conflits vont probablement apparaître si des contributions ont été intégrées entre temps sur la branche stable. Résolvez-les puis faites un `git rebase -continue` pour valider votre `merge`.
+Cas limite et détails:
+- [X] Est-ce que la suggestion exploite la popularité (exemple: genre similaire aux albums que j'ai empruntés, et trié par nombre de fois que les albums ont été empruntés)
+- [ ] Affiche les bonnes infos ? (où sont-ils… empruntés ou rangée/casier)
 
-Vérifiez sur `GitLab` que votre problème de `Merge Conflit` a bien disparu.
-Puis, cliquez sur `Resolve Wip Status` afin de montrer que le travail est terminé pour cette `merge-request`.
+## US-TU1: Tests unitaires
 
-## Attendre les relectures de vos co-équipiers
+À ce stade, la priorité est d'avoir des tests unitaires fonctionnels pour US1 & US2
 
-Prenez en compte les retours proposés par vos relecteurs. Pensez à fermer les discussions pour chaque commentaire lorsque vous avez résolu le problème.
-Si tout s’est bien passé, votre relecteur se chargera de faire le `Merge` final de votre branche. L'`issue`sera automatiquement fermée (`Closed`).
+- [X] Les tests ou une procédure documentée permet de remettre la base de données dans un état connu (on ne se base pas sur l'état de la base de données au moment de lancer les tests)
+- [X] US1
+- [X] US2
 
-***Note*** : Vous pouvez mentionner une `issue` dans le message associé à vos `commit` pour y faire référence. Un message `fix issue #xxx` (avec `xxx` le numéro de l'`issue`) fermera automatiquement cette `issue`. Vous pouvez également faire référence à une autre `merge-request` avec un message contenant `#yyy` (avec `yyy` le numéro de la `merge-request`).
+# US12: En tant qu'administrateur, je veux pouvoir lister tous les abonnés
+- [X] US implémentée
 
-## En tant que relecteur
+Cas limite et détails:
+- [ ] Est-ce qu'on affiche bien toutes les informations ?
+- [X] Quel critère de tri ?
 
-Une fois un premier `commit` effectué, il est possible de discuter directement sur la contribution (`merge-request`). Il faut alors ouvrir l'onglet `Changes`. Normalement, en tant que `Developer` vous n'avez pas les droits pour `Merger` cette `issue` dans la branche `master` du dépôt principal. Lorsque vous avez fini votre relecture et que vous n'avez plus de remarques, vous pouvez `lever le pouce` pour indiquer que de votre point de vue, cette `issue` peut-être fusionnée.
+# US13: En tant qu’utilisateur du logiciel, je souhaite que les résultats soient paginés dès que la liste est trop longue pour un meilleur confort d’utilisation.
+- [ ] US Implémentée
 
-## Conditions nécessaires pour fusionner une `merge-request`
+Cas limite et détails:
+- [ ] Est-ce que la pagination est bien performante ? C'est-à-dire est-ce que les données sont bien récupérées uniquement au besoin et pas toutes dans le C#
 
-Comme dit précédemment, vous devez régler les conflits (`Merge Conflit`) et retirer le statut `WIP` de votre `merge-request`.
+# US14: En tant qu'utilisateur, je souhaite pouvoir rechercher un album par son nom
+- [X] US Implémentée
 
-Dans `Settings/General/Merge Requests/Merge checks`, il est conseillé de définir les règles suivantes :
+Cas limite et détails:
+- [X]  Qu’est-ce qui se passe si on tape "mozart requiem"
+  - On s’attend à voir “Mozart Verdi: Requiem” (deux mots clés mais séparés dans le titre trouvé)
+- [X]  Qu’est-ce qui se passe si on tape "bach flute" ou "bach flûte"
+  - On s’attend à voir "Bach: Sonates pour flûte” (accent sur le û)
+- [X]  Qu’est-ce qui se passe si on tape "violoncelles bach"
+  - On s’attend à voir “Bach: Suites pour violoncelles” (les mots ne sont pas dans l’ordre)
 
-- [x] `Pipelines must succeed`
-- [x] `All discussions must be resolved`
+# US15: En tant qu'abonné et administrateur, on souhaite voir les pochettes d'album dans l'IHM lorsqu'ils sont mentionnés
+- [ ] US Implémentée
 
-Vous pouvez également imposer que votre contribution soit `rebasée` avant d'être fusionnée en sélectionnant dans `Settings/General/Merge Requests/Merge method` l'une des deux méthodes suivantes :
+# US16: Nous souhaitons améliorer la gestion des mots de passe
 
-- [x] `Merge commit with semi-linear history`
-- [ ] `Fast-forward merge`
+- [X] Au moment de l'inscription, je fournis le mot de passe deux fois (pour m'assurer que je ne me suis pas trompé)
+- [ ] S'assurer qu'ils ne soient pas stockés en clair dans la base de données
+- [ ] Un administrateur peut changer le mot de passe de n'importe quel utilisateur
+- [ ] Un utilisateur peut changer son mot de passe, il fournit son mot de passe actuel et le nouveau mot de passe (2 fois)
+- [X] Tous les champs qui contiennent des mots de passe ne sont pas visible à l'écran (mais des *** à la place), mais avec possibilité des les révéler (bouton "oeil")
 
-Vous trouverez également deux fichiers cachés à la racine de ce dépôt :
+# US17: En tant qu'administrateur, je souhaite voir les albums manquants (empruntés) d'un casier (note pour nous : ce peut-être simplement rajouter un filtre au bon endroit)
 
-- `.gitignore` : pour définir les règles afin d'ignorer les fichiers temporaires Visual Studio,
-- `.gitlab-ci.yml` : pour mettre en place un pipeline d'intégration continue minimal.
-Un exemple de pipeline `GitLab CI/CD` avec `.NET Core` et le framework de test `MSTest` est disponible ici https://gitlab-ce.iut.u-bordeaux.fr/PT4/demo-cicd-mstest, ***mais cela dépasse certainement le cadre de ce projet***.
+- [ ] US Implémentée
 
-## Estimation du temps d'une `issue`
+# US18: En tant que mainteneur, je souhaite m'assurer que le code correspond aux normes d'architecture logicielle, de qualité et de documentation en vigueur
 
-***Ceci est facultatif*** : ceux qui le souhaitent peuvent essayer, vous en tirerez une expérience intéressante !
+- [ ] Le code est bien factorisé (réduire les duplications)
+- [ ] Commentaires des fonctions
+- [X] Règles de codage homogène (libre)
 
-Il est possible de saisir des estimations du temps passé sur une `issue` en écrivant dans le champs commentaire :
-- /estimate \<temps\> : pour ajouter une estimation
-- /spend \<temps\> : pour indiquer le temps passé
+## US-TU2: Tests unitaires extra
 
-Le temps se décline en :
-- mo : mois
-- w : semaines
-- d : jours
-- h : heures
-- m : minutes
-
-La barre de progression du jalon pourra en tenir compte.
-
-# Comment conserver un fichier de configuration privé
-
-Afin de travailler en équipe, on vous demande de versionner votre code sur le `Gitlab` de l'IUT.
-Il reste cependant un problème : votre `url` de connexion à la base de données doit rester privée (elle peut être différente pour chaque co-équipier et ne doit pas être versionnée). La solution consiste à "stocker" cette `url` dans un fichier de configuration. Voici alors la ligne de code pour ouvrir une connexion :
-```cs
-using System.Configuration;
-...
-dbCon = new OleDbConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString);
-```
-en supposant que le fichier de configuration de l'application (`App.config` à la racine du projet) contienne, par exemple :
-```xml
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-    ...
-    <connectionStrings>
-      <add name="MyConnectionString" connectionString="Provider=SQLOLEDB;Data Source=DESKTOP-FATLC4L;Initial Catalog=Championnat;Integrated Security=SSPI" />
-    </connectionStrings>
-</configuration>
-```
-
-***Note*** : C'est également dans ce fichier de configuration que vous allez retrouver votre version du framework `.NET` (on vous recommande d'utiliser la même version).
-
-Pour finir, il est nécessaire d'ignorer ce fichier (`App.config`) lors des futurs `commits`.
-- Soit vous avez ignoré ce fichier depuis le début en l'ajoutant dans le fichier `.gitignore` du projet.
-- Soit vous pouvez l'ignorer a posteriori (par exemple si vous avez suivi la procédure ci-dessus pour "importer" le projet initial) à l'aide de la commande :
-```bash
-git update-index --skip-worktree path/to/file
-```
-
-# Ressources du cours
-
-Vous avez toujours accès aux dépôts `GitLab` :
-- https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_etd pour le module `M2106_BD`,
-- https://gitlab-ce.iut.u-bordeaux.fr/Pierre/DEMO-GIT-PT2 pour un rappel des commandes `git` vues au début du second semestre.
-
-## Les bases de données
-
-Dans le sous répertoire `databases` vous trouverez :
-
-- la base `Championnat` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/databases/championnat/Championnat_0_Creation.sql
-- la base `Modules` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/databases/modules/Modules_0_Creation.sql
-- la base `MusiquePT2` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/databases/README.md
-
-## Les supports
-
-Dans le sous répertoire `supports` vous trouverez :
-
-- les rappels `SQL` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/M2106-1-SQL.pdf
-- le support `Transact-SQL` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/M2106-2-TSQL.pdf
-- le support `C#` avec `OLEDB` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/M2106-3-OLEDB.pdf
-- le support `C#` avec `EF` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/M2106-4-EF.pdf
-- le support d'introduction à l'agilité : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/Introduction-Agilite-VF.pdf
-- le support d'introduction à la gestion de projet : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/Introduction-Gestion-Projet-VF.pdf
-- le glossaire `SCRUM` : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/supports/SCRUM.pdf
-
-## Les exemples de code
-
-Dans le sous répertoire `exemples` vous trouverez :
-
-- 2 applications `WindowsForms` avec `OleDb` :
-  - avec la base `MusiqueSQL` - 2 `ListBox` pour afficher les musiciens et leurs oeuvres : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/exemples/OLEDB_Musiciens_WindowsForms_App/README.md
-  - avec la base `Championnat` - Mise à jour des joueurs : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/exemples/OLEDB_Championnat_Update_App/README.md
-
-- 2 applications `WindowsForms` avec `Entity Framework` :
-  - avec la base `MusiqueSQL` - 2 `ListBox` pour afficher les musiciens et leurs oeuvres : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/exemples/EF_Musiciens_WindowsForms_App/README.md
-  - avec la base  `Championnat` - Mise à jour des joueurs : https://gitlab-ce.iut.u-bordeaux.fr/Pierre/m2106_bd_pt_agile/-/blob/master/exemples/EF_Championnat_Update_App/README.md
+- [X] US3
+- [ ] US4
+- [X] US5
+- [X] US6
+- [X] US7
+- [ ] US8
+- [ ] US9
+- [ ] US10
+- [ ] US12
+- [ ] US13
+- [ ] US14
+- [ ] US16
+- [ ] US17
