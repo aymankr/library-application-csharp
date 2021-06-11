@@ -162,11 +162,11 @@ Cas limite et détails:
 - [X] US Implémentée
 
 Cas limite et détails:
-- [X]  Qu’est-ce qui se passe si on tape "mozart requiem"
+- [ ]  Qu’est-ce qui se passe si on tape "mozart requiem"
   - On s’attend à voir “Mozart Verdi: Requiem” (deux mots clés mais séparés dans le titre trouvé)
-- [X]  Qu’est-ce qui se passe si on tape "bach flute" ou "bach flûte"
+- [ ]  Qu’est-ce qui se passe si on tape "bach flute" ou "bach flûte"
   - On s’attend à voir "Bach: Sonates pour flûte” (accent sur le û)
-- [X]  Qu’est-ce qui se passe si on tape "violoncelles bach"
+- [ ]  Qu’est-ce qui se passe si on tape "violoncelles bach"
   - On s’attend à voir “Bach: Suites pour violoncelles” (les mots ne sont pas dans l’ordre)
 
 # US15: En tant qu'abonné et administrateur, on souhaite voir les pochettes d'album dans l'IHM lorsqu'ils sont mentionnés
