@@ -18,6 +18,8 @@ namespace Dedisclasik
         {
             InitializeComponent();
             chargeListPays();
+            mdp.UseSystemPasswordChar = true;
+            mdp2.UseSystemPasswordChar = true;
         }
 
         private void ajout_Click(object sender, EventArgs e)
@@ -36,8 +38,13 @@ namespace Dedisclasik
             {
                 MessageBox.Show("Le login existe déjà, réessayez.");
             }
+            else if (nomAbonne.Contains(" ") || prenomAbonne.Contains(" ") || loginAbonne.Contains(" ") || mdpAbonne.Contains(" "))
+            {
+                MessageBox.Show("Vous ne pouvez pas mettre d'espaces dans vos coordonnées, réessayez.");
+            }
             else
             {
+                MessageBox.Show("Inscription réussie !");
                 inscrire(nomAbonne, prenomAbonne, loginAbonne, mdpAbonne);
                 new Connexion().ShowDialog();
                 Close();
@@ -84,6 +91,30 @@ namespace Dedisclasik
             var pays = (from p in musique.PAYS
                         select p.NOM_PAYS.Trim()).ToArray();
             listPaysBox.Items.AddRange(pays);
+        }
+
+        private void oeilMdp_Click(object sender, EventArgs e)
+        {
+            if (mdp.UseSystemPasswordChar)
+            {
+                mdp.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                mdp.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void mdpVerif_Click(object sender, EventArgs e)
+        {
+            if (mdp2.UseSystemPasswordChar)
+            {
+                mdp2.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                mdp2.UseSystemPasswordChar = true;
+            }
         }
     }
 }

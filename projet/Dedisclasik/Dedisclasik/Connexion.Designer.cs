@@ -37,6 +37,7 @@ namespace Dedisclasik
             this.loginConnexion = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.oeil = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // connexion_button
@@ -44,7 +45,7 @@ namespace Dedisclasik
             this.connexion_button.Location = new System.Drawing.Point(244, 219);
             this.connexion_button.Name = "connexion_button";
             this.connexion_button.Size = new System.Drawing.Size(137, 23);
-            this.connexion_button.TabIndex = 15;
+            this.connexion_button.TabIndex = 4;
             this.connexion_button.Text = "Se connecter";
             this.connexion_button.UseVisualStyleBackColor = true;
             this.connexion_button.Click += new System.EventHandler(this.connexion_Click);
@@ -54,7 +55,7 @@ namespace Dedisclasik
             this.inscription_button.Location = new System.Drawing.Point(310, 278);
             this.inscription_button.Name = "inscription_button";
             this.inscription_button.Size = new System.Drawing.Size(97, 23);
-            this.inscription_button.TabIndex = 14;
+            this.inscription_button.TabIndex = 5;
             this.inscription_button.Text = "Inscrivez-vous";
             this.inscription_button.UseVisualStyleBackColor = true;
             this.inscription_button.Click += new System.EventHandler(this.inscription_Click);
@@ -83,14 +84,14 @@ namespace Dedisclasik
             this.mdpConnexion.Location = new System.Drawing.Point(307, 161);
             this.mdpConnexion.Name = "mdpConnexion";
             this.mdpConnexion.Size = new System.Drawing.Size(100, 20);
-            this.mdpConnexion.TabIndex = 11;
+            this.mdpConnexion.TabIndex = 2;
             // 
             // loginConnexion
             // 
             this.loginConnexion.Location = new System.Drawing.Point(307, 113);
             this.loginConnexion.Name = "loginConnexion";
             this.loginConnexion.Size = new System.Drawing.Size(100, 20);
-            this.loginConnexion.TabIndex = 10;
+            this.loginConnexion.TabIndex = 1;
             // 
             // label2
             // 
@@ -110,12 +111,23 @@ namespace Dedisclasik
             this.label1.TabIndex = 8;
             this.label1.Text = "Nom utilisateur :";
             // 
+            // oeil
+            // 
+            this.oeil.Location = new System.Drawing.Point(413, 161);
+            this.oeil.Name = "oeil";
+            this.oeil.Size = new System.Drawing.Size(26, 20);
+            this.oeil.TabIndex = 3;
+            this.oeil.Text = "👁️";
+            this.oeil.UseVisualStyleBackColor = true;
+            this.oeil.Click += new System.EventHandler(this.oeil_Click);
+            // 
             // Connexion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(622, 367);
+            this.Controls.Add(this.oeil);
             this.Controls.Add(this.connexion_button);
             this.Controls.Add(this.inscription_button);
             this.Controls.Add(this.label4);
@@ -143,5 +155,6 @@ namespace Dedisclasik
         private System.Windows.Forms.TextBox loginConnexion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button oeil;
     }
 }
