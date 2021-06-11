@@ -19,6 +19,7 @@ namespace Dedisclasik
         {
             InitializeComponent();
             Outils.musique = new MusiquePT2_NEntities();
+            mdpConnexion.UseSystemPasswordChar = true;
         }
 
         private void inscription_Click(object sender, EventArgs e)
@@ -72,6 +73,18 @@ namespace Dedisclasik
             string mdpAdmin = "admin";
 
             return loginConnexion.Text.Equals(loginAdmin) && mdpConnexion.Text.Equals(mdpAdmin);
+        }
+
+        private void oeil_Click(object sender, EventArgs e)
+        {
+            if (mdpConnexion.UseSystemPasswordChar)
+            {
+                mdpConnexion.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                mdpConnexion.UseSystemPasswordChar = true;
+            }
         }
     }
 }

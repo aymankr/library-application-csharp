@@ -44,6 +44,8 @@ namespace Dedisclasik
             this.label4 = new System.Windows.Forms.Label();
             this.mdp2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.oeilMdp = new System.Windows.Forms.Button();
+            this.mdpVerif = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listPaysBox
@@ -53,7 +55,7 @@ namespace Dedisclasik
             this.listPaysBox.Location = new System.Drawing.Point(405, 106);
             this.listPaysBox.Name = "listPaysBox";
             this.listPaysBox.Size = new System.Drawing.Size(100, 21);
-            this.listPaysBox.TabIndex = 28;
+            this.listPaysBox.TabIndex = 4;
             // 
             // button1
             // 
@@ -61,7 +63,7 @@ namespace Dedisclasik
             this.button1.Location = new System.Drawing.Point(472, 209);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(55, 55);
-            this.button1.TabIndex = 27;
+            this.button1.TabIndex = 10;
             this.button1.Text = "Annuler";
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -88,14 +90,14 @@ namespace Dedisclasik
             this.login.Location = new System.Drawing.Point(106, 106);
             this.login.Name = "login";
             this.login.Size = new System.Drawing.Size(100, 20);
-            this.login.TabIndex = 24;
+            this.login.TabIndex = 3;
             // 
             // ajout
             // 
             this.ajout.Location = new System.Drawing.Point(411, 209);
             this.ajout.Name = "ajout";
             this.ajout.Size = new System.Drawing.Size(55, 55);
-            this.ajout.TabIndex = 22;
+            this.ajout.TabIndex = 9;
             this.ajout.Text = "OK";
             this.ajout.UseVisualStyleBackColor = true;
             this.ajout.Click += new System.EventHandler(this.ajout_Click);
@@ -132,21 +134,21 @@ namespace Dedisclasik
             this.prenom.Location = new System.Drawing.Point(405, 56);
             this.prenom.Name = "prenom";
             this.prenom.Size = new System.Drawing.Size(100, 20);
-            this.prenom.TabIndex = 18;
+            this.prenom.TabIndex = 2;
             // 
             // mdp
             // 
             this.mdp.Location = new System.Drawing.Point(106, 156);
             this.mdp.Name = "mdp";
             this.mdp.Size = new System.Drawing.Size(100, 20);
-            this.mdp.TabIndex = 17;
+            this.mdp.TabIndex = 5;
             // 
             // nom
             // 
             this.nom.Location = new System.Drawing.Point(106, 56);
             this.nom.Name = "nom";
             this.nom.Size = new System.Drawing.Size(100, 20);
-            this.nom.TabIndex = 16;
+            this.nom.TabIndex = 1;
             // 
             // label4
             // 
@@ -162,7 +164,7 @@ namespace Dedisclasik
             this.mdp2.Location = new System.Drawing.Point(405, 156);
             this.mdp2.Name = "mdp2";
             this.mdp2.Size = new System.Drawing.Size(100, 20);
-            this.mdp2.TabIndex = 29;
+            this.mdp2.TabIndex = 7;
             // 
             // label6
             // 
@@ -174,12 +176,34 @@ namespace Dedisclasik
             this.label6.TabIndex = 31;
             this.label6.Text = "Inscription";
             // 
+            // oeilMdp
+            // 
+            this.oeilMdp.Location = new System.Drawing.Point(212, 156);
+            this.oeilMdp.Name = "oeilMdp";
+            this.oeilMdp.Size = new System.Drawing.Size(26, 20);
+            this.oeilMdp.TabIndex = 6;
+            this.oeilMdp.Text = "👁️";
+            this.oeilMdp.UseVisualStyleBackColor = true;
+            this.oeilMdp.Click += new System.EventHandler(this.oeilMdp_Click);
+            // 
+            // mdpVerif
+            // 
+            this.mdpVerif.Location = new System.Drawing.Point(511, 156);
+            this.mdpVerif.Name = "mdpVerif";
+            this.mdpVerif.Size = new System.Drawing.Size(26, 20);
+            this.mdpVerif.TabIndex = 8;
+            this.mdpVerif.Text = "👁️";
+            this.mdpVerif.UseVisualStyleBackColor = true;
+            this.mdpVerif.Click += new System.EventHandler(this.mdpVerif_Click);
+            // 
             // Inscription
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(539, 276);
+            this.Controls.Add(this.mdpVerif);
+            this.Controls.Add(this.oeilMdp);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.mdp2);
@@ -220,5 +244,7 @@ namespace Dedisclasik
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox mdp2;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button oeilMdp;
+        private System.Windows.Forms.Button mdpVerif;
     }
 }
