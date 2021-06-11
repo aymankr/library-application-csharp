@@ -221,28 +221,9 @@ namespace Dedisclasik
 
         private void dataGridEmprunt_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
-                        && !dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Contains("Aucun emprunt en cours"))
+            if (dataGridEmprunt.CurrentCell != null)
             {
-                string titre = dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Trim();
-                var id_album = from al in Outils.musique.ALBUMS
-                               where al.TITRE_ALBUM == titre
-                               select al.CODE_ALBUM;
-                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
-                {
-                    if (emp.CODE_ALBUM == id_album.First())
-                    {
-                        dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
-                        if (Outils.dejaProlongé(emp))
-                        {
-                            Prolonger.Enabled = false;
-                        }
-                        else
-                        {
-                            Prolonger.Enabled = true;
-                        }
-                    }
-                }
+                Prolonger.Enabled = vérificationProlonger();
             }
         }
 
@@ -277,25 +258,12 @@ namespace Dedisclasik
                 emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
                 emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
                 emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
-
+                //emprunt.DATE_RETOUR = null; //à modifier
                 m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
                 m.EMPRUNTER.Add(emprunt);
                 pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "X";
             }
             m.SaveChanges();
-        }
-
-        private void rechercheTitre_TextChanged(object sender, EventArgs e)
-        {
-            //recherche de base 
-            pagesAlbums.Rows.OfType<DataGridViewRow>()
-                .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
-
-            //recherche avancée
-            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Titre") && r.Cells["Titre"]
-            .Value.ToString().Trim().ToLower().Contains(rechercheTitre.Text.ToString().ToLower()))
-                .ToList().ForEach(row => row.Visible = true);
-
         }
 
         private void InitialiserAlbums()
@@ -370,28 +338,41 @@ namespace Dedisclasik
             Outils.Deconnexion(this);
         }
 
+        private void rechercheTitre_TextChanged(object sender, EventArgs e)
+        {
+            rechercheTripleFacteur();
+
+        }
+
         private void rechercheGenre_TextChanged(object sender, EventArgs e)
         {
-            //recherche de base 
-            pagesAlbums.Rows.OfType<DataGridViewRow>()
-                .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
-
-            //recherche avancée
-            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Genre") && r.Cells["Genre"]
-            .Value.ToString().Trim().ToLower().Contains(rechercheGenre.Text.ToString().ToLower()))
-                .ToList().ForEach(row => row.Visible = true);
+            rechercheTripleFacteur();
         }
 
         private void rechercheEditeur_TextChanged(object sender, EventArgs e)
         {
-            //recherche de base 
+            rechercheTripleFacteur();
+        }
+
+        private void recherche(string col1, string col2, string col3, TextBox box1, TextBox box2, TextBox box3)
+        {
+            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains(col1) && r.Cells[col1]
+            .Value.ToString().Trim().ToLower().Contains(box1.Text.ToString().ToLower())
+            && pagesAlbums.Columns.Contains(col2) && r.Cells[col2]
+            .Value.ToString().Trim().ToLower().Contains(box2.Text.ToString().ToLower())
+            && pagesAlbums.Columns.Contains(col3) && r.Cells[col3]
+            .Value.ToString().Trim().ToLower().Contains(box3.Text.ToString().ToLower())) 
+                .ToList().ForEach(row => row.Visible = true);
+        }
+
+        private void rechercheTripleFacteur()
+        {
+            //initialisation recherche
             pagesAlbums.Rows.OfType<DataGridViewRow>()
                 .ToList().FindAll(row => row.Tag != null).ForEach(row => row.Visible = false);
 
-            //recherche avancée
-            pagesAlbums.Rows.OfType<DataGridViewRow>().Where(r => r.Tag != null && pagesAlbums.Columns.Contains("Editeur") && r.Cells["Editeur"]
-            .Value.ToString().Trim().ToLower().Contains(rechercheEditeur.Text.ToString().ToLower()))
-                .ToList().ForEach(row => row.Visible = true);
+            //recherche pour chaques champs
+            recherche("Titre", "Genre", "Editeur", rechercheTitre, rechercheGenre, rechercheEditeur);
         }
     }
 }
