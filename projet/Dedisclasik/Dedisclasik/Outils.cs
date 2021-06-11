@@ -30,19 +30,6 @@ namespace Dedisclasik
             return dejaProlongé;
         }
 
-        public static void chargerDataGrid(int nbColonnes, string[] attributs, System.Windows.Forms.DataGridView dg)
-        {
-            dg.Rows.Clear();
-            dg.Columns.Clear();
-            dg.ColumnCount = nbColonnes;
-
-            int i = 0;
-            foreach(string s in attributs)
-            {
-                dg.Columns[i].Name = s;
-                dg.Columns[i].Width = dg.Width / nbColonnes;
-                i++;
-            }
         public static bool dejaEmprunté(ALBUMS album)
         {
             foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
@@ -69,7 +56,7 @@ namespace Dedisclasik
                 dg.Columns[i].Width = dg.Width / longueur;
                 i++;
             }
-            dg.ReadOnly=true;
+            dg.ReadOnly = true;
             dg.MultiSelect = false;
         }
 
@@ -157,14 +144,13 @@ namespace Dedisclasik
                 multipleVerif = true;
             }
         }
-
-        public static EMPRUNTER getEmprunt()
-        {
-            EMPRUNTER emp = getEmprunt();
-            ABONNÉS abo = getAbo();
-            return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
-                && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
-        }
         #endregion
+
+        public static void Deconnexion(Form fenetre)
+        {
+            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) fenetre.Close();
+        }
+
     }
 }

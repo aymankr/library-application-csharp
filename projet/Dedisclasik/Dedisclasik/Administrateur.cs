@@ -151,38 +151,6 @@ namespace Dedisclasik
             }
         }
 
-        private void prec_Click(object sender, EventArgs e)
-        {
-            Outils.pgNb--;
-            switchNextPrev(sender, e);
-        }
-        private void switchNextPrev(object sender, EventArgs e)
-        {
-
-            switch (Outils.fonction)
-            {
-                case "prolong":
-                    empruntsProlongésToolStripMenuItem_Click(sender, e);
-                    break;
-                case "retard":
-                    empruntsEnRetardToolStripMenuItem_Click(sender, e);
-                    break;
-                case "fantome":
-                    albumsNonEmpruntésToolStripMenuItem_Click(sender, e);
-                    break;
-                case "abo":
-                    consulterLesAbonnésToolStripMenuItem_Click(sender, e);
-                    break;
-                case "top":
-                    top10MeilleursEmpruntsToolStripMenuItem_Click(sender, e);
-                    break;
-            }
-        }
-        private void suiv_Click(object sender, EventArgs e)
-        {
-            Outils.pgNb++;
-            switchNextPrev(sender, e);
-        }
 
         private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -241,83 +209,12 @@ namespace Dedisclasik
             afficherDescription("Albums non empruntés depuis plus d'un an.");
         }
 
-        private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Outils.fonction = "prolong";
-            Outils.comparer();
-
-            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-            var cmd = listEmpruntProlong().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
-            // US4 : abonnés ayant prolongé leur emprunt
-            foreach (EMPRUNTER emp in cmd)
-            {
-                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription("Emprunts qui ont été prolongés.");
-        }
-
-        private void empruntsEnRetardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Outils.fonction = "retard";
-            Outils.comparer();
-
-            labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
-            var cmd = listEmpruntRetard().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
-            foreach (EMPRUNTER emp in cmd)
-            {
-                dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
-            }
-            afficherDescription("Abonnés ayant des empruntés non rapportés depuis 10 jours.");
-        }
-
-        private void top10MeilleursEmpruntsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Outils.fonction = "top";
-            Outils.comparer();
-
-            labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
-            var cmd = listMeilleurEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
-            // US7 : les 10 plus empruntés de l'année
-            foreach (ALBUMS a in cmd)
-            {
-                dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
-            }
-            afficherDescription("Les 10 albums les plus empruntés dans l'année.");
-        }
-
-        private void albumsNonEmpruntésToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Outils.fonction = "fantome";
-            Outils.comparer();
-
-            labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
-            var cmd = listAlbumNonEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
-            //  US8 : liste albums non empruntés depuis + d'un an 
-            foreach (ALBUMS a in cmd) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
-            afficherDescription("Albums non empruntés depuis plus d'un an.");
-        }
-
         private void consulterLesAbonnésToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Outils.fonction = "abo";
             Outils.comparer();
             labelRecherche.Text = "Recherche par nom ou prénom :";
             Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
-            var cmd = Outils.musique.ABONNÉS.ToList();
-            Outils.activePaging(cmd.Count(), prec, suiv, pg);
-
-            var abos = cmd.Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1)); ;
-
-            labelRecherche.Text = "Recherche par nom ou prénom :";
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
             var cmd = Outils.musique.ABONNÉS.ToList();
             Outils.activePaging(cmd.Count(), prec, suiv, pg);
 
