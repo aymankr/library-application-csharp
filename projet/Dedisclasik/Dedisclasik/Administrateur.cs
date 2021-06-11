@@ -26,6 +26,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntProlong()
         {
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
             List<EMPRUNTER> listEmprunts = new List<EMPRUNTER>();
 
             var prolong = Outils.musique.EMPRUNTER;
@@ -53,6 +54,7 @@ namespace Dedisclasik
 
         public List<EMPRUNTER> listEmpruntRetard()
         {
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             List<EMPRUNTER> abos = new List<EMPRUNTER>();
             DateTime dateNow = DateTime.Now;
 
@@ -72,6 +74,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listMeilleurEmprunt()
         {
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             List<ALBUMS> albums = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
 
@@ -87,7 +90,6 @@ namespace Dedisclasik
             }
             return albums;
         }
-
         public List<ABONNÉS> listAbonnesPurge()
         {
             List<ABONNÉS> abos = new List<ABONNÉS>();
@@ -105,6 +107,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listAlbumNonEmprunt()
         {
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             List<ALBUMS> albs = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
             var cmd = Outils.musique.EMPRUNTER
@@ -123,7 +126,7 @@ namespace Dedisclasik
             }
             return albs;
         }
-
+        
         private bool afficherDescription(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
@@ -139,8 +142,15 @@ namespace Dedisclasik
         private void deconnect_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes) Close();
+            if (confirmResult == DialogResult.Yes)
+            {
+                Outils.actions.Clear();
+                Outils.actions.Add("vide");
+                Outils.cptActions = 0;
+                Close();
+            }
         }
+
 
         private void empruntsProlongésToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -148,9 +158,8 @@ namespace Dedisclasik
             Outils.comparer();
 
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
             var cmd = listEmpruntProlong().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
             // US4 : abonnés ayant prolongé leur emprunt
             foreach (EMPRUNTER emp in cmd)
             {
@@ -163,11 +172,9 @@ namespace Dedisclasik
         {
             Outils.fonction = "retard";
             Outils.comparer();
-
             labelRecherche.Text = "Recherche par titre, nom ou prénom :";
-            Outils.chargerDataGrid(3, new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre", "Nom", "Prénom" }, dataGridView1);
             var cmd = listEmpruntRetard().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
             foreach (EMPRUNTER emp in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { emp.ALBUMS.TITRE_ALBUM, emp.ABONNÉS.NOM_ABONNÉ, emp.ABONNÉS.PRÉNOM_ABONNÉ });
@@ -179,12 +186,10 @@ namespace Dedisclasik
         {
             Outils.fonction = "top";
             Outils.comparer();
-
             labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(2, new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
-            var cmd = listMeilleurEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
+            Outils.chargerDataGrid(new string[] { "Titre", "Nombre emprunts" }, dataGridView1);
             // US7 : les 10 plus empruntés de l'année
+            var cmd = listMeilleurEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
             foreach (ALBUMS a in cmd)
             {
                 dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM, a.EMPRUNTER.Count.ToString() });
@@ -196,11 +201,9 @@ namespace Dedisclasik
         {
             Outils.fonction = "fantome";
             Outils.comparer();
-
             labelRecherche.Text = "Recherche par titre :";
-            Outils.chargerDataGrid(1, new string[] { "Titre" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
             var cmd = listAlbumNonEmprunt().Take(Outils.pgSz * Outils.pgNb).ToList().Skip(Outils.pgSz * (Outils.pgNb - 1));
-
             //  US8 : liste albums non empruntés depuis + d'un an 
             foreach (ALBUMS a in cmd) dataGridView1.Rows.Add(new string[] { a.TITRE_ALBUM });
             afficherDescription("Albums non empruntés depuis plus d'un an.");
@@ -210,9 +213,8 @@ namespace Dedisclasik
         {
             Outils.fonction = "abo";
             Outils.comparer();
-
             labelRecherche.Text = "Recherche par nom ou prénom :";
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             var cmd = Outils.musique.ABONNÉS.ToList();
             Outils.activePaging(cmd.Count(), prec, suiv, pg);
 
@@ -225,11 +227,12 @@ namespace Dedisclasik
                 dataGridView1.Rows.Add(row);
             }
             afficherDescription("Liste des abonnés.");
+
         }
 
         private void purgerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Outils.chargerDataGrid(2, new string[] { "Nom", "Prénom" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Nom", "Prénom" }, dataGridView1);
             DateTime dateNow = DateTime.Now;
 
             // US6 remove abonnes qui n'ont pas empruntés depuis un an

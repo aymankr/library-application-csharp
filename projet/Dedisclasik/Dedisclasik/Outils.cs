@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dedisclasik
 {
@@ -29,19 +30,40 @@ namespace Dedisclasik
             return dejaProlongé;
         }
 
-        public static void chargerDataGrid(int nbColonnes, string[] attributs, System.Windows.Forms.DataGridView dg)
+        public static bool dejaEmprunté(ALBUMS album)
+        {
+            foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
+            {
+                if (album.Equals(emprunt.ALBUMS))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void chargerDataGrid(string[] attributs, System.Windows.Forms.DataGridView dg)
         {
             dg.Rows.Clear();
             dg.Columns.Clear();
-            dg.ColumnCount = nbColonnes;
+            int longueur = attributs.Length;
+            dg.ColumnCount = longueur;
 
             int i = 0;
-            foreach(string s in attributs)
+            foreach (string s in attributs)
             {
                 dg.Columns[i].Name = s;
-                dg.Columns[i].Width = dg.Width / nbColonnes;
+                dg.Columns[i].Width = dg.Width / longueur;
                 i++;
             }
+            dg.ReadOnly = true;
+            dg.MultiSelect = false;
+        }
+
+
+        public static bool ActiverPagination(int tailleListe)
+        {
+            return (tailleListe <= 20);
         }
 
         #region gestion elements
@@ -91,7 +113,6 @@ namespace Dedisclasik
             return musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == abo.CODE_ABONNÉ
                 && e.CODE_ALBUM == emp.CODE_ALBUM).FirstOrDefault();
         }
-        #endregion
 
         public static void activePaging(int nbMax, System.Windows.Forms.Button btPrec, System.Windows.Forms.Button btNext, System.Windows.Forms.Label lab)
         {
@@ -123,5 +144,13 @@ namespace Dedisclasik
                 multipleVerif = true;
             }
         }
+        #endregion
+
+        public static void Deconnexion(Form fenetre)
+        {
+            var confirmResult = MessageBox.Show("Etes-vous sûr ?", "Déconnexion", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes) fenetre.Close();
+        }
+
     }
 }

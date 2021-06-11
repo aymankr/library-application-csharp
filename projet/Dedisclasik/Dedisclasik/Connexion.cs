@@ -13,7 +13,7 @@ namespace Dedisclasik
     public partial class Connexion : Form
     {
 
-        public static ABONNÉS abonne { get; set; }
+        public static ABONNÉS abonné { get; set; }
 
         public Connexion()
         {
@@ -43,10 +43,10 @@ namespace Dedisclasik
             }
             else if (connexionValide(login, mdp))
             {
-                abonne = ABONNÉS.RechercheAbonne(login);
-                RechercheAlbumEtEmprunt emprunt = new RechercheAlbumEtEmprunt();
+                abonné = ABONNÉS.RechercheAbonne(login);
+                MonCompte compteAbonné = new MonCompte();
                 Hide();
-                emprunt.ShowDialog();
+                compteAbonné.ShowDialog();
                 Show();
             }
             else MessageBox.Show("Connexion échouée, réessayez.");
