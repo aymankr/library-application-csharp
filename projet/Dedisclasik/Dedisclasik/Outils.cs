@@ -29,7 +29,7 @@ namespace Dedisclasik
             }
             return dejaProlongé;
         }
-
+        
         public static bool dejaEmprunté(ALBUMS album)
         {
             foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
@@ -67,15 +67,18 @@ namespace Dedisclasik
         }
 
         #region gestion elements
-        public static EMPRUNTER creerEmprunt(ABONNÉS abo, string dateEmprunt, string dateRetourAttendue)
+        public static EMPRUNTER creerEmprunt(ABONNÉS abo, string dateEmprunt, string dateRetourAttendue, ALBUMS album)
         {
             EMPRUNTER emp = new EMPRUNTER();
             emp.CODE_ABONNÉ = abo.CODE_ABONNÉ;
-
-            var listAlbumsEmprunts = (from a in musique.ALBUMS join j in musique.EMPRUNTER on a.CODE_ALBUM equals j.CODE_ALBUM select a).ToList();
-            var listAlbumsNonEmpruntes = musique.ALBUMS.ToList().Except(listAlbumsEmprunts);
-            ALBUMS alb = listAlbumsNonEmpruntes.First();
-            emp.CODE_ALBUM = alb.CODE_ALBUM;
+            if (album == null)
+            {
+                var listAlbumsEmprunts = (from a in musique.ALBUMS join j in musique.EMPRUNTER on a.CODE_ALBUM equals j.CODE_ALBUM select a).ToList();
+                var listAlbumsNonEmpruntes = musique.ALBUMS.ToList().Except(listAlbumsEmprunts);
+                ALBUMS alb = listAlbumsNonEmpruntes.First();
+                emp.CODE_ALBUM = alb.CODE_ALBUM;
+            }
+            else emp.CODE_ALBUM = album.CODE_ALBUM;
             emp.DATE_EMPRUNT = DateTime.Parse(dateEmprunt);
             emp.DATE_RETOUR_ATTENDUE = DateTime.Parse(dateRetourAttendue);
             musique.EMPRUNTER.Add(emp);
