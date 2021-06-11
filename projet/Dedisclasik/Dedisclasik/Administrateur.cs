@@ -126,7 +126,7 @@ namespace Dedisclasik
             }
             return albs;
         }
-        #endregion
+        
         private bool afficherDescription(string boutonSousTitre)
         {
             sousTitre.Text = boutonSousTitre;
