@@ -46,7 +46,7 @@ namespace Dedisclasik
             }
             else if (nomAbonne.Length >= limite || prenomAbonne.Length >= limite || loginAbonne.Length >= limite || mdpAbonne.Length >= limite || mdpVerifier.Length >= limite)
             {
-                MessageBox.Show("Vous ne pouvez pas saisir plus de " + limite + " caractères par champs");
+                MessageBox.Show("Vous ne pouvez pas saisir plus de " + limite + " caractères par champs"); 
             }
             else
             {
