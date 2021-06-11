@@ -9,177 +9,86 @@ namespace DedisclasikTests
     [TestClass]
     public class AdministrateurTest
     {
-        private MusiquePT2_NEntities m = new MusiquePT2_NEntities();
         private Administrateur admin = new Administrateur();
+        private Inscription inscription = new Inscription();
+        private static MusiquePT2_NEntities m = Outils.musique = new MusiquePT2_NEntities();
 
+        
         [TestMethod]
-        public void TestEmpruntsProlonges()
+        public void testEmpruntsEnRetard()
         {
-            Outils.chargerElements();
-            //supprimerElements();
+            inscription.inscrire("test", "unitaire", "testdu33", "123");
             ABONNÉS abo = Outils.getAbo();
-            EMPRUNTER emp = Outils.getEmprunt();
-            /*List<EMPRUNTER> listEmpruntsProlong = new List<EMPRUNTER>();
-            listEmpruntsProlong.AddRange(admin.listEmpruntProlong());
+            EMPRUNTER emp = Outils.creerEmprunt(abo, "2021-06-10 16:50:26.967", "2021-06-11 17:50:26.967",null);
 
-            List<int> codeAlbums = new List<int>();
-            foreach (EMPRUNTER e in listEmpruntsProlong)
-            {
-                codeAlbums.Add(e.ALBUMS.CODE_ALBUM);
-            }
-            Assert.IsFalse(codeAlbums.Contains(emp.CODE_ALBUM));*/
+            List <EMPRUNTER> listEmpruntsRetard = admin.listEmpruntRetard();
+            Assert.IsFalse(listEmpruntsRetard.Contains(emp));
 
-            Assert.IsFalse(Outils.dejaProlongé(emp));
-
-            emp.DATE_RETOUR_ATTENDUE.AddMonths(1);
+            emp.DATE_EMPRUNT = DateTime.Parse("2021-05-02 16:50:26.967");
+            emp.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-05-09 16:50:26.967");
             m.SaveChanges();
 
-            Assert.IsTrue(Outils.dejaProlongé(emp));
+            listEmpruntsRetard = admin.listEmpruntRetard();
+            Assert.IsTrue(listEmpruntsRetard.Contains(emp));
 
-            Outils.supprimerElements();
+            Outils.supprimerEmprunt(emp);
+            Outils.supprimerAbonnes();
         }
-
-        /*
-        [TestMethod]
-        public void testEmpruntsRetard()
-        {
-            // get liste emprunts retards de 10j
-            // vérifier qu'un emprunt n'est pas en retard de 10j (qu'il n'est pas présent dans la liste)
-            // modif sa date d'emprunt et la reculer
-            // vérifier que cet emprunt est présent dans la liste
-
-            // un emprunt en retard : 
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 321).Where(a => a.CODE_ABONNÉ == 35).First();
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-06 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-25 16:50:26.967");
-            m.SaveChanges();
-
-            List<ABONNÉS> listEmpruntsRetard = new List<ABONNÉS>();
-            listEmpruntsRetard.AddRange(admin.listEmpruntRetard());
-
-            int codeAbo = album1.CODE_ABONNÉ;
-
-            List<int> codeAbos = new List<int>();
-            foreach (ABONNÉS e in listEmpruntsRetard)
-            {
-                codeAbos.Add(e.CODE_ABONNÉ);
-            }
-            Assert.IsFalse(codeAbos.Contains(codeAbo));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-03-21 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-05-15 16:50:26.967");
-            m.SaveChanges();
-
-            // vérification en retard
-            listEmpruntsRetard.Clear();
-            listEmpruntsRetard.AddRange(admin.listEmpruntRetard());
-            codeAbos.Clear();
-
-            foreach (ABONNÉS e in listEmpruntsRetard)
-            {
-                codeAbos.Add(e.CODE_ABONNÉ);
-            }
-            Assert.IsTrue(codeAbos.Contains(codeAbo));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-06 16:50:26.967");
-            album1.DATE_RETOUR_ATTENDUE = DateTime.Parse("2021-07-25 16:50:26.967");
-            m.SaveChanges();
-        }
-         public void testMeilleursEmprunts()
-         {
-             // get liste meilleurs emprunts
-             // vérifier qu'un emprunt n'est pas présent dans la liste des meilleurs
-             // le faire emprunter plusieurs fois
-             // vérifier que cet emprunt est présent dans la liste
-
-             List<ALBUMS> listMeilleursEmprunts = new List<ALBUMS>();
-             listMeilleursEmprunts.AddRange(admin.listMeilleurEmprunt());
-
-             // emprunt qui n'a pas été prolongé : Mozart: Bastien und Bastienne
-             EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 283).First();
-             int codeAlbum1 = album1.CODE_ALBUM;
-
-             List<int> codeAlbums = new List<int>();
-             foreach (EMPRUNTER e in listEmpruntsProlong)
-             {
-                 codeAlbums.Add(e.ALBUMS.CODE_ALBUM);
-             }
-             Assert.IsFalse(codeAlbums.Contains(codeAlbum1));
-
-             // qui a été prolongé : mozart complete
-             EMPRUNTER album2 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 321).First();
-             int codeAlbum2 = album2.CODE_ALBUM;
-
-             List<int> codeAlbums2 = new List<int>();
-             foreach (EMPRUNTER e in listEmpruntsProlong)
-             {
-                 codeAlbums2.Add(e.ALBUMS.CODE_ALBUM);
-             }
-             Assert.IsTrue(codeAlbums2.Contains(codeAlbum2));
-         }
 
         [TestMethod]
-        public void testAlbumNonEmprunt()
+        public void testAlbumsNonEmpruntes()
         {
-            // get liste albums non empruntés depuis plus d'un an
-            // vérifier qu'un album ayant déjà été emprunté recemment n'est pas présent dans cette liste
-            // modifier (reculer de 1 an) sa date du dernier emprunt
-            // vérifier qu'il est présent dans la liste
+            inscription.inscrire("test", "unitaire", "testdu33", "123");
+            ABONNÉS abo = Outils.getAbo();
+            EMPRUNTER emp = Outils.creerEmprunt(abo, "2018-03-10 16:50:26.967", "2018-03-10 17:50:26.967", null);
 
-            EMPRUNTER album1 = m.EMPRUNTER.Where(a => a.CODE_ALBUM == 648).First();
+            List<ALBUMS> listNonEmprunts = admin.listAlbumNonEmprunt();
+            Assert.IsTrue(listNonEmprunts.Contains(emp.ALBUMS));
 
-            List<ALBUMS> listEmpruntsRetard = new List<ALBUMS>();
-            listEmpruntsRetard.AddRange(admin.listAlbumNonEmprunt());
+            Outils.supprimerEmprunt(emp);
+            emp = Outils.creerEmprunt(abo, "2021-03-10 16:50:26.967", "2021-04-10 17:50:26.967", null);
 
-            int codeAlbum = album1.CODE_ALBUM;
+            listNonEmprunts = admin.listAlbumNonEmprunt();
+            Assert.IsFalse(listNonEmprunts.Contains(emp.ALBUMS));
 
-            List<int> codeAlbums = new List<int>();
-            foreach (ALBUMS e in listEmpruntsRetard)
+            Outils.supprimerEmprunt(emp);
+            Outils.supprimerAbonnes();
+        }
+
+        
+        [TestMethod]
+        public void testMeilleursEmprunts()
+        {
+            List<ALBUMS> listMeilleurs = admin.listMeilleurEmprunt();
+            int nbMaxEmprunt = listMeilleurs[0].EMPRUNTER.Count();
+
+            foreach(ALBUMS alb in listMeilleurs)
             {
-                codeAlbums.Add(e.CODE_ALBUM);
+                if (alb.EMPRUNTER.Count > nbMaxEmprunt) nbMaxEmprunt = alb.EMPRUNTER.Count;
             }
-            Assert.IsFalse(codeAlbums.Contains(codeAlbum));
 
-            album1.DATE_EMPRUNT = DateTime.Parse("2020-03-21 16:50:26.967");
-            m.SaveChanges();
-
-            // vérification en retard
-            listEmpruntsRetard.Clear();
-            listEmpruntsRetard.AddRange(admin.listAlbumNonEmprunt());
-            codeAlbums.Clear();
-
-            foreach (ALBUMS e in listEmpruntsRetard)
+            if (m.ABONNÉS.Count() > nbMaxEmprunt + 1)
             {
-                codeAlbums.Add(e.CODE_ALBUM);
+                var listAbos = m.ABONNÉS.Take(nbMaxEmprunt + 1).ToList();
+
+                for (int i = 0; i < nbMaxEmprunt + 1; i++)
+                {
+                    ABONNÉS aboTmp = listAbos[i];
+                    Outils.creerEmprunt(aboTmp, "2021-06-10 16:50:26.967", "2021-07-10 17:50:26.967", Outils.getAlbum());
+                }
+
+                listMeilleurs = admin.listMeilleurEmprunt(); 
+                int nbMaxEmprunt2 = listMeilleurs[0].EMPRUNTER.Count();
+
+                foreach (ALBUMS alb in listMeilleurs)
+                {
+                    if (alb.EMPRUNTER.Count > nbMaxEmprunt2) nbMaxEmprunt2 = alb.EMPRUNTER.Count;
+                }
+                Assert.IsTrue(nbMaxEmprunt < nbMaxEmprunt2);
+
+                Outils.musique.Database.ExecuteSqlCommand("delete EMPRUNTER where EMPRUNTER.CODE_ALBUM in (select CODE_ALBUM from ALBUMS where TITRE_ALBUM like 'Bach: Rampal')");
+                m.SaveChanges();
             }
-            Assert.IsTrue(codeAlbums.Contains(codeAlbum));
-
-            album1.DATE_EMPRUNT = DateTime.Parse("2021-06-04 16:25:59.707");
-            m.SaveChanges();
         }
-
-        public void testPurge()
-        {
-            // get liste albums non empruntés depuis plus d'un an
-            // purger
-            // vérifier que la liste est vide
-
-        }
-        public void testInscription()
-        {
-            // get liste abos
-            // inscrire nouvel abo
-            // vérifier qu'il existe dans la liste
-
-            // ne pas faire US admin
-        }
-        public void testListeAbos()
-        {
-            // get liste abos par la fonction admin
-            // get liste abos par requete de la base
-            // vérifier que les listes ont les mêmes contenus
-
-            // ne pas faire US admin
-        }*/
     }
 }
