@@ -55,7 +55,7 @@ en tant qu'administrateur :
 
 ## US1: En tant que futur client de la discothèque, je souhaite pouvoir être abonné afin de pouvoir emprunter des albums.
 
-- [ ] US implémentée (on peut emprunter et rendre un album)
+- [X] US implémentée (on peut emprunter et rendre un album)
 
 Cas limite et détails:
 - [X] Qu’est-ce qui se passe si on essaie de s’inscrire avec un login déjà existant ?
