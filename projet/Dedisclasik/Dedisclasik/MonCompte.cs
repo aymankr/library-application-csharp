@@ -289,7 +289,45 @@ namespace Dedisclasik
 
         private void rendre_Click(object sender, EventArgs e)
         {
-            
+            if (dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value != null
+                       && dataGridEmprunt.CurrentCell != null)
+            {
+                var result = MessageBox.Show("Voulez-vous rendre l'album?", "Rendre l'album", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    string titre = dataGridEmprunt.Rows[dataGridEmprunt.CurrentCell.RowIndex].Cells[0].Value.ToString();
+
+                    foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
+                    {
+                        if (emp.CODE_ALBUM == ABONNÉS.IdAlbum(titre))
+                        {
+                            emp.DATE_RETOUR = DateTime.Now;
+                            MessageBox.Show("L'album a bien été rendu!");
+
+                            Outils.musique.SaveChanges();
+                            afficherEmprunts();
+                            vérificationRetour();
+                            Prolonger.Enabled = vérificationProlonger();
+                            vérifcationToutProlonger();
+
+                            /*
+                            //recherche pour remettre la croix lors de la remise d'un disque
+                            foreach(ALBUMS al in ToutLesAlbums)
+                            {
+                                foreach (DataGridViewRow row in pagesAlbums.Rows)
+                                {
+                                    if (row.Cells[0].Value.Equals(al.TITRE_ALBUM))
+                                    {
+                                        pagesAlbums[row.Index, 5].Value = "";
+                                    }
+                            }
+                            */
+
+
+                        }
+                    }
+                }
+            }
         }
 
         private void ongletsAbonné_SelectedIndexChanged(object sender, EventArgs e)
