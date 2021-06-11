@@ -77,7 +77,7 @@ namespace DedisclasikTests
                     Outils.creerEmprunt(aboTmp, "2021-06-10 16:50:26.967", "2021-07-10 17:50:26.967", Outils.getAlbum());
                 }
 
-                listMeilleurs = admin.listMeilleurEmprunt();
+                listMeilleurs = admin.listMeilleurEmprunt(); 
                 int nbMaxEmprunt2 = listMeilleurs[0].EMPRUNTER.Count();
 
                 foreach (ALBUMS alb in listMeilleurs)
