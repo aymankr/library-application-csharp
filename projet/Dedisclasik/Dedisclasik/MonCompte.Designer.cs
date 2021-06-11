@@ -57,6 +57,7 @@ namespace Dedisclasik
             this.Prénom = new System.Windows.Forms.Label();
             this.Login = new System.Windows.Forms.Label();
             this.Nom = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmprunt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).BeginInit();
             this.ongletsAbonné.SuspendLayout();
@@ -225,7 +226,7 @@ namespace Dedisclasik
             // 
             // emprunter
             // 
-            this.emprunter.Location = new System.Drawing.Point(782, 74);
+            this.emprunter.Location = new System.Drawing.Point(788, 102);
             this.emprunter.Margin = new System.Windows.Forms.Padding(2);
             this.emprunter.Name = "emprunter";
             this.emprunter.Size = new System.Drawing.Size(85, 24);
@@ -285,6 +286,8 @@ namespace Dedisclasik
             // 
             // discothèque
             // 
+            this.discothèque.BackColor = System.Drawing.Color.LightBlue;
+            this.discothèque.Controls.Add(this.checkBox1);
             this.discothèque.Controls.Add(this.button1);
             this.discothèque.Controls.Add(this.discotheque);
             this.discothèque.Controls.Add(this.emprunter);
@@ -301,7 +304,6 @@ namespace Dedisclasik
             this.discothèque.Size = new System.Drawing.Size(889, 508);
             this.discothèque.TabIndex = 0;
             this.discothèque.Text = "Discothèque";
-            this.discothèque.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -315,6 +317,7 @@ namespace Dedisclasik
             // 
             // mon_compte
             // 
+            this.mon_compte.BackColor = System.Drawing.Color.LightBlue;
             this.mon_compte.Controls.Add(this.Prénom);
             this.mon_compte.Controls.Add(this.Login);
             this.mon_compte.Controls.Add(this.Nom);
@@ -336,7 +339,6 @@ namespace Dedisclasik
             this.mon_compte.Size = new System.Drawing.Size(889, 508);
             this.mon_compte.TabIndex = 1;
             this.mon_compte.Text = "Mon compte";
-            this.mon_compte.UseVisualStyleBackColor = true;
             // 
             // Prénom
             // 
@@ -364,6 +366,17 @@ namespace Dedisclasik
             this.Nom.Size = new System.Drawing.Size(35, 13);
             this.Nom.TabIndex = 18;
             this.Nom.Text = "Nom :";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(38, 50);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(84, 17);
+            this.checkBox1.TabIndex = 25;
+            this.checkBox1.Text = "Suggestions";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // MonCompte
             // 
@@ -413,5 +426,6 @@ namespace Dedisclasik
         private System.Windows.Forms.Label Login;
         private System.Windows.Forms.Label Nom;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

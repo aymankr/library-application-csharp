@@ -325,5 +325,48 @@ namespace Dedisclasik
             .Value.ToString().Trim().ToLower().Contains(rechercheEditeur.Text.ToString().ToLower()))
                 .ToList().ForEach(row => row.Visible = true);
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                var suggestions = Outils.musique.Database.SqlQuery<string>(
+
+                  "SELECT TOP 20 ALBUMS.TITRE_ALBUM " +
+                  "FROM ALBUMS " +
+                  "WHERE ALBUMS.CODE_GENRE = ( SELECT MEILLEURS.CODE_GENRE " +
+                  "        FROM(  " +
+                  "            SELECT TOP 1 COUNT(ALBUMS.CODE_GENRE) AS nb, ALBUMS.CODE_GENRE  " +
+                  "            FROM EMPRUNTER " +
+                  "            INNER JOIN ABONNÉS ON ABONNÉS.CODE_ABONNÉ = EMPRUNTER.CODE_ABONNÉ  " +
+                  "            INNER JOIN ALBUMS ON ALBUMS.CODE_ALBUM = EMPRUNTER.CODE_ALBUM  " +
+                  "            WHERE ABONNÉS.CODE_ABONNÉ = 35 " +
+                  "            GROUP BY ALBUMS.CODE_GENRE  " +
+                  "            ORDER BY nb DESC) as MEILLEURS )  " +
+                  "ORDER BY NEWID() ").ToList();
+
+                Outils.chargerDataGrid(new string[] { "Titre", "Editeur", "Date", "Pays", "Genre", "Déjà emprunté" }, pagesAlbums);
+                DataGridViewImageColumn img = new DataGridViewImageColumn();
+                img.HeaderText = "Pochette";
+                img.Width = pagesAlbums.Width / 7;
+                pagesAlbums.Columns.Insert(numColonneAlbums, img);
+
+                int i = 0;
+                foreach (string s in suggestions)
+                {
+                    ALBUMS al = Outils.musique.ALBUMS.Where(a => a.TITRE_ALBUM.Trim().Equals(s.Trim())).FirstOrDefault();
+                    pagesAlbums.RowTemplate.Height = 100;
+                    pagesAlbums.Rows.Add(new string[] { al.TITRE_ALBUM, al.getEditeur(), al.getAnnée(), al.getPays(), al.getGenre(), al.getDejaEmprunter() });
+                    pagesAlbums.Rows[i].Cells[numColonneAlbums].Value = ImagePochette(al.POCHETTE);
+                    pagesAlbums.Rows[i].Tag = (ALBUMS)al;
+                    i++;
+                }
+            }
+            else
+            {
+                pagesAlbums.Rows.Clear();
+                InitialiserAlbums();
+            }
+        }
     }
 }
