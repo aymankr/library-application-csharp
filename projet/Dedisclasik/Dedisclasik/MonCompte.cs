@@ -251,17 +251,29 @@ namespace Dedisclasik
             ALBUMS al = pagesAlbums.CurrentRow.Tag as ALBUMS;
             if (al != null && !Outils.dejaEmprunté(al))
             {
-                string titre = al.TITRE_ALBUM.Trim();
-                emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
-                emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
-                emprunt.DATE_EMPRUNT = date;
-                emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
-                emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
-                emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
-                //emprunt.DATE_RETOUR = null; //à modifier
-                m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
-                m.EMPRUNTER.Add(emprunt);
-                pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "X";
+                var result = MessageBox.Show("Voulez-vous emprunter cet album?", "Emprunt de l'album", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    string titre = al.TITRE_ALBUM.Trim();
+                    emprunt.CODE_ABONNÉ = Connexion.abonné.CODE_ABONNÉ;
+                    emprunt.CODE_ALBUM = ABONNÉS.IdAlbum(titre);
+                    emprunt.DATE_EMPRUNT = date;
+                    emprunt.DATE_RETOUR_ATTENDUE = date + TimeSpan.FromDays(EMPRUNTER.typeGenre(titre).GENRES.DÉLAI);
+                    emprunt.ABONNÉS = m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ);
+                    emprunt.ALBUMS = m.ALBUMS.Find(ABONNÉS.IdAlbum(titre));
+                    //emprunt.DATE_RETOUR = null; //à modifier
+                    m.ABONNÉS.Find(Connexion.abonné.CODE_ABONNÉ).EMPRUNTER.Add(emprunt);
+                    m.EMPRUNTER.Add(emprunt);
+                    pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value = "X";
+                }
+            }
+            else if(Outils.dejaEmprunté(al) && pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value.Equals(""))
+            {
+                MessageBox.Show("Vous avez déjà emprunté cet album");
+            }
+            else if(Outils.dejaEmprunté(al) && pagesAlbums.Rows[pagesAlbums.CurrentCell.RowIndex].Cells[5].Value.Equals("X"))
+            {
+                MessageBox.Show("Un autre utilisateur a déjà emprunter cet album");
             }
             m.SaveChanges();
         }
@@ -301,21 +313,6 @@ namespace Dedisclasik
                             vérificationRetour();
                             Prolonger.Enabled = vérificationProlonger();
                             vérifcationToutProlonger();
-
-                            /*
-                            //recherche pour remettre la croix lors de la remise d'un disque
-                            foreach(ALBUMS al in ToutLesAlbums)
-                            {
-                                foreach (DataGridViewRow row in pagesAlbums.Rows)
-                                {
-                                    if (row.Cells[0].Value.Equals(al.TITRE_ALBUM))
-                                    {
-                                        pagesAlbums[row.Index, 5].Value = "";
-                                    }
-                            }
-                            */
-
-
                         }
                     }
                 }

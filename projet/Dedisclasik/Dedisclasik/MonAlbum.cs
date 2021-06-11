@@ -51,8 +51,11 @@ namespace Dedisclasik
 
         public string getDejaEmprunter()
         {
+            var emprunt = Outils.musique.EMPRUNTER.Where(e => e.CODE_ABONNÉ == Connexion.abonné.CODE_ABONNÉ && e.CODE_ALBUM == this.CODE_ALBUM).FirstOrDefault();
             string infos = "";
-            if (Outils.dejaEmprunté(this))
+            if (Outils.dejaEmprunté(this) 
+                && emprunt != null 
+                && emprunt.DATE_RETOUR != null)
             {
                 infos = "X";
             }
