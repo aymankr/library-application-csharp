@@ -28,6 +28,8 @@ namespace Dedisclasik
             string prenomAbonne = prenom.Text;
             string loginAbonne = login.Text;
             string mdpAbonne = mdp.Text;
+            string mdpVerifier = mdp2.Text;
+            int limite = 32;
 
             if (nomAbonne.Equals("") || prenomAbonne.Equals("") || loginAbonne.Equals(""))
             {
@@ -42,6 +44,10 @@ namespace Dedisclasik
             {
                 MessageBox.Show("Vous ne pouvez pas mettre d'espaces dans vos coordonnées, réessayez.");
             }
+            else if (nomAbonne.Length <= limite || prenomAbonne.Length <= limite || loginAbonne.Length <= limite || mdpAbonne.Length <= limite || mdpVerifier.Length <= limite)
+            {
+                MessageBox.Show("Vous ne pouvez pas saisir plus de " + limite + " caractères par champs");
+            }
             else
             {
                 MessageBox.Show("Inscription réussie !");
@@ -51,7 +57,7 @@ namespace Dedisclasik
             }
         }
 
-        public void inscrire(string nomAbonne, string prenomAbonne,string loginAbonne, string mdpAbonne)
+        public void inscrire(string nomAbonne, string prenomAbonne, string loginAbonne, string mdpAbonne)
         {
             musique = new MusiquePT2_NEntities();
             ABONNÉS abonne = new ABONNÉS();

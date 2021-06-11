@@ -29,12 +29,12 @@ namespace Dedisclasik
             }
             return dejaProlongé;
         }
-        
+
         public static bool dejaEmprunté(ALBUMS album)
         {
             foreach (EMPRUNTER emprunt in musique.EMPRUNTER)
             {
-                if (album.Equals(emprunt.ALBUMS))
+                if (album.Equals(emprunt.ALBUMS) && emprunt.DATE_RETOUR == null)
                 {
                     return true;
                 }
