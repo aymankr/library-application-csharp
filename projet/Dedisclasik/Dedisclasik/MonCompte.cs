@@ -35,19 +35,12 @@ namespace Dedisclasik
             pagesAlbums.Columns.Insert(numColonneAlbums, img2);
 
             InitialiserAlbums();
-
-            afficherEmprunts(EMPRUNTER.ListeAlbums());
-
-            Prolonger.Enabled = false;
-            vérifcationToutProlonger();
-
-            nomUtilisateur.Text = Connexion.abonné.NOM_ABONNÉ.ToString();
-            prenomUtilisateur.Text = Connexion.abonné.PRÉNOM_ABONNÉ.ToString();
-            loginUtilisateur.Text = Connexion.abonné.LOGIN_ABONNÉ.ToString();
         }
 
-        public void afficherEmprunts(List<ALBUMS> albums)
+        public void afficherEmprunts()
         {
+            List<ALBUMS> albums = EMPRUNTER.ListeAlbums();
+
             string editeur;
             string annee;
             string genre;
@@ -148,6 +141,37 @@ namespace Dedisclasik
             MessageBox.Show("Prolongement effectué pour : \n" + resultat);
             ToutProlonger.Enabled = false;
             Prolonger.Enabled = false;
+        }
+
+        private void vérificationRetour()
+        {
+            if (dataGridEmprunt.CurrentCell != null && dataGridEmprunt[0, 0].Value != null) { rendre.Enabled = true; }
+            else { rendre.Enabled = false; dateRetourAttendue.Text = "00/00/00"; }
+        }
+
+        private bool vérificationProlonger()
+        {
+            if (dataGridEmprunt.CurrentCell != null)
+            {
+                Prolonger.Enabled = true;
+                string titre = dataGridEmprunt[0, dataGridEmprunt.CurrentCell.RowIndex].Value.ToString().Trim();
+                var id_album = from al in Outils.musique.ALBUMS
+                               where al.TITRE_ALBUM == titre
+                               select al.CODE_ALBUM;
+                foreach (EMPRUNTER emp in Connexion.abonné.EMPRUNTER)
+                {
+                    if (emp.CODE_ALBUM == id_album.First())
+                    {
+                        dateRetourAttendue.Text = emp.DATE_RETOUR_ATTENDUE.ToString();
+                        if (Outils.dejaProlongé(emp))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         private void vérifcationToutProlonger()
@@ -332,7 +356,13 @@ namespace Dedisclasik
 
         private void ongletsAbonné_SelectedIndexChanged(object sender, EventArgs e)
         {
-            afficherEmprunts(EMPRUNTER.ListeAlbums());
+            afficherEmprunts();
+            Prolonger.Enabled = vérificationProlonger();
+            vérifcationToutProlonger();
+            vérificationRetour();
+            nomUtilisateur.Text = Connexion.abonné.NOM_ABONNÉ.ToString();
+            prenomUtilisateur.Text = Connexion.abonné.PRÉNOM_ABONNÉ.ToString();
+            loginUtilisateur.Text = Connexion.abonné.LOGIN_ABONNÉ.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
