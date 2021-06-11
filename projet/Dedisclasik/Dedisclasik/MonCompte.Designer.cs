@@ -52,12 +52,12 @@ namespace Dedisclasik
             this.discotheque = new System.Windows.Forms.Label();
             this.ongletsAbonné = new System.Windows.Forms.TabControl();
             this.discothèque = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.mon_compte = new System.Windows.Forms.TabPage();
             this.Prénom = new System.Windows.Forms.Label();
             this.Login = new System.Windows.Forms.Label();
             this.Nom = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmprunt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pagesAlbums)).BeginInit();
             this.ongletsAbonné.SuspendLayout();
@@ -99,7 +99,7 @@ namespace Dedisclasik
             this.ToutProlonger.Name = "ToutProlonger";
             this.ToutProlonger.Size = new System.Drawing.Size(120, 23);
             this.ToutProlonger.TabIndex = 4;
-            this.ToutProlonger.Text = "Tout prologoner";
+            this.ToutProlonger.Text = "Tout prolonger";
             this.ToutProlonger.UseVisualStyleBackColor = true;
             this.ToutProlonger.Click += new System.EventHandler(this.ToutProlonger_Click);
             // 
@@ -305,6 +305,17 @@ namespace Dedisclasik
             this.discothèque.TabIndex = 0;
             this.discothèque.Text = "Discothèque";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(38, 50);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(84, 17);
+            this.checkBox1.TabIndex = 25;
+            this.checkBox1.Text = "Suggestions";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(756, 12);
@@ -366,17 +377,6 @@ namespace Dedisclasik
             this.Nom.Size = new System.Drawing.Size(35, 13);
             this.Nom.TabIndex = 18;
             this.Nom.Text = "Nom :";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(38, 50);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(84, 17);
-            this.checkBox1.TabIndex = 25;
-            this.checkBox1.Text = "Suggestions";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // MonCompte
             // 
