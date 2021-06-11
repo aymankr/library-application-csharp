@@ -74,7 +74,7 @@ namespace Dedisclasik
 
         public List<ALBUMS> listMeilleurEmprunt()
         {
-            Outils.chargerDataGrid(new string[] { "Titre" }, dataGridView1);
+            Outils.chargerDataGrid(new string[] { "Titre", "Nombre d'emprunts" }, dataGridView1);
             List<ALBUMS> albums = new List<ALBUMS>();
             DateTime dateNow = DateTime.Now;
 

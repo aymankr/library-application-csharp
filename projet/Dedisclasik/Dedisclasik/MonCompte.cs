@@ -326,6 +326,7 @@ namespace Dedisclasik
                     m.SaveChanges();
                     pagesAlbums.Rows.Clear();
                     InitialiserAlbums();
+                    MessageBox.Show("Vous avez rendu " + titre);
                 }
                 else
                 {
