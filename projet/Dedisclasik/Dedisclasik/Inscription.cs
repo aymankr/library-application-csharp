@@ -44,7 +44,7 @@ namespace Dedisclasik
             {
                 MessageBox.Show("Vous ne pouvez pas mettre d'espaces dans vos coordonnées, réessayez.");
             }
-            else if (nomAbonne.Length <= limite || prenomAbonne.Length <= limite || loginAbonne.Length <= limite || mdpAbonne.Length <= limite || mdpVerifier.Length <= limite)
+            else if (nomAbonne.Length >= limite || prenomAbonne.Length >= limite || loginAbonne.Length >= limite || mdpAbonne.Length >= limite || mdpVerifier.Length >= limite)
             {
                 MessageBox.Show("Vous ne pouvez pas saisir plus de " + limite + " caractères par champs");
             }
